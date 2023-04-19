@@ -1,8 +1,16 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from "react-native";
 import { Avatar } from "react-native-paper";
 import { colors } from "../styles/styles";
+
+const screenWidth = Dimensions.get("window").width;
 
 const Header = ({ back, emptyCart = false }) => {
   const navigation = useNavigation();
@@ -29,6 +37,9 @@ const Header = ({ back, emptyCart = false }) => {
         </TouchableOpacity>
       )}
 
+      <View style={styles.container}>
+        <Image source={require("../assets/logo.png")} style={styles.image} />
+      </View>
       <TouchableOpacity
         style={{ position: "absolute", right: 20, top: 40, zIndex: 10 }}
         onPress={
@@ -46,5 +57,20 @@ const Header = ({ back, emptyCart = false }) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    position: "absolute",
+    alignItems: "center",
+    top: 50,
+    zIndex: 10,
+    left: (screenWidth - 125) / 2,
+  },
+  image: {
+    width: 125,
+    height: 45,
+  },
+});
 
 export default Header;
