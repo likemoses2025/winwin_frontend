@@ -19,9 +19,18 @@ const Main = () => {
           <Text>Main</Text>
         </SafeAreaView>
       </View> */}
-      <Stack.Navigator>
+      <Stack.Navigator
+        initialRouteName="home"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Stack.Group>
-          <Stack.Screen name="home" component={Home} />
+          <Stack.Screen
+            name="home"
+            component={Home}
+            options={{ headerShown: false }}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
