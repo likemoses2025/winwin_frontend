@@ -24,7 +24,7 @@ const Header = ({ back, emptyCart = false }) => {
     <>
       {back && (
         <TouchableOpacity
-          style={{ position: "absolute", left: 20, top: 40, zIndex: 10 }}
+          style={{ position: "absolute", left: 20, top: 20, zIndex: 10 }}
           onPress={() => navigation.goBack()}
         >
           <Avatar.Icon
@@ -41,7 +41,7 @@ const Header = ({ back, emptyCart = false }) => {
         <Image source={require("../assets/logo.png")} style={styles.image} />
       </View>
       <TouchableOpacity
-        style={{ position: "absolute", right: 20, top: 40, zIndex: 10 }}
+        style={{ position: "absolute", right: 20, top: 20, zIndex: 10 }}
         onPress={
           emptyCart ? emptyCartHandler : () => navigation.navigate("cart")
         }
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "absolute",
     alignItems: "center",
-    top: 50,
+    top: 30,
     zIndex: 10,
     left: (screenWidth - 125) / 2,
   },
