@@ -4,6 +4,8 @@ import { colors, defaultStyle } from "../styles/styles.js";
 import Header from "../components/Header.jsx";
 import { Avatar, Button } from "react-native-paper";
 import SearchModal from "../components/SearchModal.jsx";
+import ProductCard from "../components/ProductCard.jsx";
+import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
   const categories = [
@@ -20,9 +22,32 @@ const Home = () => {
       price: 24500,
       name: "삼양라면(멀티)",
       _id: "dfkhdks1",
+      stock: 10,
       images: [
         {
-          url: "https://pixabay.com/get/ga4f26d50cd363b258293560a398b929796d1728f947bf64ddb7ebd26dad9a0c2f5b7b248ce064096a9fb45415b87a2d1db2b1539d36d90a88a07864c0b2f76ae_1920.jpg",
+          url: "https://res.cloudinary.com/moses23/image/upload/v1681037643/dyyhx82ruo0gueoefrgp.png",
+        },
+      ],
+    },
+    {
+      price: 45200,
+      name: "쿠티크(멀티)",
+      _id: "dfkhdks12",
+      stock: 5,
+      images: [
+        {
+          url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
+        },
+      ],
+    },
+    {
+      price: 45200,
+      name: "쿠티크(멀티)",
+      _id: "dfkhdks122",
+      stock: 5,
+      images: [
+        {
+          url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
         },
       ],
     },
@@ -35,6 +60,12 @@ const Home = () => {
   const categoryButtonHandler = (id) => {
     setCategory(id);
   };
+
+  const addToCartHandler = (id) => {
+    console.log("Add to Cart", id);
+  };
+
+  const navigation = useNavigation();
 
   return (
     <>
@@ -112,6 +143,25 @@ const Home = () => {
                   {item.category}
                 </Text>
               </Button>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* Products */}
+        <View style={{ flex: 1 }}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {products.map((item, index) => (
+              <ProductCard
+                key={item._id}
+                stock={item.stock}
+                name={item.name}
+                price={item.price}
+                image={item.images[0]?.url}
+                addToCartHandler={addToCartHandler}
+                id={item._id}
+                i={index}
+                navigation={navigation}
+              />
             ))}
           </ScrollView>
         </View>
