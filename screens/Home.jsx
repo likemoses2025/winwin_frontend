@@ -6,14 +6,15 @@ import { Avatar, Button } from "react-native-paper";
 import SearchModal from "../components/SearchModal.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import { useNavigation } from "@react-navigation/native";
+import Footer from "../components/Footer.jsx";
 
 const Home = () => {
   const categories = [
-    { category: "봉지면", _id: "dkfjlsd1" },
-    { category: "용기면", _id: "dkf2jlsd" },
-    { category: "스낵류", _id: "dkfj3lsd" },
-    { category: "소스류", _id: "dk4fjlsd" },
-    { category: "건기식", _id: "dk5jls23d" },
+    { category: "공지사항", _id: "dkfjlsd1" },
+    { category: "신제품", _id: "dkf2jlsd" },
+    { category: "전단행사", _id: "dkfj3lsd" },
+    { category: "프로모션", _id: "dk4fjlsd" },
+    { category: "서진이네", _id: "dk5jls23d" },
     { category: "기타", _id: "dk4565jlsd" },
   ];
 
@@ -90,8 +91,15 @@ const Home = () => {
           }}
         >
           <View>
-            <Text style={{ fontSize: 25 }}>New!!</Text>
-            <Text style={{ fontSize: 25, fontWeight: "900" }}>Products</Text>
+            <Text style={{ fontSize: 20 }}>윈윈!!</Text>
+            <Text
+              style={{
+                fontSize: 25,
+                fontWeight: "500",
+              }}
+            >
+              우리는 함께!!
+            </Text>
           </View>
 
           {/* Search Bar */}
@@ -135,7 +143,7 @@ const Home = () => {
               >
                 <Text
                   style={{
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: "800",
                     color: item._id === category ? colors.color2 : "gray",
                   }}
@@ -166,6 +174,7 @@ const Home = () => {
           </ScrollView>
         </View>
       </View>
+      <Footer activeRoute={"home"} />
     </>
   );
 };
