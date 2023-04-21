@@ -91,11 +91,10 @@ const Home = () => {
           }}
         >
           <View>
-            <Text style={{ fontSize: 20 }}>윈윈!!</Text>
+            <Text style={{ fontSize: 20 }}>윈윈(WinWin)</Text>
             <Text
               style={{
                 fontSize: 25,
-                fontWeight: "500",
               }}
             >
               우리는 함께!!
@@ -144,7 +143,6 @@ const Home = () => {
                 <Text
                   style={{
                     fontSize: 14,
-                    fontWeight: "800",
                     color: item._id === category ? colors.color2 : "gray",
                   }}
                 >

@@ -30,6 +30,7 @@ const Header = ({ back, emptyCart = false }) => {
           <Avatar.Icon
             icon={"arrow-left"}
             color={
+              // ProductDetail 페이지에 들어가면 color2 사용
               route.name === "productDetails" ? colors.color2 : colors.color3
             }
             style={{ backgroundColor: colors.color4 }}
