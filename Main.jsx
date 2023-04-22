@@ -6,6 +6,7 @@ import Home from "./screens/Home";
 import ProductDetails from "./screens/ProductDetails";
 import Toast from "react-native-toast-message";
 import Cart from "./screens/Cart";
+import ConfirmOrder from "./screens/ConfirmOrder";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,11 @@ const Main = () => {
           <Stack.Screen
             name="cart"
             component={Cart}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="confirmorder"
+            component={ConfirmOrder}
             options={{ headerShown: false }}
           />
         </Stack.Group>
