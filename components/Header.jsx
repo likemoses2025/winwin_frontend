@@ -1,11 +1,11 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
 import {
+  Dimensions,
   Image,
   StyleSheet,
   TouchableOpacity,
   View,
-  Dimensions,
 } from "react-native";
 import { Avatar } from "react-native-paper";
 import { colors } from "../styles/styles";
@@ -24,7 +24,12 @@ const Header = ({ back, emptyCart = false }) => {
     <>
       {back && (
         <TouchableOpacity
-          style={{ position: "absolute", left: 20, top: 20, zIndex: 10 }}
+          style={{
+            position: "absolute",
+            left: 20,
+            top: 20,
+            zIndex: 10,
+          }}
           onPress={() => navigation.goBack()}
         >
           <Avatar.Icon

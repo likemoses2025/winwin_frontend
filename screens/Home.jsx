@@ -7,6 +7,7 @@ import SearchModal from "../components/SearchModal.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import { useNavigation } from "@react-navigation/native";
 import Footer from "../components/Footer.jsx";
+import Heading from "../components/Heading.jsx";
 
 const Home = () => {
   const categories = [
@@ -90,16 +91,7 @@ const Home = () => {
             alignItems: "center",
           }}
         >
-          <View>
-            <Text style={{ fontSize: 20 }}>윈윈(WinWin)</Text>
-            <Text
-              style={{
-                fontSize: 25,
-              }}
-            >
-              우리는 함께!!
-            </Text>
-          </View>
+          <Heading text1="윈윈(winwin)" text2="우리는 함께!!" />
 
           {/* Search Bar */}
           <View>
