@@ -7,7 +7,7 @@ import { Button } from "react-native-paper";
 import CartItem from "../components/CartItem";
 import { useNavigation } from "@react-navigation/native";
 
-const cartItems = [
+export const cartItems = [
   {
     name: "삼양라면(멀티)",
     image:
@@ -129,8 +129,8 @@ const Cart = () => {
           paddingHorizontal: 35,
         }}
       >
-        <Text>5 Items</Text>
-        <Text>5원</Text>
+        <Text>5 Box</Text>
+        <Text>2,345,000원</Text>
       </View>
 
       {/* CheckOut Button */}
@@ -151,7 +151,7 @@ const Cart = () => {
           icon={"cart"}
           textColor={colors.color2}
         >
-          Checkout
+          <Text style={{ fontSize: 20 }}>주문하기</Text>
         </Button>
       </TouchableOpacity>
     </View>
