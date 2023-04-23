@@ -9,6 +9,11 @@ import Cart from "./screens/Cart";
 import ConfirmOrder from "./screens/ConfirmOrder";
 import Payment from "./screens/Payment";
 import Login from "./screens/Login";
+import ForgetPassword from "./screens/ForgetPassword";
+import SignUp from "./screens/SignUp";
+import Profile from "./screens/Profile";
+import Verify from "./screens/Verify";
+import Camera from "./screens/Camera";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +55,31 @@ const Main = () => {
           <Stack.Screen
             name="login"
             component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="forgetpassword"
+            component={ForgetPassword}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="signup"
+            component={SignUp}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="profile"
+            component={Profile}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="verify"
+            component={Verify}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="camera"
+            component={Camera}
             options={{ headerShown: false }}
           />
         </Stack.Group>

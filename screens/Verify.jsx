@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import {
   colors,
@@ -10,68 +10,58 @@ import {
 import { Button, TextInput } from "react-native-paper";
 import Footer from "../components/Footer";
 
-const Login = ({ navigation }) => {
-  const [email, setEmail] = useState("");
+const Verify = ({ navigation }) => {
+  const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
 
-  const loading = false;
+  const loading = true;
 
-  const submitHandler = () => {};
+  const submitHandler = () => {
+    Alert.alert("Submit!");
+  };
   return (
     <>
-      <View
-        style={{
-          ...defaultStyle,
-          paddingBottom: 150,
-          backgroundColor: colors.color2,
-        }}
-      >
+      <View style={defaultStyle}>
         {/* Heading */}
         <View style={{ marginBottom: 20 }}>
-          <Text style={formHeading}>로그인 하기</Text>
+          <Text style={formHeading}>패스워드 바꾸기</Text>
         </View>
 
         <View style={styles.container}>
           <TextInput
             {...inputOptions}
-            placeholder="이메일"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={setEmail}
+            placeholder="OTP"
+            secureTextEntry={true}
+            keyboardType="number-pad"
+            value={otp}
+            onChangeText={setOtp}
           />
 
           <TextInput
             {...inputOptions}
-            placeholder="패스워드"
+            placeholder="새로운 패스워드"
             secureTextEntry={true}
             value={password}
             onChangeText={setPassword}
           />
 
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => navigation.navigate("forgetpassword")}
-          >
-            <Text style={styles.forget}>패스워드를 잊으셨나요?</Text>
-          </TouchableOpacity>
-
           <Button
             loading={loading}
             textColor={colors.color2}
-            disabled={email === "" || password === ""}
+            disabled={otp === "" || password === ""}
             style={styles.btn}
             onPress={submitHandler}
           >
-            로그인
+            Reset
           </Button>
 
           <Text style={styles.or}>OR</Text>
 
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.navigate("signup")}
+            onPress={() => navigation.navigate("forgetpassword")}
           >
-            <Text style={styles.link}>회원가입</Text>
+            <Text style={styles.link}>OTP 다시 전송하기</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -81,4 +71,4 @@ const Login = ({ navigation }) => {
   );
 };
 
-export default Login;
+export default Verify;

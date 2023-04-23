@@ -8,7 +8,7 @@ const Footer = ({ activeRoute = "home" }) => {
   const navigation = useNavigation();
 
   let loading = false;
-  let isAuthenticated = true;
+  let isAuthenticated = false;
 
   const navigatationHandler = (key) => {
     switch (key) {

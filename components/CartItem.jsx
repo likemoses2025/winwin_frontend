@@ -1,8 +1,8 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
-import { colors } from "../styles/styles";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Avatar } from "react-native-paper";
 import { iconOptions } from "../screens/ProductDetails";
+import { colors } from "../styles/styles";
 
 const CartItem = ({
   name,
@@ -14,6 +14,7 @@ const CartItem = ({
   id,
   decrementHandler,
   incrementHandler,
+  navigation,
 }) => {
   return (
     // Shape and Image
@@ -31,7 +32,11 @@ const CartItem = ({
 
       {/* product name and price */}
       <View style={{ width: "40%", paddingHorizontal: 25 }}>
-        <Text numberOfLines={1} style={{ fontSize: 17 }}>
+        <Text
+          numberOfLines={1}
+          style={{ fontSize: 17 }}
+          onPress={() => navigation.navigate("productDetails", { id })}
+        >
           {name}
         </Text>
         <Text numberOfLines={1} style={{ fontSize: 17, fontWeight: "900" }}>
