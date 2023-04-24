@@ -25,6 +25,8 @@ const Profile = ({ navigation, route }) => {
   const avatar = null;
   const user = {
     role: "dealer",
+    name: "JangBuho",
+    email: "buho@naver.com",
   };
 
   const navigateHandler = (text) => {
@@ -89,7 +91,7 @@ const Profile = ({ navigation, route }) => {
                   loading={loadingPic}
                   textColor={colors.color1}
                 >
-                  Change Photo
+                  사진 바꾸기
                 </Button>
               </TouchableOpacity>
 
@@ -117,23 +119,14 @@ const Profile = ({ navigation, route }) => {
                   text={"반품"}
                   icon={"format-list-bulleted-square"}
                 />
-                {user?.role === "admin" ? (
-                  <ButtonBox
-                    handler={navigateHandler}
-                    icon={"view-dashboard"}
-                    text={"Admin"}
-                    reverse={true}
-                  />
-                ) : (
-                  user?.role === "dealer" && (
-                    <ButtonBox
-                      handler={navigateHandler}
-                      icon={"view-dashboard"}
-                      text={"주문"}
-                      reverse={true}
-                    />
-                  )
-                )}
+
+                <ButtonBox
+                  handler={navigateHandler}
+                  icon={"cart"}
+                  text={"주문"}
+                  reverse={true}
+                />
+
                 <ButtonBox
                   handler={navigateHandler}
                   text={"프로필"}
@@ -158,6 +151,22 @@ const Profile = ({ navigation, route }) => {
                   text={"로그아웃"}
                   icon={"exit-to-app"}
                 />
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  margin: 10,
+                  justifyContent: "space-evenly",
+                }}
+              >
+                {user.role === "admin" && (
+                  <ButtonBox
+                    handler={navigateHandler}
+                    text={"admin"}
+                    icon={"view-dashboard"}
+                    reverse={true}
+                  />
+                )}
               </View>
             </View>
           </>
