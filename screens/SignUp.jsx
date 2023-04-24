@@ -13,17 +13,27 @@ import Footer from "../components/Footer";
 import mime from "mime";
 
 const SignUp = ({ navigation, route }) => {
-  const [avatar, setAvatar] = useState("");
-  const [name, setName] = useState("");
+  const [team, setTeam] = useState("");
+  const [channel, setChannel] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [pinCode, setPinCode] = useState("");
+  const [userName, setUserName] = useState("");
+  const [sapCode, setSapCode] = useState("");
+  const [storeName, setStoreName] = useState("");
+  const [storeAddress, setStoreAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [avatar, setAvatar] = useState("");
 
   const disableBtn =
-    !name || !email || !password || !address || !city || !country || !pinCode;
+    !team ||
+    !channel ||
+    !email ||
+    !password ||
+    !userName ||
+    !sapCode ||
+    !storeName ||
+    !storeAddress ||
+    !phoneNumber;
 
   const submitHandler = () => {
     Alert.alert("Submit");
@@ -65,14 +75,20 @@ const SignUp = ({ navigation, route }) => {
 
             <TextInput
               {...inputOptions}
-              placeholder="Name"
-              value={name}
-              onChangeText={setName}
+              placeholder="팀명"
+              value={team}
+              onChangeText={setTeam}
+            />
+            <TextInput
+              {...inputOptions}
+              placeholder="채널"
+              value={channel}
+              onChangeText={setChannel}
             />
 
             <TextInput
               {...inputOptions}
-              placeholder="Email"
+              placeholder="이메일"
               keyboardType="email-address"
               value={email}
               onChangeText={setEmail}
@@ -88,28 +104,34 @@ const SignUp = ({ navigation, route }) => {
 
             <TextInput
               {...inputOptions}
-              placeholder="Address"
-              value={address}
-              onChangeText={setAddress}
+              placeholder="점주명"
+              value={userName}
+              onChangeText={setUserName}
             />
             <TextInput
               {...inputOptions}
-              placeholder="City"
-              value={city}
-              onChangeText={setCity}
+              placeholder="SapCode"
+              value={sapCode}
+              onChangeText={setSapCode}
             />
             <TextInput
               {...inputOptions}
-              placeholder="Country"
-              value={country}
-              onChangeText={setCountry}
+              placeholder="점포명"
+              value={storeName}
+              onChangeText={setStoreName}
             />
 
             <TextInput
               {...inputOptions}
-              placeholder="Pin Code"
-              value={pinCode}
-              onChangeText={setPinCode}
+              placeholder="창고주소"
+              value={storeAddress}
+              onChangeText={setStoreAddress}
+            />
+            <TextInput
+              {...inputOptions}
+              placeholder="핸드폰번호"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
             />
 
             <Button
