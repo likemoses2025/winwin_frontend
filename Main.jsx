@@ -14,11 +14,16 @@ import SignUp from "./screens/SignUp";
 import Profile from "./screens/Profile";
 import Verify from "./screens/Verify";
 import Camera from "./screens/Camera";
-import AdminPanel from "./screens/AdminPanel";
+import AdminPanel from "./screens/Admin/AdminPanel";
 import Orders from "./screens/Orders";
 import ChangePassword from "./screens/ChangePassword";
 import UpdateProfile from "./screens/UpdateProfile";
 import Returns from "./screens/Returns";
+import AdminOrders from "./screens/Admin/AdminOrders";
+import Categories from "./screens/Admin/Categories";
+import NewProduct from "./screens/Admin/NewProduct";
+import ProductImages from "./screens/Admin/ProductImages";
+import UpdateProduct from "./screens/Admin/UpdateProduct";
 
 const Stack = createNativeStackNavigator();
 
@@ -88,11 +93,6 @@ const Main = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="adminpanel"
-            component={AdminPanel}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
             name="orders"
             component={Orders}
             options={{ headerShown: false }}
@@ -110,6 +110,37 @@ const Main = () => {
           <Stack.Screen
             name="returns"
             component={Returns}
+            options={{ headerShown: false }}
+          />
+          {/* Admin */}
+          <Stack.Screen
+            name="adminpanel"
+            component={AdminPanel}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="adminorders"
+            component={AdminOrders}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="categories"
+            component={Categories}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="newproduct"
+            component={NewProduct}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="productimages"
+            component={ProductImages}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="updateproduct"
+            component={UpdateProduct}
             options={{ headerShown: false }}
           />
         </Stack.Group>

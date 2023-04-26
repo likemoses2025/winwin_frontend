@@ -24,7 +24,7 @@ const Profile = ({ navigation, route }) => {
 
   const avatar = null;
   const user = {
-    role: "dealer",
+    role: "admin",
     name: "JangBuho",
     email: "buho@naver.com",
   };
@@ -162,7 +162,7 @@ const Profile = ({ navigation, route }) => {
                 {user.role === "admin" && (
                   <ButtonBox
                     handler={navigateHandler}
-                    text={"admin"}
+                    text={"Admin"}
                     icon={"view-dashboard"}
                     reverse={true}
                   />
