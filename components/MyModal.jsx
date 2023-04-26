@@ -3,7 +3,7 @@ import React from "react";
 import { colors } from "../styles/styles";
 import { Avatar, Button } from "react-native-paper";
 
-const MyModal = ({ id, deleteHandler, navigate, setOpenModal }) => {
+const MyModal = ({ id, deleteHandler, navigation, setOpenModal }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -25,13 +25,13 @@ const MyModal = ({ id, deleteHandler, navigate, setOpenModal }) => {
 
       <Text
         style={styles.text}
-        onPress={() => navigate.navigate("updateproduct", { id })}
+        onPress={() => navigation.navigate("updateproduct", { id })}
       >
-        Edit
+        수정하기
       </Text>
 
-      <Button textColor={colors.color3} onPress={() => deleteHandler(id)}>
-        Delete
+      <Button textColor={colors.color1} onPress={() => deleteHandler(id)}>
+        삭제하기
       </Button>
     </View>
   );
@@ -40,13 +40,14 @@ const MyModal = ({ id, deleteHandler, navigate, setOpenModal }) => {
 const styles = StyleSheet.create({
   container: {
     width: 200,
-    height: 100,
+    height: 90,
     alignSelf: "center",
     justifyContent: "center",
     zIndex: 100,
     backgroundColor: colors.color2,
     padding: 20,
     borderRadius: 10,
+    elevation: 10,
   },
 
   text: {

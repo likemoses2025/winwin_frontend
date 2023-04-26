@@ -4,7 +4,7 @@ import { colors } from "../styles/styles";
 import MyModal from "../components/MyModal";
 
 const ProductListItem = ({
-  navigate,
+  navigation,
   deleteHandler,
   i,
   id,
@@ -21,7 +21,7 @@ const ProductListItem = ({
       <TouchableOpacity
         activeOpacity={0.9}
         onLongPress={() => setOpenModal((prev) => !prev)}
-        onPress={() => navigate.navigate("productdetails", { id })}
+        onPress={() => navigation.navigate("productdetails", { id })}
       >
         <View
           style={{
@@ -86,7 +86,7 @@ const ProductListItem = ({
         <MyModal
           id={id}
           deleteHandler={deleteHandler}
-          navigate={navigate}
+          navigation={navigation}
           setOpenModal={setOpenModal}
         />
       )}

@@ -43,7 +43,7 @@ const Main = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="productDetails"
+            name="productdetails"
             component={ProductDetails}
             options={{ headerShown: false }}
           />

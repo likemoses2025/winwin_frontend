@@ -18,7 +18,8 @@ const UpdateProduct = ({ navigation, route }) => {
   const [visible, setVisible] = useState(false);
 
   const product = {};
-  const loading = true;
+  const loading = false;
+  const loadingOther = true;
 
   const [id] = useState(route.params.id);
   const [name, setName] = useState("");
@@ -28,8 +29,6 @@ const UpdateProduct = ({ navigation, route }) => {
   const [category, setCategory] = useState("");
   const [categoryID, setCategoryID] = useState("");
   const [categories, setCategories] = useState([]);
-
-  useSetCategories(setCategories, isFocused);
 
   const submitHandler = () => {};
 

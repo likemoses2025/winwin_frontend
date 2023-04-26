@@ -8,7 +8,7 @@ const ProductListHeading = () => {
       <Text style={styles.text}>Image</Text>
       <Text style={styles.text}>Price</Text>
       <Text style={{ ...styles.text, width: null, maxWidth: 120 }}>Name</Text>
-      <Text style={{ ...styles.text, width: 60 }}>Category</Text>
+      <Text style={{ ...styles.text, width: 65 }}>Category</Text>
       <Text style={styles.text}>Stock</Text>
     </View>
   );
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    width: 40,
+    width: 45,
     color: colors.color2,
     fontWeight: "900",
   },

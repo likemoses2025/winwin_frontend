@@ -8,59 +8,96 @@ import ProductCard from "../components/ProductCard.jsx";
 import { useNavigation } from "@react-navigation/native";
 import Footer from "../components/Footer.jsx";
 import Heading from "../components/Heading.jsx";
+import Strategy from "../components/Notice/Strategy.jsx";
+
+export const products = [
+  {
+    price: 24500,
+    name: "삼양라면(멀티)",
+    _id: "dfkhdks1",
+    stock: 10,
+    category: "봉지면",
+    images: [
+      {
+        url: "https://res.cloudinary.com/moses23/image/upload/v1681037643/dyyhx82ruo0gueoefrgp.png",
+      },
+    ],
+  },
+  {
+    price: 45200,
+    name: "쿠티크(멀티)",
+    _id: "dfkhdks12",
+    stock: 5,
+    category: "용기면",
+    images: [
+      {
+        url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
+      },
+    ],
+  },
+  {
+    price: 45200,
+    name: "쿠티크(멀티)",
+    _id: "dfkhdks1222",
+    stock: 5,
+    category: "스낵면",
+    images: [
+      {
+        url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
+      },
+    ],
+  },
+  {
+    price: 45200,
+    name: "쿠티크(멀티)",
+    _id: "dfkhdks1422",
+    stock: 5,
+    category: "스낵면",
+    images: [
+      {
+        url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
+      },
+    ],
+  },
+  {
+    price: 45200,
+    name: "쿠티크(멀티)",
+    _id: "dfkhdks1252",
+    stock: 5,
+    category: "스낵면",
+    images: [
+      {
+        url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
+      },
+    ],
+  },
+];
+
+export const categories = [
+  { category: "봉지면", _id: "dkfjlsd1" },
+  { category: "용기면", _id: "dkf2jlsd" },
+  { category: "스낵류", _id: "dkfj3lsd" },
+  { category: "소스류", _id: "dk4fjlsd" },
+  { category: "건기식", _id: "dk5jls23d" },
+  { category: "기타", _id: "dk4565jlsd" },
+];
+
+const announcements = [
+  { announcement: "신제품", _id: "anm1" },
+  { announcement: "4월전략", _id: "anm2" },
+  { announcement: "전단행사", _id: "anm3" },
+  { announcement: "프로모션", _id: "anm4" },
+  { announcement: "서진이네", _id: "anm5" },
+  { announcement: "기타", _id: "anm6" },
+];
 
 const Home = () => {
-  const categories = [
-    { category: "공지사항", _id: "dkfjlsd1" },
-    { category: "신제품", _id: "dkf2jlsd" },
-    { category: "전단행사", _id: "dkfj3lsd" },
-    { category: "프로모션", _id: "dk4fjlsd" },
-    { category: "서진이네", _id: "dk5jls23d" },
-    { category: "기타", _id: "dk4565jlsd" },
-  ];
-
-  const products = [
-    {
-      price: 24500,
-      name: "삼양라면(멀티)",
-      _id: "dfkhdks1",
-      stock: 10,
-      images: [
-        {
-          url: "https://res.cloudinary.com/moses23/image/upload/v1681037643/dyyhx82ruo0gueoefrgp.png",
-        },
-      ],
-    },
-    {
-      price: 45200,
-      name: "쿠티크(멀티)",
-      _id: "dfkhdks12",
-      stock: 5,
-      images: [
-        {
-          url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
-        },
-      ],
-    },
-    {
-      price: 45200,
-      name: "쿠티크(멀티)",
-      _id: "dfkhdks122",
-      stock: 5,
-      images: [
-        {
-          url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
-        },
-      ],
-    },
-  ];
-
-  const [category, setCategory] = useState("");
+  const [announcement, setAnnouncement] = useState("anm1");
   const [activeSearch, setActiveSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const categoryButtonHandler = (id) => {
-    setCategory(id);
+  const announcementButtonHandler = (id) => {
+    setAnnouncement(id);
   };
 
   const addToCartHandler = (id) => {
@@ -105,9 +142,7 @@ const Home = () => {
             </TouchableOpacity>
           </View>
         </View>
-
         {/* Category */}
-
         <View
           style={{
             flexDirection: "row",
@@ -121,48 +156,58 @@ const Home = () => {
             }}
             showsHorizontalScrollIndicator={false}
           >
-            {categories.map((item, index) => (
+            {announcements.map((item, index) => (
               <Button
                 key={item._id}
                 style={{
                   backgroundColor:
-                    item._id === category ? colors.color_s5 : colors.color5,
+                    item._id === announcement ? colors.color_s5 : colors.color5,
                   borderRadius: 100,
                   margin: 5,
                 }}
-                onPress={() => categoryButtonHandler(item._id)}
+                onPress={() => announcementButtonHandler(item._id)}
               >
                 <Text
                   style={{
                     fontSize: 14,
-                    color: item._id === category ? colors.color2 : "gray",
+                    color: item._id === announcement ? colors.color2 : "gray",
                   }}
                 >
-                  {item.category}
+                  {item.announcement}
                 </Text>
               </Button>
             ))}
           </ScrollView>
         </View>
 
-        {/* Products */}
-        <View style={{ flex: 1 }}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {products.map((item, index) => (
-              <ProductCard
-                key={item._id}
-                stock={item.stock}
-                name={item.name}
-                price={item.price}
-                image={item.images[0]?.url}
-                addToCartHandler={addToCartHandler}
-                id={item._id}
-                i={index}
-                navigation={navigation}
-              />
-            ))}
-          </ScrollView>
-        </View>
+        {/* New Product */}
+        {announcement === "anm1" && (
+          <View style={{ flex: 1 }}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {products.map((item, index) => (
+                <ProductCard
+                  key={item._id}
+                  stock={item.stock}
+                  name={item.name}
+                  price={item.price}
+                  image={item.images[0]?.url}
+                  addToCartHandler={addToCartHandler}
+                  id={item._id}
+                  i={index}
+                  navigation={navigation}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        )}
+        {/* New Product */}
+        {announcement === "anm2" && (
+          <View style={{ flex: 1 }}>
+            <ScrollView showsHorizontalScrollIndicator={false}>
+              <Strategy />
+            </ScrollView>
+          </View>
+        )}
       </View>
       <Footer activeRoute={"home"} />
     </>

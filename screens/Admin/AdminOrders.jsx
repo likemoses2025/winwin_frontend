@@ -10,7 +10,7 @@ import { Headline } from "react-native-paper";
 const AdminOrders = ({ navigation }) => {
   const isFocused = useIsFocused();
 
-  const loading = true;
+  const loading = false;
   const orders = [];
 
   const updateHandler = (id) => {};

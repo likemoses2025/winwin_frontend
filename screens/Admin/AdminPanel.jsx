@@ -8,15 +8,16 @@ import ProductListItem from "../../components/ProductListItem";
 import Chart from "../../components/Chart";
 import { useIsFocused } from "@react-navigation/native";
 import ProductListHeading from "../../components/ProductListHeading";
+import { products } from "../Home";
 
 const AdminPanel = ({ navigation }) => {
   const isFocused = useIsFocused();
 
   const loading = false;
-  const products = [];
+
   const inStock = 2;
   const outOfStock = 5;
-  const loadingDelete = true;
+  const loadingDelete = false;
 
   const navigationHandler = (text) => {
     switch (text) {
@@ -36,7 +37,9 @@ const AdminPanel = ({ navigation }) => {
     }
   };
 
-  const deleteProductHandler = (id) => {};
+  const deleteProductHandler = (id) => {
+    console.log(`Deleting Product ID: ${id}`);
+  };
 
   return (
     <View style={defaultStyle}>
@@ -95,7 +98,7 @@ const AdminPanel = ({ navigation }) => {
               {!loadingDelete &&
                 products.map((item, index) => (
                   <ProductListItem
-                    navigate={navigation}
+                    navigation={navigation}
                     deleteHandler={deleteProductHandler}
                     key={item._id}
                     id={item._id}
@@ -103,7 +106,7 @@ const AdminPanel = ({ navigation }) => {
                     price={item.price}
                     stock={item.stock}
                     name={item.name}
-                    category={item.category?.category}
+                    category={item.category}
                     imgSrc={item.images[0].url}
                   />
                 ))}

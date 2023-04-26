@@ -15,14 +15,12 @@ import {
 import Header from "../../components/Header";
 import { Avatar, Button, TextInput } from "react-native-paper";
 import { useIsFocused } from "@react-navigation/native";
+import { categories } from "../Home";
 
 const Categories = ({ navigation }) => {
   const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState([]);
 
   const isFocused = useIsFocused();
-
-  useSetCategories(setCategories, isFocused);
 
   const loading = true;
 
