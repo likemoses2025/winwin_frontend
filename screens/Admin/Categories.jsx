@@ -22,7 +22,7 @@ const Categories = ({ navigation }) => {
 
   const isFocused = useIsFocused();
 
-  const loading = true;
+  const loading = false;
 
   const deleteHandler = (id) => {};
 
@@ -79,7 +79,7 @@ const Categories = ({ navigation }) => {
           disabled={!category}
           onPress={submitHandler}
         >
-          Add
+          추가하기
         </Button>
       </View>
     </View>

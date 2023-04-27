@@ -84,9 +84,9 @@ export const categories = [
 
 const announcements = [
   { announcement: "신제품", _id: "anm1" },
-  { announcement: "4월전략", _id: "anm2" },
-  { announcement: "전단행사", _id: "anm3" },
-  { announcement: "프로모션", _id: "anm4" },
+  { announcement: "5월전략", _id: "anm2" },
+  { announcement: "공지사항", _id: "anm3" },
+  { announcement: "긴급공지", _id: "anm4" },
   { announcement: "서진이네", _id: "anm5" },
   { announcement: "기타", _id: "anm6" },
 ];
@@ -202,8 +202,8 @@ const Home = () => {
         )}
         {/* New Product */}
         {announcement === "anm2" && (
-          <View style={{ flex: 1 }}>
-            <ScrollView showsHorizontalScrollIndicator={false}>
+          <View style={{ flex: 1, marginBottom: 100 }}>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <Strategy />
             </ScrollView>
           </View>

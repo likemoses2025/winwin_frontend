@@ -64,7 +64,7 @@ const SearchModal = ({
                 name={item.name}
                 price={item.price}
                 handler={() =>
-                  navigation.navigate("productDetails", { id: item._id })
+                  navigation.navigate("productdetails", { id: item._id })
                 }
               />
             ))}

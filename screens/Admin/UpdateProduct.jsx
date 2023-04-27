@@ -12,6 +12,7 @@ import Loader from "../../components/Loader";
 import { Button, TextInput } from "react-native-paper";
 import SelectComponent from "../../components/SelectComponent";
 import { useIsFocused } from "@react-navigation/native";
+import { categories } from "../Home";
 
 const UpdateProduct = ({ navigation, route }) => {
   const isFocused = useIsFocused();
@@ -19,29 +20,19 @@ const UpdateProduct = ({ navigation, route }) => {
 
   const product = {};
   const loading = false;
-  const loadingOther = true;
+  const loadingOther = false;
 
   const [id] = useState(route.params.id);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("봉지면");
   const [categoryID, setCategoryID] = useState("");
-  const [categories, setCategories] = useState([]);
 
-  const submitHandler = () => {};
-
-  useEffect(() => {
-    if (product) {
-      setName(product.name);
-      setDescription(product.description);
-      setPrice(String(product.price));
-      setStock(String(product.stock));
-      setCategory(product.category?.category);
-      setCategoryID(product.category?._id);
-    }
-  }, [product]);
+  const submitHandler = () => {
+    console.log(name, description, price, stock, category);
+  };
 
   return (
     <>

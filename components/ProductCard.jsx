@@ -16,7 +16,7 @@ const ProductCard = ({
   return (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => navigation.navigate("productDetails", { id })}
+      onPress={() => navigation.navigate("productdetails", { id })}
     >
       <View
         style={{

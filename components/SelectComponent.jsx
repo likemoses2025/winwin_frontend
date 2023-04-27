@@ -14,7 +14,7 @@ const SelectComponent = ({
   setVisible,
   setCategory,
   setCategoryID,
-  categories = [],
+  categories,
 }) => {
   const selectCategoryHandler = (item) => {
     setCategory(item.category);

@@ -11,6 +11,7 @@ import {
 import { Avatar, Button, TextInput } from "react-native-paper";
 import SelectComponent from "../../components/SelectComponent";
 import { useIsFocused } from "@react-navigation/native";
+import { categories } from "../Home";
 import mime from "mime";
 
 const NewProduct = ({ navigation, route }) => {
@@ -24,9 +25,6 @@ const NewProduct = ({ navigation, route }) => {
   const [stock, setStock] = useState("");
   const [category, setCategory] = useState("Choose Category");
   const [categoryID, setCategoryID] = useState(undefined);
-  const [categories, setCategories] = useState([]);
-
-  useSetCategories(setCategories, isFocused);
 
   const disableBtnCondition =
     !name || !description || !price || !stock || !image;
@@ -51,7 +49,7 @@ const NewProduct = ({ navigation, route }) => {
 
         {/* Heading */}
         <View style={{ marginBottom: 20, paddingTop: 70 }}>
-          <Text style={formHeading}>New Product</Text>
+          <Text style={formHeading}>신규제품 등록하기</Text>
         </View>
 
         <ScrollView
@@ -155,7 +153,7 @@ const NewProduct = ({ navigation, route }) => {
               loading={loading}
               disabled={disableBtnCondition || loading}
             >
-              Create
+              등록하기
             </Button>
           </View>
         </ScrollView>

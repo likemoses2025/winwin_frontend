@@ -7,7 +7,7 @@ import { Headline } from "react-native-paper";
 import OrderItem from "../components/OrderItem";
 import { useIsFocused } from "@react-navigation/native";
 
-const orders = [
+export const orders = [
   {
     _id: "fkldjsfljd1",
     team: "경북팀",

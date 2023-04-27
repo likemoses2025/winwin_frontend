@@ -6,12 +6,14 @@ import Loader from "../../components/Loader";
 import OrderItem from "../../components/OrderItem";
 import { useIsFocused } from "@react-navigation/native";
 import { Headline } from "react-native-paper";
+import { orders } from "../Orders";
 
 const AdminOrders = ({ navigation }) => {
   const isFocused = useIsFocused();
 
   const loading = false;
-  const orders = [];
+
+  const processOrderLoading = false;
 
   const updateHandler = (id) => {};
   return (
@@ -25,7 +27,7 @@ const AdminOrders = ({ navigation }) => {
 
       {/* Heading */}
       <View style={{ marginBottom: 20, paddingTop: 70 }}>
-        <Text style={formHeading}>All Orders</Text>
+        <Text style={formHeading}>주 문 내 역</Text>
       </View>
 
       {loading ? (
