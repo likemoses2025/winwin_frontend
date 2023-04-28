@@ -22,6 +22,17 @@ const UpdateProduct = ({ navigation, route }) => {
   const loading = false;
   const loadingOther = false;
 
+  const images = [
+    {
+      _id: "dljfsld12",
+      url: "https://res.cloudinary.com/moses23/image/upload/v1681037643/dyyhx82ruo0gueoefrgp.png",
+    },
+    {
+      _id: "dlkjflsd3dsfg",
+      url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
+    },
+  ];
+
   const [id] = useState(route.params.id);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -70,7 +81,7 @@ const UpdateProduct = ({ navigation, route }) => {
                 onPress={() =>
                   navigation.navigate("productimages", {
                     id,
-                    images: product.images,
+                    images: images,
                   })
                 }
                 textColor={colors.color1}

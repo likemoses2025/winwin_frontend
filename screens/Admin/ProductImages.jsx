@@ -12,9 +12,12 @@ const ProductImages = ({ navigation, route }) => {
   const [image, setImage] = useState(null);
   const [imageChanged, setImageChanged] = useState(false);
 
-  const loading = true;
+  const loading = false;
 
-  const deleteHandler = (imageId) => {};
+  const deleteHandler = (imageId) => {
+    console.log("Image Id", imageId);
+    console.log("Product Id", productId);
+  };
 
   const submitHandler = () => {};
 
@@ -62,6 +65,7 @@ const ProductImages = ({ navigation, route }) => {
         </View>
       </ScrollView>
 
+      {/* Bottom Camera */}
       <View
         style={{
           padding: 20,

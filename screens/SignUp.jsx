@@ -24,6 +24,12 @@ const SignUp = ({ navigation, route }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [avatar, setAvatar] = useState("");
 
+  useEffect(() => {
+    if (route.params?.image) {
+      setAvatar(route.params.image);
+    }
+  }, [route.params]);
+
   const disableBtn =
     !team ||
     !channel ||
@@ -37,6 +43,7 @@ const SignUp = ({ navigation, route }) => {
 
   const submitHandler = () => {
     Alert.alert("Submit");
+    navigation.navigate("verify");
   };
 
   const loading = true;

@@ -22,12 +22,19 @@ const Profile = ({ navigation, route }) => {
     Alert.alert("Logout");
   };
 
-  const avatar = null;
+  const [avatar, setAvatar] = useState(null);
   const user = {
     role: "admin",
     name: "JangBuho",
     email: "buho@naver.com",
   };
+
+  useEffect(() => {
+    if (route.params?.image) {
+      setAvatar(route.params.image);
+      // dispatch update Picture Here
+    }
+  }, [route.params]);
 
   const navigateHandler = (text) => {
     switch (text) {
