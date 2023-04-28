@@ -27,11 +27,6 @@ const CameraComponent = ({ navigation, route }) => {
     });
 
     const result = await ImagePicker.launchImageLibraryAsync();
-    if (result.canceled) {
-      // Handle cancellation
-    } else {
-      // Handle the selected image
-    }
 
     console.log("Image Data", data);
 
