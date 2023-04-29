@@ -84,7 +84,7 @@ export const categories = [
 
 const announcements = [
   { announcement: "신제품", _id: "anm1" },
-  { announcement: "5월전략", _id: "anm2" },
+  { announcement: "행사전략", _id: "anm2" },
   { announcement: "공지사항", _id: "anm3" },
   { announcement: "긴급공지", _id: "anm4" },
   { announcement: "서진이네", _id: "anm5" },

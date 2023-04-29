@@ -23,10 +23,7 @@ const CameraComponent = ({ navigation, route }) => {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
-      canceled: false,
     });
-
-    const result = await ImagePicker.launchImageLibraryAsync();
 
     console.log("Image Data", data);
 
@@ -51,6 +48,8 @@ const CameraComponent = ({ navigation, route }) => {
 
   const clickPicture = async () => {
     const data = await camera.takePictureAsync();
+
+    console.log("Data", data);
 
     if (route.params?.newProduct)
       return navigation.navigate("newproduct", {
