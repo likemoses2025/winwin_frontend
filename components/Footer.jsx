@@ -3,12 +3,12 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../styles/styles";
 import { Avatar } from "react-native-paper";
+import { useSelector } from "react-redux";
 
 const Footer = ({ activeRoute = "home" }) => {
   const navigation = useNavigation();
 
-  let loading = false;
-  let isAuthenticated = true;
+  const { loading, isAuthenticated } = useSelector((state) => state.user);
 
   const navigatationHandler = (key) => {
     switch (key) {

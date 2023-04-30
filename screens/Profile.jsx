@@ -1,33 +1,25 @@
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
-import {
-  colors,
-  defaultImg,
-  defaultStyle,
-  formHeading,
-} from "../styles/styles";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Button } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import ButtonBox from "../components/ButtonBox";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
-import { useIsFocused } from "@react-navigation/native";
-import mime from "mime";
+import { logout } from "../redux/actions/userAction";
+import { colors, defaultStyle, formHeading } from "../styles/styles";
+import { useMessageAndErrorUser } from "../utils/hooks";
 
 const Profile = ({ navigation, route }) => {
-  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
-  const loading = false;
-  const loadingPic = false;
+  const loading = useMessageAndErrorUser(navigation, dispatch, "login");
+
   const logoutHandler = () => {
-    Alert.alert("Logout");
+    dispatch(logout());
   };
 
   const [avatar, setAvatar] = useState(null);
-  const user = {
-    role: "admin",
-    name: "JangBuho",
-    email: "buho@naver.com",
-  };
 
   useEffect(() => {
     if (route.params?.image) {
@@ -88,21 +80,21 @@ const Profile = ({ navigation, route }) => {
               />
 
               <TouchableOpacity
-                disabled={loadingPic}
+                disabled={loading}
                 onPress={() =>
                   navigation.navigate("camera", { updateProfile: true })
                 }
               >
                 <Button
-                  disabled={loadingPic}
-                  loading={loadingPic}
+                  disabled={loading}
+                  loading={loading}
                   textColor={colors.color1}
                 >
                   사진 바꾸기
                 </Button>
               </TouchableOpacity>
 
-              <Text style={styles.name}>{user?.name}</Text>
+              <Text style={styles.name}>{user?.userName}</Text>
               <Text
                 style={{
                   fontWeight: "300",
@@ -166,7 +158,7 @@ const Profile = ({ navigation, route }) => {
                   justifyContent: "space-evenly",
                 }}
               >
-                {user.role === "admin" && (
+                {user?.role === "admin" && (
                   <ButtonBox
                     handler={navigateHandler}
                     text={"Admin"}

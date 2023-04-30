@@ -1,33 +1,40 @@
-import { View, Text, SafeAreaView, StatusBar, Platform } from "react-native";
-import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "./screens/Home";
-import ProductDetails from "./screens/ProductDetails";
+import React, { useEffect } from "react";
 import Toast from "react-native-toast-message";
-import Cart from "./screens/Cart";
-import ConfirmOrder from "./screens/ConfirmOrder";
-import Payment from "./screens/Payment";
-import Login from "./screens/Login";
-import ForgetPassword from "./screens/ForgetPassword";
-import SignUp from "./screens/SignUp";
-import Profile from "./screens/Profile";
-import Verify from "./screens/Verify";
-import Camera from "./screens/Camera";
-import AdminPanel from "./screens/Admin/AdminPanel";
-import Orders from "./screens/Orders";
-import ChangePassword from "./screens/ChangePassword";
-import UpdateProfile from "./screens/UpdateProfile";
-import Returns from "./screens/Returns";
 import AdminOrders from "./screens/Admin/AdminOrders";
+import AdminPanel from "./screens/Admin/AdminPanel";
 import Categories from "./screens/Admin/Categories";
 import NewProduct from "./screens/Admin/NewProduct";
 import ProductImages from "./screens/Admin/ProductImages";
 import UpdateProduct from "./screens/Admin/UpdateProduct";
+import Camera from "./screens/Camera";
+import Cart from "./screens/Cart";
+import ChangePassword from "./screens/ChangePassword";
+import ConfirmOrder from "./screens/ConfirmOrder";
+import ForgetPassword from "./screens/ForgetPassword";
+import Home from "./screens/Home";
+import Login from "./screens/Login";
+import Orders from "./screens/Orders";
+import Payment from "./screens/Payment";
+import ProductDetails from "./screens/ProductDetails";
+import Profile from "./screens/Profile";
+import Returns from "./screens/Returns";
+import SignUp from "./screens/SignUp";
+import UpdateProfile from "./screens/UpdateProfile";
+import Verify from "./screens/Verify";
+import { useDispatch } from "react-redux";
+import { loadUser } from "./redux/actions/userAction";
 
 const Stack = createNativeStackNavigator();
 
 const Main = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
   return (
     <NavigationContainer>
       <Stack.Navigator

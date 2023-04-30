@@ -9,14 +9,20 @@ import {
 } from "../styles/styles";
 import { Button, TextInput } from "react-native-paper";
 import Footer from "../components/Footer";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/actions/userAction";
+import { useMessageAndErrorUser } from "../utils/hooks";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loading = false;
+  const dispatch = useDispatch();
+  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
 
-  const submitHandler = () => {};
+  const submitHandler = () => {
+    dispatch(login(email, password));
+  };
   return (
     <>
       <View
