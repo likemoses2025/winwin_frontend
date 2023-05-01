@@ -11,8 +11,13 @@ import {
 import { Avatar, Button, TextInput } from "react-native-paper";
 import Footer from "../components/Footer";
 import mime from "mime";
+import { useMessageAndErrorUser } from "../utils/hooks";
+import { useDispatch } from "react-redux";
+import { register } from "../redux/actions/userAction";
 
 const SignUp = ({ navigation, route }) => {
+  const dispatch = useDispatch;
+
   const [team, setTeam] = useState("");
   const [channel, setChannel] = useState("");
   const [email, setEmail] = useState("");
@@ -23,12 +28,6 @@ const SignUp = ({ navigation, route }) => {
   const [storeAddress, setStoreAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [avatar, setAvatar] = useState("");
-
-  useEffect(() => {
-    if (route.params?.image) {
-      setAvatar(route.params.image);
-    }
-  }, [route.params]);
 
   const disableBtn =
     !team ||
@@ -42,11 +41,36 @@ const SignUp = ({ navigation, route }) => {
     !phoneNumber;
 
   const submitHandler = () => {
-    Alert.alert("Submit");
-    navigation.navigate("verify");
+    const myForm = new FormData();
+
+    myForm.append("team", team);
+    myForm.append("channel", channel);
+    myForm.append("email", email);
+    myForm.append("password", password);
+    myForm.append("userName", userName);
+    myForm.append("sapCode", sapCode);
+    myForm.append("storeName", storeName);
+    myForm.append("storeAddress", storeAddress);
+    myForm.append("phoneNumber", phoneNumber);
+
+    if (avatar !== "") {
+      myForm.append("file", {
+        uri: avatar,
+        type: mime.getType(avatar),
+        name: avatar.split("/").pop(),
+      });
+    }
+
+    dispatch(register(myForm));
   };
 
-  const loading = true;
+  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
+
+  useEffect(() => {
+    if (route.params?.image) {
+      setAvatar(route.params.image);
+    }
+  }, [route.params]);
 
   return (
     <>

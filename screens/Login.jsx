@@ -22,6 +22,8 @@ const Login = ({ navigation }) => {
 
   const submitHandler = () => {
     dispatch(login(email, password));
+    setEmail("");
+    setPassword("");
   };
   return (
     <>
