@@ -12,16 +12,30 @@ export const useMessageAndErrorUser = (
 
   useEffect(() => {
     if (error) {
-      Toast.show({ type: "error", text1: error });
-      dispatch({ type: "clearError" });
+      Toast.show({
+        type: "error",
+        text1: error,
+      });
+      dispatch({
+        type: "clearError",
+      });
     }
+
     if (message) {
-      navigation.navigate(navigateTo);
-      Toast.show({ type: "success", text1: message });
-      dispatch({ type: "clearMessage" });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: navigateTo }],
+      });
+      Toast.show({
+        type: "success",
+        text1: message,
+      });
+      dispatch({
+        type: "clearMessage",
+      });
       dispatch(loadUser());
     }
-  }, [message, error, dispatch]);
+  }, [error, message, dispatch]);
 
   return loading;
 };

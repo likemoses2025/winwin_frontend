@@ -9,21 +9,14 @@ const CameraComponent = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(CameraType.back);
   const [camera, setCamera] = useState(null);
-
   const openImagePicker = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false)
-      return alert("갤러리에 접근할 권한이 없습니다.!!");
+      return alert("Permission to access gallery is required");
 
-    const data = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-
-    console.log("Image Data", data);
+    const data = await ImagePicker.launchImageLibraryAsync();
 
     if (route.params?.newProduct)
       return navigation.navigate("newproduct", {
@@ -46,8 +39,6 @@ const CameraComponent = ({ navigation, route }) => {
 
   const clickPicture = async () => {
     const data = await camera.takePictureAsync();
-
-    console.log("Data", data);
 
     if (route.params?.newProduct)
       return navigation.navigate("newproduct", {
@@ -128,7 +119,7 @@ const MyIcon = ({ icon, handler }) => (
   <TouchableOpacity onPress={handler}>
     <Avatar.Icon
       icon={icon}
-      size={50}
+      size={40}
       color={colors.color2}
       style={{
         backgroundColor: colors.color1,

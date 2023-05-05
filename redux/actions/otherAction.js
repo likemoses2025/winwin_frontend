@@ -94,7 +94,7 @@ export const updatePic = (formData) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({
-      type: "updatePicFail",
+      type: "updatePicFailure",
       payload: error.response.data.message,
     });
   }

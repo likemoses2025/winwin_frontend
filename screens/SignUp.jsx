@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { register } from "../redux/actions/userAction";
 
 const SignUp = ({ navigation, route }) => {
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
 
   const [team, setTeam] = useState("");
   const [channel, setChannel] = useState("");
@@ -67,9 +67,7 @@ const SignUp = ({ navigation, route }) => {
   const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
 
   useEffect(() => {
-    if (route.params?.image) {
-      setAvatar(route.params.image);
-    }
+    if (route.params?.image) setAvatar(route.params.image);
   }, [route.params]);
 
   return (
@@ -101,7 +99,7 @@ const SignUp = ({ navigation, route }) => {
               }}
             />
             <TouchableOpacity onPress={() => navigation.navigate("camera")}>
-              <Button textColor={colors.color1}>사진바꾸기</Button>
+              <Button textColor={colors.color1}>사진 등록하기</Button>
             </TouchableOpacity>
 
             <TextInput

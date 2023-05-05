@@ -82,6 +82,7 @@ export const register = (myForm) => async (dispatch) => {
       type: "registerSuccess",
       payload: data.message,
     });
+    dispatch(loadUser());
   } catch (error) {
     dispatch({
       type: "registerFail",

@@ -21,24 +21,27 @@ import mime from "mime";
 import { updatePic } from "../redux/actions/otherAction";
 
 const Profile = ({ navigation, route }) => {
+  const { user } = useSelector((state) => state.user);
+  const [avatar, setAvatar] = useState(defaultImg);
+
+  console.log("user", user);
+  console.log("route.params", route.params);
+
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const { user } = useSelector((state) => state.user);
 
   const loading = useMessageAndErrorUser(navigation, dispatch, "login");
-  const loadingPic = useMessageAndErrorOther(dispatch, null, null, loadUser);
 
   const logoutHandler = () => {
     dispatch(logout());
   };
 
-  const [avatar, setAvatar] = useState(
-    user?.avatar ? user?.avatar.url : defaultImg
-  );
+  const loadingPic = useMessageAndErrorOther(dispatch, null, null, loadUser);
 
   useEffect(() => {
     if (route.params?.image) {
       setAvatar(route.params.image);
+      // dispatch updatePic Here
       const myForm = new FormData();
       myForm.append("file", {
         uri: route.params.image,
@@ -46,9 +49,16 @@ const Profile = ({ navigation, route }) => {
         name: route.params.image.split("/").pop(),
       });
       dispatch(updatePic(myForm));
-      dispatch(loadUser());
     }
+
+    dispatch(loadUser());
   }, [route.params, dispatch, isFocused]);
+
+  useEffect(() => {
+    if (user?.avatar) {
+      setAvatar(user.avatar.url);
+    }
+  }, [user]);
 
   const navigateHandler = (text) => {
     switch (text) {
