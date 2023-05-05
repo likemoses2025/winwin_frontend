@@ -10,8 +10,6 @@ const CameraComponent = ({ navigation, route }) => {
   const [type, setType] = useState(CameraType.back);
   const [camera, setCamera] = useState(null);
 
-  console.log("Route Parmas", route.params);
-
   const openImagePicker = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();

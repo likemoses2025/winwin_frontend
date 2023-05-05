@@ -5,28 +5,50 @@ import { useDispatch, useSelector } from "react-redux";
 import ButtonBox from "../components/ButtonBox";
 import Footer from "../components/Footer";
 import Loader from "../components/Loader";
-import { logout } from "../redux/actions/userAction";
-import { colors, defaultStyle, formHeading } from "../styles/styles";
-import { useMessageAndErrorUser } from "../utils/hooks";
+import { loadUser, logout } from "../redux/actions/userAction";
+import {
+  colors,
+  defaultStyle,
+  formHeading,
+  defaultImg,
+} from "../styles/styles";
+import {
+  useMessageAndErrorOther,
+  useMessageAndErrorUser,
+} from "../utils/hooks";
+import { useIsFocused } from "@react-navigation/native";
+import mime from "mime";
+import { updatePic } from "../redux/actions/otherAction";
 
 const Profile = ({ navigation, route }) => {
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const { user } = useSelector((state) => state.user);
 
   const loading = useMessageAndErrorUser(navigation, dispatch, "login");
+  const loadingPic = useMessageAndErrorOther(dispatch, null, null, loadUser);
 
   const logoutHandler = () => {
     dispatch(logout());
   };
 
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState(
+    user?.avatar ? user?.avatar.url : defaultImg
+  );
 
   useEffect(() => {
     if (route.params?.image) {
       setAvatar(route.params.image);
-      // dispatch update Picture Here
+      const myForm = new FormData();
+      myForm.append("file", {
+        uri: route.params.image,
+        type: mime.getType(route.params.image),
+        name: route.params.image.split("/").pop(),
+      });
+      dispatch(updatePic(myForm));
+      dispatch(loadUser());
     }
-  }, [route.params]);
+  }, [route.params, dispatch, isFocused]);
 
   const navigateHandler = (text) => {
     switch (text) {
@@ -80,14 +102,14 @@ const Profile = ({ navigation, route }) => {
               />
 
               <TouchableOpacity
-                disabled={loading}
+                disabled={loadingPic}
                 onPress={() =>
                   navigation.navigate("camera", { updateProfile: true })
                 }
               >
                 <Button
-                  disabled={loading}
-                  loading={loading}
+                  disabled={loadingPic}
+                  loading={loadingPic}
                   textColor={colors.color1}
                 >
                   사진 바꾸기

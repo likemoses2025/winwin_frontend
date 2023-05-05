@@ -9,13 +9,19 @@ import {
 } from "../styles/styles";
 import { Button, TextInput } from "react-native-paper";
 import Header from "../components/Header";
+import { useDispatch } from "react-redux";
+import { changePassword } from "../redux/actions/otherAction";
+import { useMessageAndErrorOther } from "../utils/hooks";
 
-const ChangePassword = () => {
+const ChangePassword = (navigation) => {
+  const dispatch = useDispatch();
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const loading = false;
+
+  const loading = useMessageAndErrorOther(dispatch);
 
   const submitHandler = () => {
+    dispatch(changePassword(oldPassword, newPassword));
     setOldPassword("");
     setNewPassword("");
   };

@@ -9,9 +9,13 @@ import {
 } from "../styles/styles";
 import { Button, TextInput } from "react-native-paper";
 import Header from "../components/Header";
+import { useMessageAndErrorOther } from "../utils/hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "../redux/actions/otherAction";
 
 const UpdateProfile = ({ navigation }) => {
-  const user = {};
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
   const [team, setTeam] = useState(user?.team);
   const [channel, setChannel] = useState(user?.channel);
@@ -22,10 +26,21 @@ const UpdateProfile = ({ navigation }) => {
   const [storeAddress, setStoreAddress] = useState(user?.storeAddress);
   const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber);
 
-  const loading = true;
+  const loading = useMessageAndErrorOther(dispatch, navigation, "profile");
 
   const submitHandler = () => {
-    Alert.alert("우우");
+    dispatch(
+      updateProfile(
+        team,
+        channel,
+        email,
+        userName,
+        sapCode,
+        storeName,
+        storeAddress,
+        phoneNumber
+      )
+    );
   };
   return (
     <View style={defaultStyle}>
