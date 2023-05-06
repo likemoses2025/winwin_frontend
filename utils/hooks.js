@@ -83,12 +83,15 @@ export const useMessageAndErrorOther = (
 export const useSetCategories = (setCategories, isFocused) => {
   useEffect(() => {
     axios
-      .get(`${server}/category/all`)
+      .get(`${server}/product/categories`)
       .then((res) => {
         setCategories(res.data.categories);
       })
       .catch((e) => {
-        Toast.show({ type: "error", text1: e.response.data.message });
+        Toast.show({
+          type: "error",
+          text1: e.response.data.message,
+        });
       });
   }, [isFocused]);
 };

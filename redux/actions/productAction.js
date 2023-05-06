@@ -7,7 +7,7 @@ export const getAllProducts = (keyword, category) => async (dispatch) => {
     dispatch({ type: "getAllProductsRequest" });
 
     const { data } = await axios.get(
-      `${server}/product/all?keyword=${keyword}&category=${category}`,
+      `${server}/product/all?keyword=${keyword}`,
       {
         withCredentials: true,
       }
@@ -17,6 +17,23 @@ export const getAllProducts = (keyword, category) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "getAllProductsFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getNewProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: "getNewProductsRequest" });
+
+    const { data } = await axios.get(`${server}/product/newproduct`, {
+      withCredentials: true,
+    });
+
+    dispatch({ type: "getNewProductsSuccess", payload: data.products });
+  } catch (error) {
+    dispatch({
+      type: "getNewProductsFailure",
       payload: error.response.data.message,
     });
   }
@@ -46,6 +63,7 @@ export const getProductDetails = (id) => async (dispatch) => {
     const { data } = await axios.get(`${server}/product/single/${id}`, {
       withCredentials: true,
     });
+    console.log("Product Data", data);
 
     dispatch({ type: "getProductDetailsSuccess", payload: data.product });
   } catch (error) {

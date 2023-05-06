@@ -13,6 +13,9 @@ import { Avatar, Button } from "react-native-paper";
 import Header from "../components/Header";
 import Carousel from "react-native-snap-carousel";
 import Toast from "react-native-toast-message";
+import { useEffect } from "react";
+import { getProductDetails } from "../redux/actions/productAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = SLIDER_WIDTH;
@@ -28,29 +31,34 @@ export const iconOptions = {
 };
 
 const ProductDetails = ({ route: { params } }) => {
+  const dispatch = useDispatch();
   const isCarousel = useRef(null);
+  const {
+    product: { name, stock, price, images, description },
+  } = useSelector((state) => state.product);
+
   const [quantity, setQuantity] = useState(1);
 
-  const name = "4과비빔면(멀티)";
-  const stock = 5;
-  const price = 34520;
-  const description =
-    "사과, 매실, 배, 파인애플 4가지 과일로 상큼함을 더한 4과비빔면과일의 새콤달콤한 맛으로 여름철 잃어버린 입맛을 찾아보세요!";
+  // const name = "4과비빔면(멀티)";
+  // const stock = 5;
+  // const price = 34520;
+  // const description =
+  //   "사과, 매실, 배, 파인애플 4가지 과일로 상큼함을 더한 4과비빔면과일의 새콤달콤한 맛으로 여름철 잃어버린 입맛을 찾아보세요!";
 
-  const images = [
-    {
-      id: "dklfjdlsf1",
-      url: "https://res.cloudinary.com/moses23/image/upload/v1681037643/dyyhx82ruo0gueoefrgp.png",
-    },
-    {
-      id: "dklfjdlsf2",
-      url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
-    },
-    {
-      id: "dklfjdlsf3",
-      url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
-    },
-  ];
+  // const images = [
+  //   {
+  //     id: "dklfjdlsf1",
+  //     url: "https://res.cloudinary.com/moses23/image/upload/v1681037643/dyyhx82ruo0gueoefrgp.png",
+  //   },
+  //   {
+  //     id: "dklfjdlsf2",
+  //     url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
+  //   },
+  //   {
+  //     id: "dklfjdlsf3",
+  //     url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
+  //   },
+  // ];
 
   const decrementQty = () => {
     if (quantity <= 1) return;
@@ -71,6 +79,10 @@ const ProductDetails = ({ route: { params } }) => {
       text1: "Order successfully added",
     });
   };
+
+  useEffect(() => {
+    dispatch(getProductDetails(params.id));
+  }, [dispatch]);
 
   return (
     <View

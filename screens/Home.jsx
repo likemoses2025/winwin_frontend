@@ -1,28 +1,22 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import React, { useState } from "react";
-import { colors, defaultStyle } from "../styles/styles.js";
-import Header from "../components/Header.jsx";
-import { Avatar, Button } from "react-native-paper";
-import SearchModal from "../components/SearchModal.jsx";
-import ProductCard from "../components/ProductCard.jsx";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import {
+  RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Avatar, Button } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import Footer from "../components/Footer.jsx";
+import Header from "../components/Header.jsx";
 import Heading from "../components/Heading.jsx";
 import Strategy from "../components/Notice/Strategy.jsx";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../redux/actions/productAction.js";
-import { useSetCategories } from "../utils/hooks.js";
-
-export const categories = [
-  { category: "봉지면", _id: "dkfjlsd1" },
-  { category: "용기면", _id: "dkf2jlsd" },
-  { category: "스낵류", _id: "dkfj3lsd" },
-  { category: "소스류", _id: "dk4fjlsd" },
-  { category: "건기식", _id: "dk5jls23d" },
-  { category: "기타", _id: "dk4565jlsd" },
-  { category: "신제품", _id: "dk4565jl2sd" },
-];
+import ProductCard from "../components/ProductCard.jsx";
+import SearchModal from "../components/SearchModal.jsx";
+import { getNewProducts } from "../redux/actions/productAction.js";
+import { colors, defaultStyle } from "../styles/styles.js";
 
 const announcements = [
   { announcement: "신제품", _id: "anm1" },
@@ -35,14 +29,24 @@ const announcements = [
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const isFocused = useIsFocused();
+
   const { products } = useSelector((state) => state.product);
 
   const [announcement, setAnnouncement] = useState("anm1");
   const [activeSearch, setActiveSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+
+    dispatch(getNewProducts());
+    console.log("I am Refresh Control");
+
+    setRefreshing(false);
+  };
 
   const announcementButtonHandler = (id) => {
     setAnnouncement(id);
@@ -52,15 +56,9 @@ const Home = () => {
     console.log("Add to Cart", id);
   };
 
-  const navigation = useNavigation();
-
-  useSetCategories(setCategories, isFocused);
-
-  console.log("카테고리", categories);
-
   useEffect(() => {
-    dispatch(getAllProducts(searchQuery, category));
-    console.log("Action");
+    dispatch(getNewProducts());
+    console.log("isFocused Action");
   }, [dispatch]);
 
   return (
@@ -140,7 +138,13 @@ const Home = () => {
         {/* New Product */}
         {announcement === "anm1" && (
           <View style={{ flex: 1 }}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            >
               {products.map((item, index) => (
                 <ProductCard
                   key={item._id}

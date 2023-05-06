@@ -81,9 +81,9 @@ const ProductCard = ({
         >
           <Button
             textColor={i % 2 === 0 ? colors.color_s5 : colors.color2}
-            onPress={() => addToCartHandler(id, stock)}
+            // onPress={() => addToCartHandler(id, stock)}
           >
-            Add to Cart
+            New Product!!
           </Button>
         </TouchableOpacity>
       </View>
