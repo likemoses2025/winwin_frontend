@@ -1,7 +1,10 @@
+import axios from "axios";
 import { useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { useSelector } from "react-redux";
 import { loadUser } from "../redux/actions/userAction";
+
+const server = process.env.API_URL;
 
 export const useMessageAndErrorUser = (
   navigation,
@@ -75,4 +78,17 @@ export const useMessageAndErrorOther = (
   }, [error, message, dispatch]);
 
   return loading;
+};
+
+export const useSetCategories = (setCategories, isFocused) => {
+  useEffect(() => {
+    axios
+      .get(`${server}/category/all`)
+      .then((res) => {
+        setCategories(res.data.categories);
+      })
+      .catch((e) => {
+        Toast.show({ type: "error", text1: e.response.data.message });
+      });
+  }, [isFocused]);
 };

@@ -5,73 +5,14 @@ import Header from "../components/Header.jsx";
 import { Avatar, Button } from "react-native-paper";
 import SearchModal from "../components/SearchModal.jsx";
 import ProductCard from "../components/ProductCard.jsx";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import Footer from "../components/Footer.jsx";
 import Heading from "../components/Heading.jsx";
 import Strategy from "../components/Notice/Strategy.jsx";
-
-export const products = [
-  {
-    price: 24500,
-    name: "삼양라면(멀티)",
-    _id: "dfkhdks1",
-    stock: 10,
-    category: "봉지면",
-    images: [
-      {
-        url: "https://res.cloudinary.com/moses23/image/upload/v1681037643/dyyhx82ruo0gueoefrgp.png",
-      },
-    ],
-  },
-  {
-    price: 45200,
-    name: "쿠티크(멀티)",
-    _id: "dfkhdks12",
-    stock: 5,
-    category: "용기면",
-    images: [
-      {
-        url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
-      },
-    ],
-  },
-  {
-    price: 45200,
-    name: "쿠티크(멀티)",
-    _id: "dfkhdks1222",
-    stock: 5,
-    category: "스낵면",
-    images: [
-      {
-        url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
-      },
-    ],
-  },
-  {
-    price: 45200,
-    name: "쿠티크(멀티)",
-    _id: "dfkhdks1422",
-    stock: 5,
-    category: "스낵면",
-    images: [
-      {
-        url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
-      },
-    ],
-  },
-  {
-    price: 45200,
-    name: "쿠티크(멀티)",
-    _id: "dfkhdks1252",
-    stock: 5,
-    category: "스낵면",
-    images: [
-      {
-        url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
-      },
-    ],
-  },
-];
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "../redux/actions/productAction.js";
+import { useSetCategories } from "../utils/hooks.js";
 
 export const categories = [
   { category: "봉지면", _id: "dkfjlsd1" },
@@ -80,6 +21,7 @@ export const categories = [
   { category: "소스류", _id: "dk4fjlsd" },
   { category: "건기식", _id: "dk5jls23d" },
   { category: "기타", _id: "dk4565jlsd" },
+  { category: "신제품", _id: "dk4565jl2sd" },
 ];
 
 const announcements = [
@@ -92,9 +34,15 @@ const announcements = [
 ];
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+  const { products } = useSelector((state) => state.product);
+
   const [announcement, setAnnouncement] = useState("anm1");
   const [activeSearch, setActiveSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState();
 
   const announcementButtonHandler = (id) => {
     setAnnouncement(id);
@@ -105,6 +53,15 @@ const Home = () => {
   };
 
   const navigation = useNavigation();
+
+  useSetCategories(setCategories, isFocused);
+
+  console.log("카테고리", categories);
+
+  useEffect(() => {
+    dispatch(getAllProducts(searchQuery, category));
+    console.log("Action");
+  }, [dispatch]);
 
   return (
     <>

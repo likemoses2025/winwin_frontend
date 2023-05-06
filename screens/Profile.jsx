@@ -24,9 +24,6 @@ const Profile = ({ navigation, route }) => {
   const { user } = useSelector((state) => state.user);
   const [avatar, setAvatar] = useState(defaultImg);
 
-  console.log("user", user);
-  console.log("route.params", route.params);
-
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
