@@ -58,7 +58,6 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getNewProducts());
-    console.log("isFocused Action");
   }, [dispatch]);
 
   return (

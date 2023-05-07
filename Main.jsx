@@ -25,6 +25,7 @@ import UpdateProfile from "./screens/UpdateProfile";
 import Verify from "./screens/Verify";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./redux/actions/userAction";
+import OrderCreate from "./screens/OrderCreate";
 
 const Stack = createNativeStackNavigator();
 
@@ -148,6 +149,11 @@ const Main = () => {
           <Stack.Screen
             name="updateproduct"
             component={UpdateProduct}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ordercreate"
+            component={OrderCreate}
             options={{ headerShown: false }}
           />
         </Stack.Group>

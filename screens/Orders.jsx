@@ -1,9 +1,9 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
 import { colors, defaultStyle, formHeading } from "../styles/styles";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
-import { Headline } from "react-native-paper";
+import { Avatar, Button, Headline } from "react-native-paper";
 import OrderItem from "../components/OrderItem";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -20,14 +20,12 @@ export const orders = [
         code: 303257,
         price: 25625,
         quantity: 45,
-        sum: 2032023,
       },
       {
         name: "불닭볶음면(멀티)",
         code: 303357,
         price: 30625,
         quantity: 50,
-        sum: 2232023,
       },
     ],
     user: "kdjfldj1fod",
@@ -48,14 +46,12 @@ export const orders = [
         code: 303257,
         price: 25625,
         quantity: 45,
-        sum: 2032023,
       },
       {
         name: "불닭볶음면(멀티)",
         code: 303357,
         price: 30625,
         quantity: 50,
-        sum: 2232023,
       },
     ],
     user: "kdjfldj1fod",
@@ -76,14 +72,12 @@ export const orders = [
         code: 303257,
         price: 25625,
         quantity: 45,
-        sum: 2032023,
       },
       {
         name: "불닭볶음면(멀티)",
         code: 303357,
         price: 30625,
         quantity: 50,
-        sum: 2232023,
       },
     ],
     user: "kdjfldj1fod",
@@ -94,7 +88,7 @@ export const orders = [
   },
 ];
 
-const Orders = () => {
+const Orders = ({ navigation }) => {
   const isFocused = useIsFocused();
   const loading = false;
 
@@ -150,6 +144,22 @@ const Orders = () => {
           </ScrollView>
         </View>
       )}
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          right: 10,
+          bottom: 10,
+          zIndex: 10,
+        }}
+        onPress={() => navigation.navigate("ordercreate")}
+      >
+        <Avatar.Icon
+          icon={"plus-circle"}
+          size={120}
+          color={colors.color_s3}
+          style={{ backgroundColor: colors.color4 }}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
