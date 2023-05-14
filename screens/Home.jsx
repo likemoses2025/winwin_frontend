@@ -144,7 +144,7 @@ const Home = () => {
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
               }
             >
-              {products.map((item, index) => (
+              {products?.map((item, index) => (
                 <ProductCard
                   key={item._id}
                   stock={item.stock}

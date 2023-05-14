@@ -25,11 +25,9 @@ export const getAllProducts = (keyword, category) => async (dispatch) => {
 export const getNewProducts = () => async (dispatch) => {
   try {
     dispatch({ type: "getNewProductsRequest" });
-
     const { data } = await axios.get(`${server}/product/newproduct`, {
       withCredentials: true,
     });
-
     dispatch({ type: "getNewProductsSuccess", payload: data.products });
   } catch (error) {
     dispatch({
@@ -42,11 +40,9 @@ export const getNewProducts = () => async (dispatch) => {
 export const getAdminProducts = () => async (dispatch) => {
   try {
     dispatch({ type: "getAdminProductsRequest" });
-
     const { data } = await axios.get(`${server}/product/admin`, {
       withCredentials: true,
     });
-
     dispatch({ type: "getAdminProductsSuccess", payload: data });
   } catch (error) {
     dispatch({
@@ -59,16 +55,35 @@ export const getAdminProducts = () => async (dispatch) => {
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: "getProductDetailsRequest" });
-
     const { data } = await axios.get(`${server}/product/single/${id}`, {
       withCredentials: true,
     });
-    console.log("Product Data", data);
-
     dispatch({ type: "getProductDetailsSuccess", payload: data.product });
   } catch (error) {
     dispatch({
       type: "getProductDetailsFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const createProduct = (formData) => async (dispatch) => {
+  try {
+    dispatch({ type: "createProductRequest" });
+
+    const { data } = await axios.post(`${server}/product/new`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+      withCredentials: true,
+    });
+
+    dispatch({
+      type: "createProductSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    console.log(error.response.data.message);
+    dispatch({
+      type: "createProductFailure",
       payload: error.response.data.message,
     });
   }

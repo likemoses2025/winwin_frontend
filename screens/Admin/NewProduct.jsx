@@ -11,27 +11,49 @@ import {
 import { Avatar, Button, TextInput } from "react-native-paper";
 import SelectComponent from "../../components/SelectComponent";
 import { useIsFocused } from "@react-navigation/native";
-import { categories } from "../Home";
 import mime from "mime";
+import { useDispatch } from "react-redux";
+import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
+import { createProduct } from "../../redux/actions/productAction";
 
 const NewProduct = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const [visible, setVisible] = useState(false);
 
+  const [visible, setVisible] = useState(false);
   const [image, setImage] = useState("");
+  const [no, setNo] = useState("");
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [code, setCode] = useState("");
   const [price, setPrice] = useState("");
-  const [stock, setStock] = useState("");
-  const [category, setCategory] = useState("Choose Category");
-  const [categoryID, setCategoryID] = useState(undefined);
+  const [newproduct] = useState(false);
+  const [category, setCategory] = useState("제품유형 선택");
+  const [categories, setCategories] = useState([]);
+
+  useSetCategories(setCategories, isFocused);
+  const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
 
   const disableBtnCondition =
-    !name || !description || !price || !stock || !image;
+    !no || !name || !code || !price || !image || !category;
 
-  const submitHandler = () => {};
+  const submitHandler = () => {
+    console.log("category: " + category);
+    const myForm = new FormData();
+    myForm.append("no", no);
+    myForm.append("name", name);
+    myForm.append("code", code);
+    myForm.append("price", price);
+    myForm.append("newproduct", newproduct);
+    myForm.append("category", category);
 
-  const loading = true;
+    myForm.append("file", {
+      uri: image,
+      type: mime.getType(image),
+      name: image.split("/").pop(),
+    });
+
+    dispatch(createProduct(myForm));
+  };
 
   useEffect(() => {
     if (route.params?.image) setImage(route.params.image);
@@ -102,32 +124,34 @@ const NewProduct = ({ navigation, route }) => {
               </TouchableOpacity>
             </View>
 
+            {/* Input Field */}
             <TextInput
               {...inputOptions}
-              placeholder="Name"
+              placeholder="번호"
+              keyboardType="number-pad"
+              value={no}
+              onChangeText={setNo}
+            />
+            <TextInput
+              {...inputOptions}
+              placeholder="제품명"
               value={name}
               onChangeText={setName}
             />
             <TextInput
               {...inputOptions}
-              placeholder="Description"
-              value={description}
-              onChangeText={setDescription}
+              placeholder="SapCode"
+              keyboardType="number-pad"
+              value={code}
+              onChangeText={setCode}
             />
 
             <TextInput
               {...inputOptions}
-              placeholder="Price"
+              placeholder="가격"
               keyboardType="number-pad"
               value={price}
               onChangeText={setPrice}
-            />
-            <TextInput
-              {...inputOptions}
-              keyboardType="number-pad"
-              placeholder="Stock"
-              value={stock}
-              onChangeText={setStock}
             />
 
             <Text
@@ -161,7 +185,6 @@ const NewProduct = ({ navigation, route }) => {
 
       <SelectComponent
         categories={categories}
-        setCategoryID={setCategoryID}
         setCategory={setCategory}
         visible={visible}
         setVisible={setVisible}

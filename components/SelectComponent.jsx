@@ -9,16 +9,9 @@ import React from "react";
 import { Avatar, Headline } from "react-native-paper";
 import { colors } from "../styles/styles";
 
-const SelectComponent = ({
-  visible,
-  setVisible,
-  setCategory,
-  setCategoryID,
-  categories,
-}) => {
+const SelectComponent = ({ visible, setVisible, setCategory, categories }) => {
   const selectCategoryHandler = (item) => {
     setCategory(item.category);
-    setCategoryID(item._id);
     setVisible(false);
   };
 

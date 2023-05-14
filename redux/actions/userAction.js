@@ -21,7 +21,7 @@ export const login = (email, password) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({
-      type: "loginFail",
+      type: "loginFailure",
       payload: error.response.data.message,
     });
   }
@@ -42,7 +42,7 @@ export const loadUser = () => async (dispatch) => {
     });
   } catch (error) {
     dispatch({
-      type: "loadUserFail",
+      type: "loadUserFailure",
       payload: error.response.data.message,
     });
   }
@@ -63,7 +63,7 @@ export const logout = () => async (dispatch) => {
     });
   } catch (error) {
     dispatch({
-      type: "logoutFail",
+      type: "logoutFailure",
       payload: error.response.data.message,
     });
   }
@@ -85,7 +85,7 @@ export const register = (myForm) => async (dispatch) => {
     dispatch(loadUser());
   } catch (error) {
     dispatch({
-      type: "registerFail",
+      type: "registerFailure",
       payload: error.response.data.message,
     });
   }

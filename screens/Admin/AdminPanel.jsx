@@ -1,22 +1,23 @@
-import { View, Text, ScrollView } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import React from "react";
-import { colors, defaultStyle, formHeading } from "../../styles/styles";
+import { ScrollView, Text, View } from "react-native";
+import { useDispatch } from "react-redux";
+import ButtonBox from "../../components/ButtonBox";
+import Chart from "../../components/Chart";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
-import ButtonBox from "../../components/ButtonBox";
-import ProductListItem from "../../components/ProductListItem";
-import Chart from "../../components/Chart";
-import { useIsFocused } from "@react-navigation/native";
 import ProductListHeading from "../../components/ProductListHeading";
-import { products } from "../Home";
+import ProductListItem from "../../components/ProductListItem";
+import { colors, defaultStyle, formHeading } from "../../styles/styles";
+import { useAdminProduct } from "../../utils/hooks";
 
 const AdminPanel = ({ navigation }) => {
+  const dispatch = useDispatch();
   const isFocused = useIsFocused();
-
-  const loading = false;
-
-  const inStock = 2;
-  const outOfStock = 5;
+  const { products, inStock, outOfStock, loading } = useAdminProduct(
+    dispatch,
+    isFocused
+  );
   const loadingDelete = false;
 
   const navigationHandler = (text) => {
@@ -96,7 +97,7 @@ const AdminPanel = ({ navigation }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
               {!loadingDelete &&
-                products.map((item, index) => (
+                products?.map((item, index) => (
                   <ProductListItem
                     navigation={navigation}
                     deleteHandler={deleteProductHandler}
@@ -107,7 +108,7 @@ const AdminPanel = ({ navigation }) => {
                     stock={item.stock}
                     name={item.name}
                     category={item.category}
-                    imgSrc={item.images[0].url}
+                    imgSrc={item.images[0]?.url}
                   />
                 ))}
             </View>
