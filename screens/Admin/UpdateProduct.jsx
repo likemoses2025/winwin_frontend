@@ -11,39 +11,52 @@ import {
 import Loader from "../../components/Loader";
 import { Button, TextInput } from "react-native-paper";
 import SelectComponent from "../../components/SelectComponent";
+import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
 import { useIsFocused } from "@react-navigation/native";
-import { categories } from "../Home";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductDetails } from "../../redux/actions/productAction";
+import { updateProduct } from "../../redux/actions/otherAction";
 
 const UpdateProduct = ({ navigation, route }) => {
   const isFocused = useIsFocused();
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
 
-  const product = {};
-  const loading = false;
-  const loadingOther = false;
-
-  const images = [
-    {
-      _id: "dljfsld12",
-      url: "https://res.cloudinary.com/moses23/image/upload/v1681037643/dyyhx82ruo0gueoefrgp.png",
-    },
-    {
-      _id: "dlkjflsd3dsfg",
-      url: "https://res.cloudinary.com/moses23/image/upload/v1681038939/dscr5jhdy6agyveptjhy.png",
-    },
-  ];
+  const { product, loading } = useSelector((state) => state.product);
 
   const [id] = useState(route.params.id);
+  const [no, setNo] = useState("");
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [code, setCode] = useState("");
   const [price, setPrice] = useState("");
-  const [stock, setStock] = useState("");
-  const [category, setCategory] = useState("봉지면");
-  const [categoryID, setCategoryID] = useState("");
+  const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
+
+  useSetCategories(setCategories, isFocused);
 
   const submitHandler = () => {
-    console.log(name, description, price, stock, category);
+    dispatch(updateProduct(id, no, name, code, price, category));
   };
+
+  const loadingOther = useMessageAndErrorOther(
+    dispatch,
+    navigation,
+    "adminpanel"
+  );
+
+  useEffect(() => {
+    dispatch(getProductDetails(id));
+  }, [dispatch, id, isFocused]);
+
+  useEffect(() => {
+    if (product) {
+      setNo(product.no);
+      setName(product.name);
+      setCode(product.code);
+      setPrice(String(product.price));
+      setCategory(product.category);
+    }
+  }, [product]);
 
   return (
     <>
@@ -81,7 +94,7 @@ const UpdateProduct = ({ navigation, route }) => {
                 onPress={() =>
                   navigation.navigate("productimages", {
                     id,
-                    images: images,
+                    images: product.images,
                   })
                 }
                 textColor={colors.color1}
@@ -91,15 +104,21 @@ const UpdateProduct = ({ navigation, route }) => {
 
               <TextInput
                 {...inputOptions}
+                placeholder="No"
+                value={no}
+                onChangeText={setNo}
+              />
+              <TextInput
+                {...inputOptions}
                 placeholder="Name"
                 value={name}
                 onChangeText={setName}
               />
               <TextInput
                 {...inputOptions}
-                placeholder="Description"
-                value={description}
-                onChangeText={setDescription}
+                placeholder="Code"
+                value={code}
+                onChangeText={setCode}
               />
 
               <TextInput
@@ -108,13 +127,6 @@ const UpdateProduct = ({ navigation, route }) => {
                 keyboardType="number-pad"
                 value={price}
                 onChangeText={setPrice}
-              />
-              <TextInput
-                {...inputOptions}
-                placeholder="Stock"
-                value={stock}
-                keyboardType="number-pad"
-                onChangeText={setStock}
               />
 
               <Text
@@ -149,7 +161,6 @@ const UpdateProduct = ({ navigation, route }) => {
 
       <SelectComponent
         categories={categories}
-        setCategoryID={setCategoryID}
         setCategory={setCategory}
         visible={visible}
         setVisible={setVisible}

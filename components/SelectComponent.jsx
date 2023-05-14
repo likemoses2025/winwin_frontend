@@ -28,7 +28,7 @@ const SelectComponent = ({ visible, setVisible, setCategory, categories }) => {
             icon={"close"}
           />
         </TouchableOpacity>
-        <Headline style={styles.heading}> Select a Category</Headline>
+        <Headline style={styles.heading}> 제품유형 선택하기</Headline>
         <ScrollView>
           {categories.map((i) => (
             <Text
