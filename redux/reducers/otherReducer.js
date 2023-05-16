@@ -2,6 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 
 export const otherReducer = createReducer({}, (builder) => {
   builder
+    // Request
     .addCase("changePasswordRequest", (state) => {
       state.loading = true;
     })
@@ -11,6 +12,7 @@ export const otherReducer = createReducer({}, (builder) => {
     .addCase("updatePicRequest", (state) => {
       state.loading = true;
     })
+    // Success
     .addCase("changePasswordSuccess", (state, action) => {
       state.loading = false;
       state.message = action.payload;
@@ -23,6 +25,7 @@ export const otherReducer = createReducer({}, (builder) => {
       state.loading = false;
       state.message = action.payload;
     })
+    // Failure
     .addCase("changePasswordFailure", (state, action) => {
       state.loading = false;
       state.error = action.payload;
@@ -35,7 +38,7 @@ export const otherReducer = createReducer({}, (builder) => {
       state.loading = false;
       state.error = action.payload;
     });
-
+  // ETC
   builder.addCase("clearError", (state, action) => {
     state.error = null;
   });

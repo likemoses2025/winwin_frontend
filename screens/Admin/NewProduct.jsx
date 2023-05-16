@@ -13,7 +13,7 @@ import SelectComponent from "../../components/SelectComponent";
 import { useIsFocused } from "@react-navigation/native";
 import mime from "mime";
 import { useDispatch } from "react-redux";
-import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
+import { useMessageAndErrorProduct, useSetCategories } from "../../utils/hooks";
 import { createProduct } from "../../redux/actions/productAction";
 
 const NewProduct = ({ navigation, route }) => {
@@ -31,13 +31,11 @@ const NewProduct = ({ navigation, route }) => {
   const [categories, setCategories] = useState([]);
 
   useSetCategories(setCategories, isFocused);
-  const loading = useMessageAndErrorOther(dispatch, navigation, "adminpanel");
 
   const disableBtnCondition =
     !no || !name || !code || !price || !image || !category;
 
   const submitHandler = () => {
-    console.log("category: " + category);
     const myForm = new FormData();
     myForm.append("no", no);
     myForm.append("name", name);
@@ -54,6 +52,13 @@ const NewProduct = ({ navigation, route }) => {
 
     dispatch(createProduct(myForm));
   };
+
+  const loading = useMessageAndErrorProduct(
+    dispatch,
+    navigation,
+    "adminpanel",
+    null
+  );
 
   useEffect(() => {
     if (route.params?.image) setImage(route.params.image);

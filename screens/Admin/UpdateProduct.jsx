@@ -1,6 +1,15 @@
-import { View, Text, ScrollView } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
+import { Button, TextInput } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
+import Loader from "../../components/Loader";
+import SelectComponent from "../../components/SelectComponent";
+import {
+  getProductDetails,
+  updateProduct,
+} from "../../redux/actions/productAction";
 import {
   colors,
   defaultStyle,
@@ -8,14 +17,7 @@ import {
   inputOptions,
   inputStyling,
 } from "../../styles/styles";
-import Loader from "../../components/Loader";
-import { Button, TextInput } from "react-native-paper";
-import SelectComponent from "../../components/SelectComponent";
-import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
-import { useIsFocused } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import { getProductDetails } from "../../redux/actions/productAction";
-import { updateProduct } from "../../redux/actions/otherAction";
+import { useMessageAndErrorProduct, useSetCategories } from "../../utils/hooks";
 
 const UpdateProduct = ({ navigation, route }) => {
   const isFocused = useIsFocused();
@@ -38,7 +40,7 @@ const UpdateProduct = ({ navigation, route }) => {
     dispatch(updateProduct(id, no, name, code, price, category));
   };
 
-  const loadingOther = useMessageAndErrorOther(
+  const loadingOther = useMessageAndErrorProduct(
     dispatch,
     navigation,
     "adminpanel"
@@ -50,7 +52,7 @@ const UpdateProduct = ({ navigation, route }) => {
 
   useEffect(() => {
     if (product) {
-      setNo(product.no);
+      setNo(String(product.no));
       setName(product.name);
       setCode(product.code);
       setPrice(String(product.price));
