@@ -7,17 +7,15 @@ import Header from "../../components/Header";
 import Loader from "../../components/Loader";
 import SelectComponent from "../../components/SelectComponent";
 import {
-  getProductDetails,
-  updateProduct,
-} from "../../redux/actions/productAction";
-import {
   colors,
   defaultStyle,
   formHeading,
   inputOptions,
   inputStyling,
 } from "../../styles/styles";
-import { useMessageAndErrorProduct, useSetCategories } from "../../utils/hooks";
+import { getProductDetails } from "../../redux/actions/productAction";
+import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
+import { updateProduct } from "../../redux/actions/otherAction";
 
 const UpdateProduct = ({ navigation, route }) => {
   const isFocused = useIsFocused();
@@ -40,7 +38,7 @@ const UpdateProduct = ({ navigation, route }) => {
     dispatch(updateProduct(id, no, name, code, price, category));
   };
 
-  const loadingOther = useMessageAndErrorProduct(
+  const loadingOther = useMessageAndErrorOther(
     dispatch,
     navigation,
     "adminpanel"
@@ -154,7 +152,7 @@ const UpdateProduct = ({ navigation, route }) => {
                 loading={loadingOther}
                 disabled={loadingOther}
               >
-                Update
+                업데이트 하기
               </Button>
             </View>
           </ScrollView>

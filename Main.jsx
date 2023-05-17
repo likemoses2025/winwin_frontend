@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
 import Toast from "react-native-toast-message";
 import AdminOrders from "./screens/Admin/AdminOrders";
-import AdminPanel from "./screens/Admin/AdminPanel";
 import Categories from "./screens/Admin/Categories";
 import NewProduct from "./screens/Admin/NewProduct";
 import ProductImages from "./screens/Admin/ProductImages";
@@ -26,6 +25,7 @@ import Verify from "./screens/Verify";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./redux/actions/userAction";
 import OrderCreate from "./screens/OrderCreate";
+import AdminPanel from "./screens/Admin/AdminPanel";
 
 const Stack = createNativeStackNavigator();
 

@@ -10,5 +10,3 @@ export const store = configureStore({
     product: productReducer,
   },
 });
-
-export const server = "https://winwin-server.onrender.com/api/v1";

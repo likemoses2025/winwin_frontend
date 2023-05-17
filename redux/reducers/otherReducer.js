@@ -12,6 +12,21 @@ export const otherReducer = createReducer({}, (builder) => {
     .addCase("updatePicRequest", (state) => {
       state.loading = true;
     })
+    .addCase("createProductRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("updateProductRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("addProductImageRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("deleteProductImageRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("deleteProductAndImageRequest", (state) => {
+      state.loading = true;
+    })
     // Success
     .addCase("changePasswordSuccess", (state, action) => {
       state.loading = false;
@@ -25,6 +40,28 @@ export const otherReducer = createReducer({}, (builder) => {
       state.loading = false;
       state.message = action.payload;
     })
+    .addCase("createProductSuccess", (state, action) => {
+      state.loading = false;
+      state.products = action.payload.products;
+      state.inStock = action.payload.inStock;
+      state.outOfStock = action.payload.outOfStock;
+    })
+    .addCase("updateProductSuccess", (state, action) => {
+      state.loading = false;
+      state.product = action.payload.product;
+    })
+    .addCase("addProductImageSuccess", (state, action) => {
+      state.loading = false;
+      state.product = action.payload.product;
+    })
+    .addCase("deleteProductImageSuccess", (state, action) => {
+      state.loading = false;
+      state.product = action.payload.product;
+    })
+    .addCase("deleteProductAndImageSuccess", (state, action) => {
+      state.loading = false;
+      state.product = action.payload.product;
+    })
     // Failure
     .addCase("changePasswordFailure", (state, action) => {
       state.loading = false;
@@ -35,6 +72,26 @@ export const otherReducer = createReducer({}, (builder) => {
       state.error = action.payload;
     })
     .addCase("updatePicFailure", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("createProductFailure", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("updateProductFailure", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("addProductImageFailure", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("deleteProductImageFailure", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("deleteProductAndImageFailure", (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

@@ -10,13 +10,14 @@ import {
 } from "../../styles/styles";
 import { Avatar, Button, TextInput } from "react-native-paper";
 import SelectComponent from "../../components/SelectComponent";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import mime from "mime";
 import { useDispatch } from "react-redux";
-import { useMessageAndErrorProduct, useSetCategories } from "../../utils/hooks";
-import { createProduct } from "../../redux/actions/productAction";
+import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
+import { createProduct } from "../../redux/actions/otherAction";
 
-const NewProduct = ({ navigation, route }) => {
+const NewProduct = ({ route }) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
@@ -53,7 +54,7 @@ const NewProduct = ({ navigation, route }) => {
     dispatch(createProduct(myForm));
   };
 
-  const loading = useMessageAndErrorProduct(
+  const loading = useMessageAndErrorOther(
     dispatch,
     navigation,
     "adminpanel",
