@@ -52,6 +52,22 @@ export const getAdminProducts = () => async (dispatch) => {
   }
 };
 
+export const getOrderProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: "getOrderProductsRequest" });
+    const { data } = await axios.get(`${server}/product/admin`, {
+      withCredentials: true,
+    });
+    console.log("productAction : Working 2");
+    dispatch({ type: "getOrderProductsSuccess", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "getOrderProductsFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: "getProductDetailsRequest" });

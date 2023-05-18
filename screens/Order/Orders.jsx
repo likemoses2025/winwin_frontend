@@ -1,10 +1,10 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import { colors, defaultStyle, formHeading } from "../styles/styles";
-import Header from "../components/Header";
-import Loader from "../components/Loader";
+import { colors, defaultStyle, formHeading } from "../../styles/styles";
+import Header from "../../components/Header";
+import Loader from "../../components/Loader";
 import { Avatar, Button, Headline } from "react-native-paper";
-import OrderItem from "../components/OrderItem";
+import OrderItem from "../../components/OrderItem";
 import { useIsFocused } from "@react-navigation/native";
 
 export const orders = [

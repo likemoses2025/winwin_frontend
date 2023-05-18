@@ -14,6 +14,9 @@ export const productReducer = createReducer(
       .addCase("getAdminProductsRequest", (state) => {
         state.loading = true;
       })
+      .addCase("getOrderProductsRequest", (state) => {
+        state.loading = true;
+      })
       .addCase("getProductDetailsRequest", (state) => {
         state.loading = true;
       })
@@ -33,6 +36,10 @@ export const productReducer = createReducer(
         state.inStock = action.payload.inStock;
         state.outOfStock = action.payload.outOfStock;
       })
+      .addCase("getOrderProductsSuccess", (state, action) => {
+        state.loading = false;
+        state.products = action.payload.products;
+      })
       .addCase("getProductDetailsSuccess", (state, action) => {
         state.loading = false;
         state.product = action.payload;
@@ -48,6 +55,10 @@ export const productReducer = createReducer(
         state.error = action.payload;
       })
       .addCase("getAdminProductsFailure", (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase("getOrderProductsFailure", (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

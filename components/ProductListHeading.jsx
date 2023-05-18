@@ -9,7 +9,6 @@ const ProductListHeading = () => {
       <Text style={styles.text}>Price</Text>
       <Text style={{ ...styles.text, width: null, maxWidth: 120 }}>Name</Text>
       <Text style={{ ...styles.text, width: 65 }}>Category</Text>
-      <Text style={styles.text}>Stock</Text>
     </View>
   );
 };

@@ -6,7 +6,7 @@ import Loader from "../../components/Loader";
 import OrderItem from "../../components/OrderItem";
 import { useIsFocused } from "@react-navigation/native";
 import { Headline } from "react-native-paper";
-import { orders } from "../Orders";
+import { orders } from "../Order/Orders";
 
 const AdminOrders = ({ navigation }) => {
   const isFocused = useIsFocused();

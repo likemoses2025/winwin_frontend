@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { useSelector } from "react-redux";
 import { loadUser } from "../redux/actions/userAction";
-import { getAdminProducts } from "../redux/actions/productAction";
+import {
+  getAdminProducts,
+  getOrderProducts,
+} from "../redux/actions/productAction";
 
 const server = process.env.API_URL;
 
@@ -112,4 +115,19 @@ export const useAdminProduct = (dispatch, isFocused) => {
   }, [dispatch, isFocused, error]);
 
   return { products, inStock, outOfStock, loading };
+};
+
+export const useGetOrderProducts = (dispatch, isFocused) => {
+  console.log("Hooks Working 1");
+  const { products, error, loading } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    if (error) {
+      Toast.show({ type: "error", text1: error });
+      dispatch({ type: "clearError" });
+    }
+    dispatch(getOrderProducts());
+  }, [dispatch, isFocused, error]);
+
+  return { products, loading };
 };

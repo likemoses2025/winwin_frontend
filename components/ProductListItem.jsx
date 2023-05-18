@@ -69,16 +69,6 @@ const ProductListItem = ({
           >
             {category}
           </Text>
-
-          <Text
-            style={{
-              width: 40,
-              color: colors.color2,
-            }}
-            numberOfLines={1}
-          >
-            {stock}
-          </Text>
         </View>
       </TouchableOpacity>
 

@@ -1,12 +1,12 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import { colors, defaultStyle } from "../styles/styles";
-import Header from "../components/Header";
-import Heading from "../components/Heading";
-import { cartItems } from "./Cart";
-import ConfirmOrderItem from "../components/ConfirmOrderItem";
+import Heading from "../../components/Heading";
+import ConfirmOrderItem from "../../components/ConfirmOrderItem";
 import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-paper";
+import { defaultStyle, colors } from "../../styles/styles";
+import Header from "../../components/Header";
+import { cartItems } from "../Cart";
 
 const ConfirmOrder = () => {
   const navigation = useNavigation();
