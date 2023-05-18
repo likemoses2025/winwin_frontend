@@ -58,6 +58,7 @@ export const useMessageAndErrorOther = (
         type: "error",
         text1: error,
       });
+
       dispatch({
         type: "clearError",
       });

@@ -42,25 +42,23 @@ export const otherReducer = createReducer({}, (builder) => {
     })
     .addCase("createProductSuccess", (state, action) => {
       state.loading = false;
-      state.products = action.payload.products;
-      state.inStock = action.payload.inStock;
-      state.outOfStock = action.payload.outOfStock;
+      state.message = action.payload;
     })
     .addCase("updateProductSuccess", (state, action) => {
       state.loading = false;
-      state.product = action.payload.product;
+      state.message = action.payload;
     })
     .addCase("addProductImageSuccess", (state, action) => {
       state.loading = false;
-      state.product = action.payload.product;
+      state.message = action.payload;
     })
     .addCase("deleteProductImageSuccess", (state, action) => {
       state.loading = false;
-      state.product = action.payload.product;
+      state.message = action.payload;
     })
     .addCase("deleteProductAndImageSuccess", (state, action) => {
       state.loading = false;
-      state.product = action.payload.product;
+      state.message = action.payload;
     })
     // Failure
     .addCase("changePasswordFailure", (state, action) => {

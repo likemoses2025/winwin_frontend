@@ -1,6 +1,12 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
+import mime from "mime";
 import React, { useEffect, useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Avatar, Button, TextInput } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import Header from "../../components/Header";
+import SelectComponent from "../../components/SelectComponent";
+import { createProduct } from "../../redux/actions/otherAction";
 import {
   colors,
   defaultStyle,
@@ -8,16 +14,9 @@ import {
   inputOptions,
   inputStyling,
 } from "../../styles/styles";
-import { Avatar, Button, TextInput } from "react-native-paper";
-import SelectComponent from "../../components/SelectComponent";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
-import mime from "mime";
-import { useDispatch } from "react-redux";
 import { useMessageAndErrorOther, useSetCategories } from "../../utils/hooks";
-import { createProduct } from "../../redux/actions/otherAction";
 
-const NewProduct = ({ route }) => {
-  const navigation = useNavigation();
+const NewProduct = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 

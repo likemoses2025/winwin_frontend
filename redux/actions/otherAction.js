@@ -148,7 +148,7 @@ export const updateProduct =
 
       dispatch({
         type: "updateProductSuccess",
-        payload: data.product,
+        payload: data.message,
       });
     } catch (error) {
       dispatch({
