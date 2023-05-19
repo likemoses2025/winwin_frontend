@@ -118,8 +118,9 @@ export const useAdminProduct = (dispatch, isFocused) => {
 };
 
 export const useGetOrderProducts = (dispatch, isFocused) => {
-  console.log("Hooks Working 1");
-  const { products, error, loading } = useSelector((state) => state.product);
+  const { orderProducts, error, loading } = useSelector(
+    (state) => state.product
+  );
 
   useEffect(() => {
     if (error) {
@@ -129,5 +130,5 @@ export const useGetOrderProducts = (dispatch, isFocused) => {
     dispatch(getOrderProducts());
   }, [dispatch, isFocused, error]);
 
-  return { products, loading };
+  return { orderProducts, loading };
 };

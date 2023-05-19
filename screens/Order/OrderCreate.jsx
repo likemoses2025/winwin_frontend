@@ -12,18 +12,27 @@ import {
 } from "../../styles/styles";
 import { useGetOrderProducts } from "../../utils/hooks";
 import { useIsFocused } from "@react-navigation/native";
+import ProductForm from "../../components/ProductForm";
 
 // https://github.com/moses1206/OrderProject/blob/main/client/src/components/views/Order/OrderForm.js
 
 const OrderCreate = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const { products, loading } = useGetOrderProducts(dispatch, isFocused);
-  const [quantity, setQuantity] = useState("");
+  const { orderProducts, loading } = useGetOrderProducts(dispatch, isFocused);
 
-  const handleChangeQuantity = (quantity) => {
-    setQuantity(Number(quantity));
+  console.log("orderProducts" + orderProducts);
+
+  const [orderList, setOrderList] = useState([]);
+
+  const changeOrderQuantity = (code, quantity) => {
+    const NewOrderList = orderProducts.map((item) =>
+      item.code === code ? { ...item, quantity } : item
+    );
+    setOrderList(NewOrderList);
   };
+
+  console.log("orderList: " + JSON.stringify(orderList));
 
   return (
     <View
@@ -52,15 +61,12 @@ const OrderCreate = () => {
           flexWrap: "wrap",
         }}
       >
-        {products.map((product) => (
-          <TextInput
-            key={product.no}
-            style={{ fontSize: 12, width: 120 }}
-            label={product.name}
-            labelStyle={{ bottom: "auto" }}
-            mode="outlined"
-            value={quantity}
-            onChangeText={(text) => setQuantity(text)}
+        {orderProducts.map((item, index) => (
+          <ProductForm
+            key={item.code}
+            index={index}
+            product={item}
+            changeQuantity={changeOrderQuantity}
           />
         ))}
       </ScrollView>

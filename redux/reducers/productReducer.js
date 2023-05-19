@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 export const productReducer = createReducer(
-  { products: [], product: {} },
+  { products: [], product: {}, orderProducts: [] },
   (builder) => {
     builder
       // Request
@@ -38,7 +38,7 @@ export const productReducer = createReducer(
       })
       .addCase("getOrderProductsSuccess", (state, action) => {
         state.loading = false;
-        state.products = action.payload.products;
+        state.orderProducts = action.payload.products;
       })
       .addCase("getProductDetailsSuccess", (state, action) => {
         state.loading = false;

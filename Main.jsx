@@ -47,7 +47,8 @@ const Main = () => {
         <Stack.Group>
           <Stack.Screen
             name="home"
-            component={Home}
+            // component={Home}
+            component={OrderCreate}
             options={{ headerShown: false }}
           />
           <Stack.Screen
