@@ -1,4 +1,3 @@
-import { useIsFocused } from "@react-navigation/native";
 import React, { useState } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { Button } from "react-native-paper";
@@ -8,28 +7,29 @@ import Heading from "../../components/Heading";
 import Loader from "../../components/Loader";
 import ProductForm from "../../components/ProductForm";
 import { colors, defaultStyle } from "../../styles/styles";
-import { useGetOrderProducts } from "../../utils/hooks";
 
-const OrderCreate = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const isFocused = useIsFocused();
-  const { orderedItems } = useSelector((state) => state.order);
-  const { orderProducts, loading } = useGetOrderProducts(dispatch, isFocused);
+const OrderCreate = ({ route, navigation }) => {
+  const { orderProducts } = useSelector((state) => state.product);
   const [orderList, setOrderList] = useState(orderProducts);
-  const [filteredOrderList, setFilteredOrderList] = useState();
+  const [loading, setLoading] = useState(true);
+
+  console.log("Route.name :" + route.name);
+
+  setTimeout(() => setLoading(false), 3000); // 2초 후 로딩을 false로 설정
 
   const changeQuantity = (code, quantity) => {
     const NewOrderList = orderList.map((item) =>
       item.code === code ? { ...item, quantity } : item
     );
     setOrderList(NewOrderList);
-    const filteredData = orderList.filter((item) => item.quantity > 0);
-    setFilteredOrderList(filteredData);
   };
 
   const orderCreateHandler = () => {
-    // orderedItems.orderItem.push(filteredOrderList);
-    navigation.navigate("confirmorder");
+    const orderItems = orderList.filter((item) => item.quantity > 0);
+    navigation.navigate("confirmorder", {
+      orderItems,
+      orderCreate: true,
+    });
   };
 
   return (

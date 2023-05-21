@@ -5,16 +5,24 @@ import ConfirmOrderItem from "../../components/ConfirmOrderItem";
 import Header from "../../components/Header";
 import Heading from "../../components/Heading";
 import { colors, defaultStyle } from "../../styles/styles";
-import { cartItems } from "../Cart";
+
+const nf = new Intl.NumberFormat();
 
 const ConfirmOrder = ({ route, navigation }) => {
-  const itemsPrice = 45000;
-  const shippingCharges = 200;
-  const tax = 0.18 * itemsPrice;
-  const totalAmount = itemsPrice * shippingCharges + tax;
+  const { orderItems } = route.params;
+  console.log("orderItems" + orderItems);
 
   console.log("Route.params" + JSON.stringify(route.params));
   console.log("ConfirmOrder Route" + JSON.stringify(route));
+
+  const totalAmount = orderItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+
+  const totalBox = orderItems.reduce((acc, item) => acc + item.quantity, 0);
+
+  // 결제하기 누르면 orderItem 및 전체 state 초기화
 
   return (
     <View style={defaultStyle}>
@@ -26,10 +34,9 @@ const ConfirmOrder = ({ route, navigation }) => {
       />
       <View style={{ paddingVertical: 20, flex: 1, elevation: 1 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {cartItems.map((i) => (
+          {orderItems.map((i) => (
             <ConfirmOrderItem
-              key={i.product}
-              image={i.image}
+              key={i.code}
               name={i.name}
               quantity={i.quantity}
               price={i.price}
@@ -37,29 +44,51 @@ const ConfirmOrder = ({ route, navigation }) => {
           ))}
         </ScrollView>
       </View>
-      <PriceTag heading={"제품합계"} value={itemsPrice} />
-      <PriceTag heading={"배송비"} value={shippingCharges} />
-      <PriceTag heading={"세금"} value={tax} />
-      <PriceTag heading={"전체합계"} value={totalAmount} />
 
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("payment", {
-            itemsPrice,
-            shippingCharges,
-            tax,
-            totalAmount,
-          })
-        }
+      <PriceTag heading={"전체수량"} value={totalBox} />
+      <PriceTag heading={"전체합계"} value={totalAmount} />
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: 10,
+        }}
       >
-        <Button
-          icon={"chevron-right"}
-          style={{ backgroundColor: colors.color3, padding: 5, margin: 10 }}
-          textColor={colors.color2}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ordercreate", { orderItems })}
         >
-          결제하기
-        </Button>
-      </TouchableOpacity>
+          <Button
+            icon={"chevron-left"}
+            style={{
+              backgroundColor: colors.color1,
+              padding: 5,
+              marginTop: 10,
+              width: "100%",
+            }}
+            textColor={colors.color2}
+          >
+            뒤로가기
+          </Button>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("payment", {
+              itemsPrice,
+              shippingCharges,
+              tax,
+              totalAmount,
+            })
+          }
+        >
+          <Button
+            icon={"chevron-right"}
+            style={{ backgroundColor: colors.color3, padding: 5, margin: 10 }}
+            textColor={colors.color2}
+          >
+            결제하기
+          </Button>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -74,7 +103,10 @@ const PriceTag = ({ heading, value }) => (
     }}
   >
     <Text style={{ fontWeight: "800" }}>{heading}</Text>
-    <Text>{value}원</Text>
+    <Text>
+      {nf.format(value)}
+      {heading === "전체수량" ? "박스" : "원"}
+    </Text>
   </View>
 );
 

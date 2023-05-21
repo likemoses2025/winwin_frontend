@@ -1,7 +1,9 @@
 import { View, Text, Image } from "react-native";
 import React from "react";
 
-const ConfirmOrderItem = ({ price, quantity, image, name }) => {
+const nf = new Intl.NumberFormat();
+
+const ConfirmOrderItem = ({ price, quantity, name }) => {
   return (
     <View
       style={{
@@ -11,15 +13,11 @@ const ConfirmOrderItem = ({ price, quantity, image, name }) => {
         margin: 10,
       }}
     >
-      <Image
-        source={{ uri: image }}
-        style={{ width: 50, height: 50, resizeMode: "contain" }}
-      />
       <Text>{name}</Text>
       <View style={{ flexDirection: "row" }}>
         <Text>{quantity}</Text>
         <Text style={{ marginHorizontal: 10 }}>x</Text>
-        <Text>{price}원</Text>
+        <Text>{nf.format(price)}원</Text>
       </View>
     </View>
   );

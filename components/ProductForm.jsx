@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TextInput } from "react-native-paper";
 
 const ProductForm = ({ product, changeQuantity }) => {
-  const [quantity, setQuantity] = useState("");
+  const [quantity, setQuantity] = useState(null);
 
   useEffect(() => {
     changeQuantity(product.code, parseInt(quantity));
@@ -11,7 +11,7 @@ const ProductForm = ({ product, changeQuantity }) => {
 
   return (
     <TextInput
-      key={product.no}
+      key={product.code}
       keyboardType="numeric"
       style={{ fontSize: 12, width: 120 }}
       label={product.name}

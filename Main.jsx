@@ -26,6 +26,7 @@ import { useDispatch } from "react-redux";
 import { loadUser } from "./redux/actions/userAction";
 import OrderCreate from "./screens/Order/OrderCreate";
 import AdminPanel from "./screens/Admin/AdminPanel";
+import { getOrderProducts } from "./redux/actions/productAction";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(loadUser());
+    dispatch(getOrderProducts());
   }, [dispatch]);
 
   return (
