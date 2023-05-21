@@ -54,17 +54,12 @@ export const getAdminProducts = () => async (dispatch) => {
 
 export const getOrderProducts = () => async (dispatch) => {
   try {
-    console.log("Working 1");
     dispatch({ type: "getOrderProductsRequest" });
     const { data } = await axios.get(`${server}/product/order`, {
       withCredentials: true,
     });
-    console.log("Working 2" + JSON.stringify(data));
-
     dispatch({ type: "getOrderProductsSuccess", payload: data });
-    console.log("Working 3");
   } catch (error) {
-    console.log("Working error", error);
     dispatch({
       type: "getOrderProductsFailure",
       payload: error.response.data.message,

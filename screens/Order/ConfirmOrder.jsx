@@ -1,20 +1,20 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import Heading from "../../components/Heading";
-import ConfirmOrderItem from "../../components/ConfirmOrderItem";
-import { useNavigation } from "@react-navigation/native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Button } from "react-native-paper";
-import { defaultStyle, colors } from "../../styles/styles";
+import ConfirmOrderItem from "../../components/ConfirmOrderItem";
 import Header from "../../components/Header";
+import Heading from "../../components/Heading";
+import { colors, defaultStyle } from "../../styles/styles";
 import { cartItems } from "../Cart";
 
-const ConfirmOrder = () => {
-  const navigation = useNavigation();
-
+const ConfirmOrder = ({ route, navigation }) => {
   const itemsPrice = 45000;
   const shippingCharges = 200;
   const tax = 0.18 * itemsPrice;
   const totalAmount = itemsPrice * shippingCharges + tax;
+
+  console.log("Route.params" + JSON.stringify(route.params));
+  console.log("ConfirmOrder Route" + JSON.stringify(route));
 
   return (
     <View style={defaultStyle}>

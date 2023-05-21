@@ -1,39 +1,36 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useState } from "react";
+import { ScrollView, TouchableOpacity, View } from "react-native";
+import { Button } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Heading from "../../components/Heading";
-import { Button, TextInput } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  colors,
-  defaultStyle,
-  formHeading,
-  inputStyling,
-} from "../../styles/styles";
-import { useGetOrderProducts } from "../../utils/hooks";
-import { useIsFocused } from "@react-navigation/native";
-import ProductForm from "../../components/ProductForm";
 import Loader from "../../components/Loader";
-
-// https://github.com/moses1206/OrderProject/blob/main/client/src/components/views/Order/OrderForm.js
+import ProductForm from "../../components/ProductForm";
+import { colors, defaultStyle } from "../../styles/styles";
+import { useGetOrderProducts } from "../../utils/hooks";
 
 const OrderCreate = ({ navigation }) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
+  const { orderedItems } = useSelector((state) => state.order);
   const { orderProducts, loading } = useGetOrderProducts(dispatch, isFocused);
-
-  console.log("orderProducts" + orderProducts);
-
   const [orderList, setOrderList] = useState(orderProducts);
+  const [filteredOrderList, setFilteredOrderList] = useState();
 
   const changeQuantity = (code, quantity) => {
     const NewOrderList = orderList.map((item) =>
       item.code === code ? { ...item, quantity } : item
     );
     setOrderList(NewOrderList);
+    const filteredData = orderList.filter((item) => item.quantity > 0);
+    setFilteredOrderList(filteredData);
   };
 
-  console.log("orderList: " + JSON.stringify(orderList));
+  const orderCreateHandler = () => {
+    // orderedItems.orderItem.push(filteredOrderList);
+    navigation.navigate("confirmorder");
+  };
 
   return (
     <View
@@ -43,7 +40,7 @@ const OrderCreate = ({ navigation }) => {
         backgroundColor: colors.color5,
       }}
     >
-      <Header back={true} />
+      <Header back={false} />
 
       {loading ? (
         <Loader />
@@ -65,9 +62,11 @@ const OrderCreate = ({ navigation }) => {
               flexDirection: "row",
               justifyContent: "space-between",
               flexWrap: "wrap",
+              paddingBottom: 10,
+              paddingTop: 10,
             }}
           >
-            {orderProducts.map((item, index) => (
+            {orderList.map((item, index) => (
               <ProductForm
                 key={item.code}
                 index={index}
@@ -83,10 +82,7 @@ const OrderCreate = ({ navigation }) => {
               width: "100%",
             }}
           >
-            <Button
-              textColor={colors.color2}
-              onPress={() => navigation.navigate("confirmorder")}
-            >
+            <Button textColor={colors.color2} onPress={orderCreateHandler}>
               다음
             </Button>
           </TouchableOpacity>

@@ -105,7 +105,7 @@ const Orders = ({ navigation }) => {
 
       {/* Heading */}
       <View style={{ marginBottom: 20, paddingTop: 70 }}>
-        <Text style={formHeading}>Orders</Text>
+        <Text style={formHeading}>주문내역</Text>
       </View>
 
       {loading ? (
