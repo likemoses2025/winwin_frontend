@@ -8,7 +8,7 @@ const Heading = ({ text1, text2, containerStyle }) => {
       <Text
         style={{
           fontSize: 25,
-          fontWeight: "900",
+          fontWeight: "700",
         }}
       >
         {text2}

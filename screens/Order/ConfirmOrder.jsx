@@ -1,19 +1,39 @@
 import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Button } from "react-native-paper";
 import ConfirmOrderItem from "../../components/ConfirmOrderItem";
 import Header from "../../components/Header";
 import Heading from "../../components/Heading";
 import { colors, defaultStyle } from "../../styles/styles";
-
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Avatar } from "react-native-paper";
+import { useEffect } from "react";
 const nf = new Intl.NumberFormat();
 
 const ConfirmOrder = ({ route, navigation }) => {
   const { orderItems } = route.params;
-  console.log("orderItems" + orderItems);
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+  const [formattedDate, setFormattedDate] = useState("");
 
-  console.log("Route.params" + JSON.stringify(route.params));
-  console.log("ConfirmOrder Route" + JSON.stringify(route));
+  const handleDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    const koreaDate = currentDate.toLocaleDateString("ko-KR");
+    setShowPicker(Platform.OS === "ios");
+    setDate(currentDate);
+    setFormattedDate(koreaDate);
+  };
+
+  const showDatePicker = () => {
+    setShowPicker(true);
+  };
 
   const totalAmount = orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -24,29 +44,118 @@ const ConfirmOrder = ({ route, navigation }) => {
 
   // 결제하기 누르면 orderItem 및 전체 state 초기화
 
+  useEffect(() => {
+    const tomorrow = new Date(date.setDate(date.getDate() + 1));
+    const formattedTomorrow = tomorrow.toLocaleDateString("ko-KR");
+    setFormattedDate(formattedTomorrow);
+  }, [date]);
+
   return (
     <View style={defaultStyle}>
       <Header back={true} />
       <Heading
-        containerStyle={{ paddingTop: 70 }}
-        text1="주문"
-        text2="확인하기"
+        containerStyle={{
+          paddingTop: 40,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        text2="주문 상세내역"
       />
       <View style={{ paddingVertical: 20, flex: 1, elevation: 1 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              borderWidth: 0.3,
+              padding: 10,
+              borderRadius: 10,
+              width: "45%",
+            }}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <View>
+                <Text>배송날짜</Text>
+                <Text style={{ fontSize: 16 }}>{formattedDate}</Text>
+              </View>
+              <TouchableOpacity
+                onPress={showDatePicker}
+                style={{ justifyContent: "center", padding: 10 }}
+              >
+                <Avatar.Icon icon="calendar-month-outline" size={30} />
+              </TouchableOpacity>
+              {/* <Button mode="text" onPress={showDatePicker}>
+            </Button> */}
+              {showPicker && (
+                <DateTimePicker
+                  value={date}
+                  mode="date"
+                  display="default"
+                  locale="ko-KR" // Set the locale to Korean
+                  onChange={handleDateChange}
+                />
+              )}
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+
+              alignItems: "center",
+              borderWidth: 0.3,
+              padding: 10,
+              borderRadius: 10,
+              width: "45%",
+            }}
+          >
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Text>배송장소</Text>
+                <Text style={{ fontSize: 16 }}>창고</Text>
+              </View>
+
+              <TouchableOpacity
+                style={{ justifyContent: "center", alignItems: "center" }}
+              >
+                <Avatar.Icon icon="truck-cargo-container" size={30} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
         <ScrollView showsVerticalScrollIndicator={false}>
-          {orderItems.map((i) => (
-            <ConfirmOrderItem
-              key={i.code}
-              name={i.name}
-              quantity={i.quantity}
-              price={i.price}
-            />
-          ))}
+          <View style={{ borderWidth: 0.3, marginTop: 30, borderRadius: 10 }}>
+            {orderItems.map((i) => (
+              <ConfirmOrderItem
+                key={i.code}
+                name={i.name}
+                quantity={i.quantity}
+                price={i.price}
+              />
+            ))}
+          </View>
         </ScrollView>
       </View>
-
-      <PriceTag heading={"전체수량"} value={totalBox} />
-      <PriceTag heading={"전체합계"} value={totalAmount} />
+      <View
+        style={{
+          borderColor: colors.color1,
+          borderWidth: 1,
+          marginTop: 30,
+          borderRadius: 10,
+          padding: 10,
+        }}
+      >
+        <PriceTag heading={"전체수량"} value={totalBox} />
+        <PriceTag heading={"전체합계"} value={totalAmount} />
+      </View>
       <View
         style={{
           flexDirection: "row",
