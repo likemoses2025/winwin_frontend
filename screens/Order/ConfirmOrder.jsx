@@ -16,13 +16,21 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Avatar } from "react-native-paper";
 import { useSelector } from "react-redux";
 
+import TableComponent from "../../components/TableComponent";
+
 const nf = new Intl.NumberFormat();
 
 const ConfirmOrder = ({ route, navigation }) => {
+  const { user } = useSelector((state) => state.user);
   const { orderItems } = route.params;
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
-  const { user } = useSelector((state) => state.user);
+
+  const totalAmount = orderItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+  const totalBox = orderItems.reduce((acc, item) => acc + item.quantity, 0);
   console.log("User: " + JSON.stringify(user));
 
   const handleDateChange = (event, selectedDate) => {
@@ -36,12 +44,6 @@ const ConfirmOrder = ({ route, navigation }) => {
   };
 
   const orderSubmitHandler = () => {};
-
-  const totalAmount = orderItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-  const totalBox = orderItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <View style={defaultStyle}>
@@ -143,18 +145,9 @@ const ConfirmOrder = ({ route, navigation }) => {
           </View>
         </View>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ borderWidth: 0.3, marginTop: 30, borderRadius: 10 }}>
-            {orderItems.map((i) => (
-              <ConfirmOrderItem
-                key={i.code}
-                name={i.name}
-                quantity={i.quantity}
-                price={i.price}
-              />
-            ))}
-          </View>
-        </ScrollView>
+        {/******* Table *******/}
+
+        <TableComponent orderItems={orderItems} />
       </View>
       <View
         style={{
