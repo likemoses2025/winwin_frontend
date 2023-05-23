@@ -50,7 +50,6 @@ const Main = () => {
           <Stack.Screen
             name="home"
             component={Home}
-            // component={OrderCreate}
             options={{ headerShown: false }}
           />
           <Stack.Screen

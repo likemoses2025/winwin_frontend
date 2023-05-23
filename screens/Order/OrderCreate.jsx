@@ -13,9 +13,7 @@ const OrderCreate = ({ route, navigation }) => {
   const [orderList, setOrderList] = useState(orderProducts);
   const [loading, setLoading] = useState(true);
 
-  console.log("Route.name :" + route.name);
-
-  setTimeout(() => setLoading(false), 3000); // 2초 후 로딩을 false로 설정
+  setTimeout(() => setLoading(false), 3000); // 3초 후 로딩을 false로 설정
 
   const changeQuantity = (code, quantity) => {
     const NewOrderList = orderList.map((item) =>

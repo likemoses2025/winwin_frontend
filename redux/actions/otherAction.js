@@ -225,3 +225,28 @@ export const deleteProductAndImage = (id) => async (dispatch) => {
     });
   }
 };
+
+export const createOrder = (orderObj) => async (dispatch) => {
+  try {
+    console.log("Working 1");
+    dispatch({ type: "createOrderRequest" });
+
+    const { data } = await axios.post(`${server}/order/new`, orderObj, {
+      withCredentials: true,
+    });
+    console.log("Working 2");
+
+    dispatch({
+      type: "createOrderSuccess",
+      payload: data.message,
+    });
+    console.log("Working 3");
+  } catch (error) {
+    console.log("Working Error: " + error);
+    console.log("Working Error: " + error.message);
+    dispatch({
+      type: "createOrderFailure",
+      payload: error.response.data.message,
+    });
+  }
+};

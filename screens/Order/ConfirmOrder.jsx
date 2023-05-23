@@ -14,13 +14,15 @@ import Heading from "../../components/Heading";
 import { colors, defaultStyle } from "../../styles/styles";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Avatar } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import TableComponent from "../../components/TableComponent";
+import { createOrder } from "../../redux/actions/otherAction";
 
 const nf = new Intl.NumberFormat();
 
 const ConfirmOrder = ({ route, navigation }) => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { orderItems } = route.params;
   const [date, setDate] = useState(new Date());
@@ -31,7 +33,6 @@ const ConfirmOrder = ({ route, navigation }) => {
     0
   );
   const totalBox = orderItems.reduce((acc, item) => acc + item.quantity, 0);
-  console.log("User: " + JSON.stringify(user));
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -43,7 +44,19 @@ const ConfirmOrder = ({ route, navigation }) => {
     setShowPicker(true);
   };
 
-  const orderSubmitHandler = () => {};
+  const orderSubmitHandler = () => {
+    const orderObj = {
+      team: user.team,
+      deliveryDate: date,
+      deliveryPlace: "창고",
+      totalBox: totalBox,
+      totalAmount: totalAmount,
+      orderItems: JSON.stringify(orderItems),
+    };
+
+    console.log("orderObj: " + JSON.stringify(orderObj));
+    dispatch(createOrder(orderObj));
+  };
 
   return (
     <View style={defaultStyle}>
