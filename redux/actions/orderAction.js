@@ -1,26 +1,22 @@
 import axios from "axios";
 const server = process.env.API_URL;
 
-export const getUserOrders = () => async (dispatch) => {
+export const getDealerOrders = () => async (dispatch) => {
   try {
-    console.log("Working 11");
-    dispatch({ type: "getUserOrdersRequest" });
+    console.log("Working 1");
+    dispatch({ type: "getDealerOrdersRequest" });
 
-    const { data } = await axios.get(`${server}/order/userOrder`, {
+    console.log("Working 2");
+    const { data } = await axios.get(`${server}/order/dealer`, {
       withCredentials: true,
     });
-    console.log("Working 22", data);
 
-    dispatch({
-      type: "getUserOrdersSuccess",
-      payload: data,
-    });
-    console.log("Working 33");
+    console.log("Working 3");
+    dispatch({ type: "getDealerOrdersSuccess", payload: data });
   } catch (error) {
-    console.log("Working Error");
-    console.log(error);
+    console.log("Working Error: " + error);
     dispatch({
-      type: "getUserOrdersFailure",
+      type: "getDealerOrdersFailure",
       payload: error.response.data.message,
     });
   }

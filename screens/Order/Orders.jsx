@@ -1,19 +1,26 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import React from "react";
-import { colors, defaultStyle, formHeading } from "../../styles/styles";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useEffect } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Avatar, Headline } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
-import { Avatar, Button, Headline } from "react-native-paper";
 import OrderItem from "../../components/OrderItem";
-import { useIsFocused } from "@react-navigation/native";
-import { useGetUserOrders } from "../../utils/hooks";
-import { useDispatch } from "react-redux";
+import { colors, defaultStyle, formHeading } from "../../styles/styles";
+import { useGetDealerOrders } from "../../utils/hooks";
+import { getDealerOrders } from "../../redux/actions/orderAction";
 
 const Orders = ({ navigation }) => {
-  const isFocused = useIsFocused();
+  const { dealerOrders, loading } = useSelector((state) => state.order);
   const dispatch = useDispatch();
-  const { userOrders, loading } = useGetUserOrders(dispatch, isFocused);
-  console.log("UserOrders: " + JSON.stringify(userOrders));
+  const isFocused = useIsFocused();
+  // const { dealerOrders, loading } = useGetDealerOrders(dispatch, isFocused);
+
+  console.log("DealerOrders: " + dealerOrders);
+
+  useEffect(() => {
+    getDealerOrders();
+  }, []);
 
   const updateOrderHandler = () => {};
 
@@ -41,8 +48,8 @@ const Orders = ({ navigation }) => {
           }}
         >
           <ScrollView showsVerticalScrollIndicator={false}>
-            {userOrders.length > 0 ? (
-              userOrders.map((item, index) => (
+            {dealerOrders.length >= 0 ? (
+              dealerOrders.map((item, index) => (
                 <OrderItem
                   key={item._id}
                   id={item._id}
