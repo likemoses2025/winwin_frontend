@@ -1,23 +1,14 @@
-import React from "react";
-import { useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { Button } from "react-native-paper";
-import ConfirmOrderItem from "../../components/ConfirmOrderItem";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import React, { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import { Avatar, Button } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Heading from "../../components/Heading";
 import { colors, defaultStyle } from "../../styles/styles";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { Avatar } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
-
 import TableComponent from "../../components/TableComponent";
 import { createOrder } from "../../redux/actions/otherAction";
+import { useMessageAndErrorOther } from "../../utils/hooks";
 
 const nf = new Intl.NumberFormat();
 
@@ -27,6 +18,7 @@ const ConfirmOrder = ({ route, navigation }) => {
   const { orderItems } = route.params;
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
+  const loading = useMessageAndErrorOther(dispatch, navigation, "orders");
 
   const totalAmount = orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -54,7 +46,6 @@ const ConfirmOrder = ({ route, navigation }) => {
       orderItems: JSON.stringify(orderItems),
     };
 
-    console.log("orderObj: " + JSON.stringify(orderObj));
     dispatch(createOrder(orderObj));
   };
 
@@ -203,6 +194,7 @@ const ConfirmOrder = ({ route, navigation }) => {
             icon={"chevron-right"}
             style={{ backgroundColor: colors.color1, padding: 5, margin: 10 }}
             textColor={colors.color2}
+            loading={loading}
           >
             주문하기
           </Button>

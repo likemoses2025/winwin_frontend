@@ -6,91 +6,14 @@ import Loader from "../../components/Loader";
 import { Avatar, Button, Headline } from "react-native-paper";
 import OrderItem from "../../components/OrderItem";
 import { useIsFocused } from "@react-navigation/native";
-
-export const orders = [
-  {
-    _id: "fkldjsfljd1",
-    team: "경북팀",
-    storeName: "치복상사",
-    deliveryDate: "2023-03-04",
-    deliveryPlace: "창고",
-    orderItems: [
-      {
-        name: "삼양라면(멀티)",
-        code: 303257,
-        price: 25625,
-        quantity: 45,
-      },
-      {
-        name: "불닭볶음면(멀티)",
-        code: 303357,
-        price: 30625,
-        quantity: 50,
-      },
-    ],
-    user: "kdjfldj1fod",
-    totalBox: 352,
-    totalSum: 2520000,
-    orderStatus: "Processing",
-    createdAt: "12-2-2023T23423",
-  },
-  {
-    _id: "fkldjsfljd12",
-    team: "경북팀",
-    storeName: "경북상사",
-    deliveryDate: "2023-03-04",
-    deliveryPlace: "핵교",
-    orderItems: [
-      {
-        name: "삼양라면(멀티)",
-        code: 303257,
-        price: 25625,
-        quantity: 45,
-      },
-      {
-        name: "불닭볶음면(멀티)",
-        code: 303357,
-        price: 30625,
-        quantity: 50,
-      },
-    ],
-    user: "kdjfldj1fod",
-    totalBox: 352,
-    totalSum: 2520000,
-    orderStatus: "Processing",
-    createdAt: "12-2-2023T23423",
-  },
-  {
-    _id: "fkldjsfljd13",
-    team: "경북팀",
-    storeName: "비산상회",
-    deliveryDate: "2023-03-04",
-    deliveryPlace: "공장",
-    orderItems: [
-      {
-        name: "삼양라면(멀티)",
-        code: 303257,
-        price: 25625,
-        quantity: 45,
-      },
-      {
-        name: "불닭볶음면(멀티)",
-        code: 303357,
-        price: 30625,
-        quantity: 50,
-      },
-    ],
-    user: "kdjfldj1fod",
-    totalBox: 352,
-    totalSum: 2520000,
-    orderStatus: "Processing",
-    createdAt: "12-2-2023T23423",
-  },
-];
+import { useGetUserOrders } from "../../utils/hooks";
+import { useDispatch } from "react-redux";
 
 const Orders = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const loading = false;
+  const dispatch = useDispatch();
+  const { userOrders, loading } = useGetUserOrders(dispatch, isFocused);
+  console.log("UserOrders: " + JSON.stringify(userOrders));
 
   const updateOrderHandler = () => {};
 
@@ -118,8 +41,8 @@ const Orders = ({ navigation }) => {
           }}
         >
           <ScrollView showsVerticalScrollIndicator={false}>
-            {orders.length > 0 ? (
-              orders.map((item, index) => (
+            {userOrders.length > 0 ? (
+              userOrders.map((item, index) => (
                 <OrderItem
                   key={item._id}
                   id={item._id}

@@ -7,6 +7,7 @@ import {
   getAdminProducts,
   getOrderProducts,
 } from "../redux/actions/productAction";
+import { getUserOrders } from "../redux/actions/orderAction";
 
 const server = process.env.API_URL;
 
@@ -132,4 +133,20 @@ export const useGetOrderProducts = (dispatch, isFocused) => {
   }, [dispatch, isFocused, error]);
 
   return { orderProducts, loading };
+};
+
+export const useGetUserOrders = (dispatch, isFocused) => {
+  const { userOrders, error, loading } = useSelector((state) => state.order);
+  console.log("Working 1");
+  useEffect(() => {
+    if (error) {
+      Toast.show({ type: "error", text1: error });
+      dispatch({ type: "clearError" });
+    }
+    console.log("Working 2");
+    dispatch(getUserOrders());
+  }, [dispatch, isFocused, error]);
+  console.log("Working 3");
+
+  return { userOrders, loading };
 };
