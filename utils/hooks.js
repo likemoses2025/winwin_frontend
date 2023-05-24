@@ -1,13 +1,13 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { useSelector } from "react-redux";
-import { loadUser } from "../redux/actions/userAction";
 import {
   getAdminProducts,
   getOrderProducts,
 } from "../redux/actions/productAction";
 import { getUserOrders } from "../redux/actions/orderAction";
+import { loadUser } from "../redux/actions/userAction";
 
 const server = process.env.API_URL;
 
