@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { useSelector } from "react-redux";
-import { getDealerOrders } from "../redux/actions/orderAction";
 import {
   getAdminProducts,
   getOrderProducts,
@@ -113,6 +112,7 @@ export const useAdminProduct = (dispatch, isFocused) => {
       Toast.show({ type: "error", text1: error });
       dispatch({ type: "clearError" });
     }
+
     dispatch(getAdminProducts());
   }, [dispatch, isFocused, error]);
 
@@ -135,23 +135,33 @@ export const useGetOrderProducts = (dispatch, isFocused) => {
   return { orderProducts, loading };
 };
 
-export const useGetDealerOrders = (dispatch, isFocused) => {
-  console.log("Working 1000");
-  const { dealerOrders, error, loading } = useSelector((state) => state.order);
-  console.log("Working 2000");
+export const useGetOrders = (isFocused, dealer = false) => {
+  console.log("useGetOrder Start");
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    if (error) {
-      Toast.show({ type: "error", text1: error });
-      dispatch({ type: "clearError" });
-    }
+    setLoading(true);
+    console.log("Why Not Working?");
+    axios
+      .get(`${server}/order/${dealer ? "my" : "team"}`)
+      .then((res) => {
+        setOrders(res.data.orders);
+        setLoading(false);
+      })
+      .catch((e) => {
+        Toast.show({
+          type: "error",
+          text1: e.response.data.message,
+        });
+        setLoading(false);
+      });
+  }, [isFocused]);
 
-    console.log("Working 3000");
-    dispatch(getDealerOrders());
-    console.log("Working 4000");
-  }, [dispatch, isFocused, error]);
-  console.log("Working 5000");
-
-  return { dealerOrders, loading };
+  return {
+    loading,
+    orders,
+  };
 };
 
 export const useGetTeamOrders = (isFocused, isAdmin = false) => {

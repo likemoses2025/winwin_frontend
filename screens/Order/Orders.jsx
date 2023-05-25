@@ -1,26 +1,18 @@
 import { useIsFocused } from "@react-navigation/native";
-import React, { useEffect } from "react";
+import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Headline } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
 import OrderItem from "../../components/OrderItem";
 import { colors, defaultStyle, formHeading } from "../../styles/styles";
-import { useGetDealerOrders } from "../../utils/hooks";
-import { getDealerOrders } from "../../redux/actions/orderAction";
+import { useGetOrders } from "../../utils/hooks";
 
 const Orders = ({ navigation }) => {
-  const { dealerOrders, loading } = useSelector((state) => state.order);
-  const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  // const { dealerOrders, loading } = useGetDealerOrders(dispatch, isFocused);
+  const { orders, loading } = useGetOrders(isFocused, true);
 
-  console.log("DealerOrders: " + dealerOrders);
-
-  useEffect(() => {
-    getDealerOrders();
-  }, []);
+  console.log("orders: " + orders);
 
   const updateOrderHandler = () => {};
 
@@ -48,8 +40,8 @@ const Orders = ({ navigation }) => {
           }}
         >
           <ScrollView showsVerticalScrollIndicator={false}>
-            {dealerOrders.length >= 0 ? (
-              dealerOrders.map((item, index) => (
+            {orders.length >= 0 ? (
+              orders.map((item, index) => (
                 <OrderItem
                   key={item._id}
                   id={item._id}
