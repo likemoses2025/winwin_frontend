@@ -20,6 +20,8 @@ const ConfirmOrder = ({ route, navigation }) => {
   const [showPicker, setShowPicker] = useState(false);
   const loading = useMessageAndErrorOther(dispatch, navigation, "orders");
 
+  console.log("route" + JSON.stringify(route));
+
   const totalAmount = orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0

@@ -11,10 +11,11 @@ import { useGetOrders } from "../../utils/hooks";
 const Orders = ({ navigation }) => {
   const isFocused = useIsFocused();
   const { orders, loading } = useGetOrders(isFocused, true);
-
-  console.log("orders: " + orders);
+  // const orderObj = JSON.parse(orders);
 
   const updateOrderHandler = () => {};
+
+  const deleteHandler = () => {};
 
   return (
     <View
@@ -47,15 +48,15 @@ const Orders = ({ navigation }) => {
                   id={item._id}
                   i={index}
                   team={item.team}
-                  storeName={item.storeName}
+                  storeName={item.user.storeName}
                   status={item.orderStatus}
                   user={item.user}
-                  orderedOn={item.createdAt.split("T")[0]}
+                  orderedOn={item.createdAt}
                   deliveryPlace={item.deliveryPlace}
                   deliveryDate={item.deliveryDate}
                   totalBox={item.totalBox}
-                  totalSum={item.totalSum}
-                  updateHandler={updateOrderHandler}
+                  totalAmount={item.totalAmount}
+                  orderItems={item.orderItems}
                 />
               ))
             ) : (

@@ -2,6 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import { colors } from "../styles/styles";
+import { useNavigation } from "@react-navigation/native";
+
+const nf = new Intl.NumberFormat();
 
 const OrderItem = ({
   id,
@@ -10,13 +13,15 @@ const OrderItem = ({
   deliveryPlace,
   storeName,
   totalBox,
-  totalSum,
-  orderedOn,
-  updateHandler,
-  admin = true,
+  totalAmount,
   loading,
+  orderItems,
   i = 0,
 }) => {
+  const navigation = useNavigation();
+  const date = new Date(deliveryDate);
+  const krTime = new Date(date.getTime() + 60 * 1000);
+
   return (
     <View
       style={{
@@ -30,34 +35,58 @@ const OrderItem = ({
           backgroundColor: i % 2 === 0 ? colors.color3 : colors.color1,
         }}
       >
-        배송요청 날짜 - #{deliveryDate}
+        @{storeName + " " + " " + " " + " " + " " + " "} 배송날짜 -{" "}
+        {deliveryDate.split("T")[0]}
       </Text>
 
-      <TextBox title={"팀명"} value={team} i={i} />
-      <TextBox title={"점명"} value={storeName} i={i} />
-      <TextBox title={"배송장소"} value={deliveryPlace} i={i} />
-      <TextBox title={"박스합계"} value={totalBox} i={i} />
-      <TextBox title={"금액합계"} value={totalSum} i={i} />
-      <TextBox title={"생성시간"} value={orderedOn} i={i} />
+      <View
+        style={{
+          paddingHorizontal: 20,
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <View>
+          <TextBox title={"팀명"} value={team} i={i} />
+          <TextBox title={"장소"} value={deliveryPlace} i={i} />
+        </View>
+        <View>
+          <TextBox title={"박스"} value={nf.format(totalBox)} i={i} />
+          <TextBox title={"금액"} value={nf.format(totalAmount)} i={i} />
+        </View>
+      </View>
+      <View
+        style={{
+          paddingLeft: 20,
+        }}
+      >
+        <TextBox title={"생성일"} value={krTime.toLocaleString()} i={i} />
+      </View>
 
-      {admin && (
-        <Button
-          icon={"update"}
-          mode={"contained"}
-          textColor={i % 2 === 0 ? colors.color2 : colors.color3}
-          style={{
-            width: 120,
-            alignSelf: "center",
-            marginTop: 10,
-            backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
-          }}
-          onPress={() => updateHandler(id)}
-          loading={loading}
-          disabled={loading}
-        >
-          Update
-        </Button>
-      )}
+      <Button
+        icon={"clipboard-text-search-outline"}
+        mode={"contained"}
+        textColor={i % 2 === 0 ? colors.color2 : colors.color3}
+        style={{
+          width: 120,
+          alignSelf: "center",
+          marginTop: 10,
+          backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
+        }}
+        // onPress={() =>
+        // navigation.navigate("confirmorder", {
+        //   id,
+        //   totalAmount,
+        //   totalBox,
+        //   orderItems: orderItems,
+        //   name: "OrderItems",
+        // })
+        // }
+        loading={loading}
+        disabled={loading}
+      >
+        확인하기
+      </Button>
     </View>
   );
 };
@@ -69,10 +98,11 @@ const TextBox = ({ title, value, i }) => (
       color: i % 2 === 0 ? colors.color3 : colors.color2,
     }}
   >
-    <Text style={{ fontWeight: "900" }}>{title} - </Text>
+    <Text style={{ fontWeight: "900" }}>{title} : </Text>
+
     {value}
-    {title === "금액합계" ? "원" : ""}
-    {title === "박스합계" ? "박스" : ""}
+    {title === "금액" ? "원" : ""}
+    {title === "박스" ? "박스" : ""}
   </Text>
 );
 
@@ -86,7 +116,7 @@ const styles = StyleSheet.create({
   text: {
     color: colors.color2,
     fontSize: 16,
-    fontWeight: "900",
+    fontWeight: "700",
     marginHorizontal: -20,
     marginTop: -20,
     marginBottom: 10,
