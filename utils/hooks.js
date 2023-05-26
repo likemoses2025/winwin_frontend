@@ -136,13 +136,12 @@ export const useGetOrderProducts = (dispatch, isFocused) => {
 };
 
 export const useGetOrders = (isFocused, dealer = false) => {
-  console.log("useGetOrder Start");
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    console.log("Why Not Working?");
+
     axios
       .get(`${server}/order/${dealer ? "my" : "team"}`)
       .then((res) => {

@@ -20,8 +20,6 @@ const ConfirmOrder = ({ route, navigation }) => {
   const [showPicker, setShowPicker] = useState(false);
   const loading = useMessageAndErrorOther(dispatch, navigation, "orders");
 
-  console.log("route" + JSON.stringify(route));
-
   const totalAmount = orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
@@ -171,7 +169,7 @@ const ConfirmOrder = ({ route, navigation }) => {
       <View
         style={{
           flexDirection: "row",
-          justifyContent: "space-between",
+          justifyContent: "space-evenly",
           marginTop: 10,
         }}
       >
@@ -181,7 +179,10 @@ const ConfirmOrder = ({ route, navigation }) => {
           <Button
             icon={"chevron-left"}
             style={{
-              backgroundColor: colors.color3,
+              backgroundColor:
+                route.params.name === "editOrder"
+                  ? colors.color1
+                  : colors.color3,
               padding: 5,
               marginTop: 10,
               width: "100%",
@@ -191,16 +192,18 @@ const ConfirmOrder = ({ route, navigation }) => {
             수정하기
           </Button>
         </TouchableOpacity>
-        <TouchableOpacity onPress={orderSubmitHandler}>
-          <Button
-            icon={"chevron-right"}
-            style={{ backgroundColor: colors.color1, padding: 5, margin: 10 }}
-            textColor={colors.color2}
-            loading={loading}
-          >
-            주문하기
-          </Button>
-        </TouchableOpacity>
+        {route.params.name !== "editOrder" && (
+          <TouchableOpacity onPress={orderSubmitHandler}>
+            <Button
+              icon={"chevron-right"}
+              style={{ backgroundColor: colors.color1, padding: 5, margin: 10 }}
+              textColor={colors.color2}
+              loading={loading}
+            >
+              주문하기
+            </Button>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

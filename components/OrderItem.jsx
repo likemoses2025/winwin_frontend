@@ -73,15 +73,15 @@ const OrderItem = ({
           marginTop: 10,
           backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
         }}
-        // onPress={() =>
-        // navigation.navigate("confirmorder", {
-        //   id,
-        //   totalAmount,
-        //   totalBox,
-        //   orderItems: orderItems,
-        //   name: "OrderItems",
-        // })
-        // }
+        onPress={() =>
+          navigation.navigate("confirmorder", {
+            id,
+            totalAmount,
+            totalBox,
+            orderItems: JSON.parse(orderItems),
+            name: "editOrder",
+          })
+        }
         loading={loading}
         disabled={loading}
       >
