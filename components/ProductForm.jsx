@@ -3,9 +3,7 @@ import { TextInput } from "react-native-paper";
 import { colors } from "../styles/styles";
 
 const ProductForm = ({ product, changeQuantity }) => {
-  const [quantity, setQuantity] = useState(
-    product.quantity ? product.quantity : null
-  );
+  const [quantity, setQuantity] = useState("");
 
   useEffect(() => {
     changeQuantity(product.code, parseInt(quantity));
