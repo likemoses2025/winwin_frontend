@@ -7,7 +7,7 @@ import Header from "../../components/Header";
 import Heading from "../../components/Heading";
 import { colors, defaultStyle } from "../../styles/styles";
 import TableComponent from "../../components/TableComponent";
-import { createOrder } from "../../redux/actions/otherAction";
+import { createOrder, updateOrder } from "../../redux/actions/otherAction";
 import { useMessageAndErrorOther } from "../../utils/hooks";
 
 const nf = new Intl.NumberFormat();
@@ -15,10 +15,15 @@ const nf = new Intl.NumberFormat();
 const ConfirmOrder = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { orderItems } = route.params;
+  const orderItems = route.params?.orderItems;
+  const id = route.params?.id;
+  const deliveryDate = route.params?.deliveryDate;
+  const deliveryPlace = route.params?.deliveryPlace;
+  const name = route.params?.name;
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
+
   const loading = useMessageAndErrorOther(dispatch, navigation, "orders");
 
   const totalAmount = orderItems.reduce(
@@ -50,6 +55,19 @@ const ConfirmOrder = ({ route, navigation }) => {
     dispatch(createOrder(orderObj));
   };
 
+  const updateSubmitHandler = () => {
+    const orderObj = {
+      team: user.team,
+      deliveryDate: date,
+      deliveryPlace: "창고",
+      totalBox: totalBox,
+      totalAmount: totalAmount,
+      orderItems: JSON.stringify(orderItems),
+    };
+
+    dispatch(updateOrder(id, orderObj));
+  };
+
   return (
     <View style={defaultStyle}>
       <Header back={true} />
@@ -59,7 +77,7 @@ const ConfirmOrder = ({ route, navigation }) => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        text2="주문 상세내역"
+        text2="주문 확인"
       />
       <View style={{ paddingVertical: 20, flex: 1 }}>
         <View
@@ -175,45 +193,39 @@ const ConfirmOrder = ({ route, navigation }) => {
         }}
       >
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("ordercreate", {
-              id,
-              team,
-              deliveryDate,
-              deliveryPlace,
-              orderItems,
-              name,
-            })
-          }
+          onPress={() => navigation.navigate("orderupdate", { orderItems })}
         >
           <Button
-            icon={"chevron-left"}
+            icon={"chevron-right"}
             style={{
-              backgroundColor:
-                route.params.name === "editOrder"
-                  ? colors.color1
-                  : colors.color3,
+              backgroundColor: colors.color3,
               padding: 5,
-              marginTop: 10,
-              width: "100%",
+              margin: 10,
             }}
             textColor={colors.color2}
+            loading={loading}
           >
             수정하기
           </Button>
         </TouchableOpacity>
-        {route.params.name !== "editOrder" && (
-          <TouchableOpacity onPress={orderSubmitHandler}>
-            <Button
-              icon={"chevron-right"}
-              style={{ backgroundColor: colors.color1, padding: 5, margin: 10 }}
-              textColor={colors.color2}
-              loading={loading}
-            >
-              주문하기
-            </Button>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          onPress={
+            name === "orderCreate" ? orderSubmitHandler : updateSubmitHandler
+          }
+        >
+          <Button
+            icon={"chevron-right"}
+            style={{
+              backgroundColor: colors.color1,
+              padding: 5,
+              margin: 10,
+            }}
+            textColor={colors.color2}
+            loading={loading}
+          >
+            {name === "orderCreate" ? "주문하기" : "등록하기"}
+          </Button>
+        </TouchableOpacity>
       </View>
     </View>
   );

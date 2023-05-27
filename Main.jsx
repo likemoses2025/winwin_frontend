@@ -27,6 +27,7 @@ import { loadUser } from "./redux/actions/userAction";
 import OrderCreate from "./screens/Order/OrderCreate";
 import AdminPanel from "./screens/Admin/AdminPanel";
 import { getOrderProducts } from "./redux/actions/productAction";
+import OrderUpdate from "./screens/Order/OrderUpdate";
 
 const Stack = createNativeStackNavigator();
 
@@ -156,6 +157,11 @@ const Main = () => {
           <Stack.Screen
             name="ordercreate"
             component={OrderCreate}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="orderupdate"
+            component={OrderUpdate}
             options={{ headerShown: false }}
           />
         </Stack.Group>

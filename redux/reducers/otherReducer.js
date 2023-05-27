@@ -30,6 +30,9 @@ export const otherReducer = createReducer({}, (builder) => {
     .addCase("createOrderRequest", (state) => {
       state.loading = true;
     })
+    .addCase("updateOrderRequest", (state) => {
+      state.loading = true;
+    })
     // Success
     .addCase("changePasswordSuccess", (state, action) => {
       state.loading = false;
@@ -67,6 +70,10 @@ export const otherReducer = createReducer({}, (builder) => {
       state.loading = false;
       state.message = action.payload;
     })
+    .addCase("updateOrderSuccess", (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    })
     // Failure
     .addCase("changePasswordFailure", (state, action) => {
       state.loading = false;
@@ -101,6 +108,10 @@ export const otherReducer = createReducer({}, (builder) => {
       state.error = action.payload;
     })
     .addCase("createOrderFailure", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("updateOrderFailure", (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

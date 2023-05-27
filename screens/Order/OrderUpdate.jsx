@@ -9,15 +9,25 @@ import Loader from "../../components/Loader";
 import ProductForm from "../../components/ProductForm";
 import { colors, defaultStyle } from "../../styles/styles";
 
-const OrderCreate = ({ route, navigation }) => {
+const OrderUpdate = ({ route, navigation }) => {
   const { orderProducts } = useSelector((state) => state.product);
-  const [orderList, setOrderList] = useState(orderProducts);
-  const [loading, setLoading] = useState(true);
-  // const { orderItems } = route.params?.orderItems;
+  const [orderList, setOrderList] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const { id, orderItems, deliveryDate, deliveryPlace } = route.params;
 
   setTimeout(() => setLoading(false), 2500); // 2.5초 후 로딩을 false로 설정
 
-  console.log("orderList 111 : " + JSON.stringify(orderList));
+  useEffect(() => {
+    const updatedArray = orderProducts.map((item) => {
+      const second = orderItems.find((s) => s.code === item.code);
+      if (second) {
+        return { ...item, quantity: second.quantity };
+      }
+      return item;
+    });
+    setOrderList(updatedArray);
+  }, [orderItems]);
 
   const changeQuantity = (code, quantity) => {
     const NewOrderList = orderList.map((item) =>
@@ -26,11 +36,14 @@ const OrderCreate = ({ route, navigation }) => {
     setOrderList(NewOrderList);
   };
 
-  const orderCreateHandler = () => {
+  const orderUpdateHandler = () => {
     const orderItems = orderList.filter((item) => item.quantity > 0);
     navigation.navigate("confirmorder", {
+      id,
       orderItems,
-      name: "orderCreate",
+      deliveryDate,
+      deliveryPlace,
+      name: "orderUpdate",
     });
   };
 
@@ -56,7 +69,7 @@ const OrderCreate = ({ route, navigation }) => {
               alignItems: "center",
             }}
           >
-            <Heading text1="주문하기" />
+            <Heading text1="주문 수정하기" />
           </View>
           <ScrollView
             contentContainerStyle={{
@@ -74,6 +87,9 @@ const OrderCreate = ({ route, navigation }) => {
                   key={item.code}
                   index={index}
                   item={item}
+                  orderProducts={orderProducts}
+                  orderItems={orderItems}
+                  setOrderList={setOrderList}
                   changeQuantity={changeQuantity}
                 />
               );
@@ -86,7 +102,7 @@ const OrderCreate = ({ route, navigation }) => {
               width: "100%",
             }}
           >
-            <Button textColor={colors.color2} onPress={orderCreateHandler}>
+            <Button textColor={colors.color2} onPress={orderUpdateHandler}>
               다음
             </Button>
           </TouchableOpacity>
@@ -96,4 +112,4 @@ const OrderCreate = ({ route, navigation }) => {
   );
 };
 
-export default OrderCreate;
+export default OrderUpdate;

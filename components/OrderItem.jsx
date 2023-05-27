@@ -82,7 +82,7 @@ const OrderItem = ({
             totalAmount,
             totalBox,
             orderItems: JSON.parse(orderItems),
-            name: "editOrder",
+            name: "orders",
           })
         }
         loading={loading}
