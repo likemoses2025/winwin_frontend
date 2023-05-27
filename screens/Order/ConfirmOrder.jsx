@@ -16,12 +16,10 @@ const ConfirmOrder = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { orderItems } = route.params;
+
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
   const loading = useMessageAndErrorOther(dispatch, navigation, "orders");
-
-  console.log("orderItems : " + JSON.stringify(orderItems));
-  console.log("orderItems._id : " + orderItems._id);
 
   const totalAmount = orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -178,7 +176,14 @@ const ConfirmOrder = ({ route, navigation }) => {
       >
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("ordercreate", { id: orderItems._id })
+            navigation.navigate("ordercreate", {
+              id,
+              team,
+              deliveryDate,
+              deliveryPlace,
+              orderItems,
+              name,
+            })
           }
         >
           <Button

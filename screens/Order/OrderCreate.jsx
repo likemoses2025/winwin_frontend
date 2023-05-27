@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 import { Button } from "react-native-paper";
 import { useSelector } from "react-redux";
@@ -12,10 +13,11 @@ const OrderCreate = ({ route, navigation }) => {
   const { orderProducts } = useSelector((state) => state.product);
   const [orderList, setOrderList] = useState(orderProducts);
   const [loading, setLoading] = useState(true);
-
-  console.log("id", route.params.id);
+  // const { orderItems } = route.params?.orderItems;
 
   setTimeout(() => setLoading(false), 2500); // 2.5초 후 로딩을 false로 설정
+
+  console.log("orderList 111 : " + JSON.stringify(orderList));
 
   const changeQuantity = (code, quantity) => {
     const NewOrderList = orderList.map((item) =>
@@ -24,13 +26,10 @@ const OrderCreate = ({ route, navigation }) => {
     setOrderList(NewOrderList);
   };
 
-  console.log("orderList : ", orderList);
-
   const orderCreateHandler = () => {
     const orderItems = orderList.filter((item) => item.quantity > 0);
     navigation.navigate("confirmorder", {
       orderItems,
-      orderCreate: true,
     });
   };
 
@@ -68,14 +67,16 @@ const OrderCreate = ({ route, navigation }) => {
               paddingTop: 10,
             }}
           >
-            {orderList.map((item, index) => (
-              <ProductForm
-                key={item.code}
-                index={index}
-                product={item}
-                changeQuantity={changeQuantity}
-              />
-            ))}
+            {orderList.map((item, index) => {
+              return (
+                <ProductForm
+                  key={item.code}
+                  index={index}
+                  item={item}
+                  changeQuantity={changeQuantity}
+                />
+              );
+            })}
           </ScrollView>
           <TouchableOpacity
             style={{

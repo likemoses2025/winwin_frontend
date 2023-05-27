@@ -76,6 +76,9 @@ const OrderItem = ({
         onPress={() =>
           navigation.navigate("confirmorder", {
             id,
+            team,
+            deliveryDate,
+            deliveryPlace,
             totalAmount,
             totalBox,
             orderItems: JSON.parse(orderItems),
