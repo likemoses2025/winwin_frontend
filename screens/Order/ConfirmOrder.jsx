@@ -10,24 +10,25 @@ import TableComponent from "../../components/TableComponent";
 import { createOrder, updateOrder } from "../../redux/actions/otherAction";
 import { useMessageAndErrorOther } from "../../utils/hooks";
 import { useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 
 const nf = new Intl.NumberFormat();
 
 const ConfirmOrder = ({ route, navigation }) => {
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const orderItems = route.params?.orderItems;
 
   const [id] = useState(route.params?.id);
   const [name] = useState(route.params?.name);
-  const [orderItems, setOrderItems] = useState(route.params?.orderItems);
+  // const [orderItems, setOrderItems] = useState(route.params?.orderItems);
   const [deliveryPlace, setDeliveryPlace] = useState(
     route.params?.deliveryPlace
   );
   const [deliveryDate, setDeliveryDate] = useState(route.params?.deliveryDate);
   const [totalAmount, setTotalAmount] = useState(route.params?.totalAmount);
   const [totalBox, setTotalBox] = useState(route.params?.totalBox);
-
-  console.log("confirm orderItems : " + JSON.stringify(orderItems));
 
   const [date, setDate] = useState(
     deliveryDate ? new Date(deliveryDate) : new Date()
@@ -39,9 +40,7 @@ const ConfirmOrder = ({ route, navigation }) => {
   useEffect(() => {
     setTotalAmount(amount);
     setTotalBox(box);
-    setDeliveryDate(date);
-    setOrderItems(route.params?.orderItems);
-  }, [amount, box, date, route.params.orderItems]);
+  }, [isFocused]);
 
   const amount = orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -59,7 +58,7 @@ const ConfirmOrder = ({ route, navigation }) => {
     setShowPicker(true);
   };
 
-  const orderSubmitHandler = () => {
+  const createOrderSubmitHandler = () => {
     const orderObj = {
       team: user.team,
       deliveryDate: deliveryDate,
@@ -69,10 +68,12 @@ const ConfirmOrder = ({ route, navigation }) => {
       orderItems: JSON.stringify(orderItems),
     };
 
+    console.log("Working orderSubmit");
+
     dispatch(createOrder(orderObj));
   };
 
-  const updateSubmitHandler = () => {
+  const updateOrderSubmitHandler = () => {
     const updateObj = {
       team: user.team,
       deliveryDate: date,
@@ -81,6 +82,8 @@ const ConfirmOrder = ({ route, navigation }) => {
       totalAmount: totalAmount,
       orderItems: JSON.stringify(orderItems),
     };
+
+    console.log("updateObj" + JSON.stringify(updateObj));
 
     dispatch(updateOrder(id, updateObj));
   };
@@ -234,7 +237,9 @@ const ConfirmOrder = ({ route, navigation }) => {
 
         <TouchableOpacity
           onPress={
-            name === "orderCreate" ? orderSubmitHandler : updateSubmitHandler
+            name === "orderCreate"
+              ? createOrderSubmitHandler
+              : updateOrderSubmitHandler
           }
         >
           <Button

@@ -251,12 +251,12 @@ export const updateOrder = (id, updateObj) => async (dispatch) => {
     dispatch({
       type: "updateOrderRequest",
     });
+    console.log("Working 1");
+    console.log("Update OBJ: " + JSON.stringify(updateObj));
 
     const { data } = await axios.put(
       `${server}/order/update/${id}`,
-      {
-        updateObj,
-      },
+      updateObj,
       {
         headers: {
           "Content-Type": "application/json",
@@ -265,11 +265,14 @@ export const updateOrder = (id, updateObj) => async (dispatch) => {
       }
     );
 
+    console.log("Working 2");
     dispatch({
       type: "updateOrderSuccess",
       payload: data.message,
     });
+    console.log("Working 3");
   } catch (error) {
+    console.log("Working Error", error);
     dispatch({
       type: "updateOrderFailure",
       payload: error?.response.data.message,

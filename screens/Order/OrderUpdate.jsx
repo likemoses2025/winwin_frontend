@@ -16,9 +16,6 @@ const OrderUpdate = ({ route, navigation }) => {
 
   const { id, orderItems } = route.params;
 
-  console.log("OrderUpdate orderItems: " + orderItems);
-  console.log("OrderUpdate orderList::: " + JSON.stringify(orderList));
-
   setTimeout(() => setLoading(false), 2500); // 2.5초 후 로딩을 false로 설정
 
   useEffect(() => {

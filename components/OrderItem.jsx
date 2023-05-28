@@ -63,33 +63,51 @@ const OrderItem = ({
         <TextBox title={"생성일"} value={krTime.toLocaleString()} i={i} />
       </View>
 
-      <Button
-        icon={"clipboard-text-search-outline"}
-        mode={"contained"}
-        textColor={i % 2 === 0 ? colors.color2 : colors.color3}
-        style={{
-          width: 120,
-          alignSelf: "center",
-          marginTop: 10,
-          backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
-        }}
-        onPress={() =>
-          navigation.navigate("confirmorder", {
-            id,
-            team,
-            deliveryDate,
-            deliveryPlace,
-            totalAmount,
-            totalBox,
-            orderItems: JSON.parse(orderItems),
-            name: "orders",
-          })
-        }
-        loading={loading}
-        disabled={loading}
-      >
-        확인하기
-      </Button>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Button
+          icon={"clipboard-text-search-outline"}
+          mode={"contained"}
+          textColor={i % 2 === 0 ? colors.color2 : colors.color3}
+          style={{
+            width: 120,
+            alignSelf: "center",
+            marginTop: 10,
+            backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
+          }}
+          onPress={() =>
+            navigation.navigate("confirmorder", {
+              id,
+              team,
+              deliveryDate,
+              deliveryPlace,
+              totalAmount,
+              totalBox,
+              orderItems: JSON.parse(orderItems),
+              name: "orders",
+            })
+          }
+          loading={loading}
+          disabled={loading}
+        >
+          확인하기
+        </Button>
+        <Button
+          icon={"clipboard-text-search-outline"}
+          mode={"contained"}
+          textColor={i % 2 === 0 ? colors.color2 : colors.color3}
+          style={{
+            width: 120,
+            alignSelf: "center",
+            marginTop: 10,
+            backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
+          }}
+          onPress={() => navigation.navigate("confirmorder", { id })}
+          loading={loading}
+          disabled={loading}
+        >
+          삭제하기
+        </Button>
+      </View>
     </View>
   );
 };
