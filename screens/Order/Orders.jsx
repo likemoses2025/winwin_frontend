@@ -13,8 +13,6 @@ const Orders = ({ navigation }) => {
   const { orders, loading } = useGetOrders(isFocused, true);
   // const orderObj = JSON.parse(orders);
 
-  const updateOrderHandler = () => {};
-
   const deleteHandler = () => {};
 
   return (

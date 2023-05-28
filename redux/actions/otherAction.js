@@ -246,13 +246,24 @@ export const createOrder = (orderObj) => async (dispatch) => {
   }
 };
 
-export const updateOrder = (id, orderObj) => async (dispatch) => {
+export const updateOrder = (id, updateObj) => async (dispatch) => {
   try {
-    dispatch({ type: "updateOrderRequest" });
+    dispatch({
+      type: "updateOrderRequest",
+    });
 
-    // const { data } = await axios.post(`${server}/order/new`, orderObj, {
-    //   withCredentials: true,
-    // });
+    const { data } = await axios.put(
+      `${server}/order/update/${id}`,
+      {
+        updateObj,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
 
     dispatch({
       type: "updateOrderSuccess",
@@ -261,7 +272,7 @@ export const updateOrder = (id, orderObj) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "updateOrderFailure",
-      payload: error.response.data.message,
+      payload: error?.response.data.message,
     });
   }
 };

@@ -9,28 +9,45 @@ import { colors, defaultStyle } from "../../styles/styles";
 import TableComponent from "../../components/TableComponent";
 import { createOrder, updateOrder } from "../../redux/actions/otherAction";
 import { useMessageAndErrorOther } from "../../utils/hooks";
+import { useEffect } from "react";
 
 const nf = new Intl.NumberFormat();
 
 const ConfirmOrder = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const orderItems = route.params?.orderItems;
-  const id = route.params?.id;
-  const deliveryDate = route.params?.deliveryDate;
-  const deliveryPlace = route.params?.deliveryPlace;
-  const name = route.params?.name;
 
-  const [date, setDate] = useState(new Date());
+  const [id] = useState(route.params?.id);
+  const [name] = useState(route.params?.name);
+  const [orderItems, setOrderItems] = useState(route.params?.orderItems);
+  const [deliveryPlace, setDeliveryPlace] = useState(
+    route.params?.deliveryPlace
+  );
+  const [deliveryDate, setDeliveryDate] = useState(route.params?.deliveryDate);
+  const [totalAmount, setTotalAmount] = useState(route.params?.totalAmount);
+  const [totalBox, setTotalBox] = useState(route.params?.totalBox);
+
+  console.log("confirm orderItems : " + JSON.stringify(orderItems));
+
+  const [date, setDate] = useState(
+    deliveryDate ? new Date(deliveryDate) : new Date()
+  );
   const [showPicker, setShowPicker] = useState(false);
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "orders");
 
-  const totalAmount = orderItems.reduce(
+  useEffect(() => {
+    setTotalAmount(amount);
+    setTotalBox(box);
+    setDeliveryDate(date);
+    setOrderItems(route.params?.orderItems);
+  }, [amount, box, date, route.params.orderItems]);
+
+  const amount = orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-  const totalBox = orderItems.reduce((acc, item) => acc + item.quantity, 0);
+  const box = orderItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -45,7 +62,7 @@ const ConfirmOrder = ({ route, navigation }) => {
   const orderSubmitHandler = () => {
     const orderObj = {
       team: user.team,
-      deliveryDate: date,
+      deliveryDate: deliveryDate,
       deliveryPlace: "창고",
       totalBox: totalBox,
       totalAmount: totalAmount,
@@ -56,7 +73,7 @@ const ConfirmOrder = ({ route, navigation }) => {
   };
 
   const updateSubmitHandler = () => {
-    const orderObj = {
+    const updateObj = {
       team: user.team,
       deliveryDate: date,
       deliveryPlace: "창고",
@@ -65,7 +82,7 @@ const ConfirmOrder = ({ route, navigation }) => {
       orderItems: JSON.stringify(orderItems),
     };
 
-    dispatch(updateOrder(id, orderObj));
+    dispatch(updateOrder(id, updateObj));
   };
 
   return (
@@ -169,7 +186,6 @@ const ConfirmOrder = ({ route, navigation }) => {
         </View>
 
         {/******* Table *******/}
-
         <TableComponent orderItems={orderItems} />
       </View>
       <View
@@ -192,22 +208,30 @@ const ConfirmOrder = ({ route, navigation }) => {
           marginTop: 10,
         }}
       >
-        <TouchableOpacity
-          onPress={() => navigation.navigate("orderupdate", { orderItems })}
-        >
-          <Button
-            icon={"chevron-right"}
-            style={{
-              backgroundColor: colors.color3,
-              padding: 5,
-              margin: 10,
-            }}
-            textColor={colors.color2}
-            loading={loading}
+        {name !== "orderCreate" && (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("orderupdate", {
+                id,
+                orderItems,
+              })
+            }
           >
-            수정하기
-          </Button>
-        </TouchableOpacity>
+            <Button
+              icon={"chevron-right"}
+              style={{
+                backgroundColor: colors.color3,
+                padding: 5,
+                margin: 10,
+              }}
+              textColor={colors.color2}
+              loading={loading}
+            >
+              제품추가
+            </Button>
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity
           onPress={
             name === "orderCreate" ? orderSubmitHandler : updateSubmitHandler
@@ -223,7 +247,7 @@ const ConfirmOrder = ({ route, navigation }) => {
             textColor={colors.color2}
             loading={loading}
           >
-            {name === "orderCreate" ? "주문하기" : "등록하기"}
+            {name === "orderCreate" ? "주문하기" : "수정하기"}
           </Button>
         </TouchableOpacity>
       </View>

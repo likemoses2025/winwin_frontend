@@ -14,7 +14,10 @@ const OrderUpdate = ({ route, navigation }) => {
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const { id, orderItems, deliveryDate, deliveryPlace } = route.params;
+  const { id, orderItems } = route.params;
+
+  console.log("OrderUpdate orderItems: " + orderItems);
+  console.log("OrderUpdate orderList::: " + JSON.stringify(orderList));
 
   setTimeout(() => setLoading(false), 2500); // 2.5초 후 로딩을 false로 설정
 
@@ -38,11 +41,10 @@ const OrderUpdate = ({ route, navigation }) => {
 
   const orderUpdateHandler = () => {
     const orderItems = orderList.filter((item) => item.quantity > 0);
+    console.log("OrderUpdate Items: " + JSON.stringify(orderItems));
     navigation.navigate("confirmorder", {
       id,
-      orderItems,
-      deliveryDate,
-      deliveryPlace,
+      orderItems: orderItems,
       name: "orderUpdate",
     });
   };
