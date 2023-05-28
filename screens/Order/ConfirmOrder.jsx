@@ -22,7 +22,6 @@ const ConfirmOrder = ({ route, navigation }) => {
 
   const [id] = useState(route.params?.id);
   const [name] = useState(route.params?.name);
-  // const [orderItems, setOrderItems] = useState(route.params?.orderItems);
   const [deliveryPlace, setDeliveryPlace] = useState(
     route.params?.deliveryPlace
   );
@@ -40,7 +39,8 @@ const ConfirmOrder = ({ route, navigation }) => {
   useEffect(() => {
     setTotalAmount(amount);
     setTotalBox(box);
-  }, [isFocused]);
+    setDeliveryDate(date);
+  }, [isFocused, date]);
 
   const amount = orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,

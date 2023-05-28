@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import { colors } from "../styles/styles";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { deleteMyOrder } from "../redux/actions/otherAction";
 
 const nf = new Intl.NumberFormat();
 
@@ -15,6 +17,7 @@ const OrderItem = ({
   totalBox,
   totalAmount,
   loading,
+  deleteHandler,
   orderItems,
   i = 0,
 }) => {
@@ -101,7 +104,7 @@ const OrderItem = ({
             marginTop: 10,
             backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
           }}
-          onPress={() => navigation.navigate("confirmorder", { id })}
+          onPress={deleteHandler}
           loading={loading}
           disabled={loading}
         >

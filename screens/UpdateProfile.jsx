@@ -57,7 +57,7 @@ const UpdateProfile = ({ navigation }) => {
           padding: 20,
           elevation: 10,
           borderRadius: 10,
-          backgroundColor: colors.color3,
+          backgroundColor: colors.color2,
         }}
       >
         <View>
@@ -67,6 +67,14 @@ const UpdateProfile = ({ navigation }) => {
             value={team}
             onChangeText={setTeam}
           />
+          {/* <TextInput
+            {...inputOptions}
+            activeOutlineColor={colors.color_s3}
+            label="팀명"
+            mode="outlined"
+            value={team}
+            onChangeText={setTeam}
+          /> */}
           <TextInput
             {...inputOptions}
             placeholder="채널명"

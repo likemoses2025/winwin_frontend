@@ -6,14 +6,25 @@ import Header from "../../components/Header";
 import Loader from "../../components/Loader";
 import OrderItem from "../../components/OrderItem";
 import { colors, defaultStyle, formHeading } from "../../styles/styles";
-import { useGetOrders } from "../../utils/hooks";
+import { useGetOrders, useMessageAndErrorOther } from "../../utils/hooks";
+import { deleteMyOrder } from "../../redux/actions/otherAction";
+import { useDispatch } from "react-redux";
 
 const Orders = ({ navigation }) => {
   const isFocused = useIsFocused();
+  const dispatch = useDispatch();
   const { orders, loading } = useGetOrders(isFocused, true);
-  // const orderObj = JSON.parse(orders);
 
-  const deleteHandler = () => {};
+  const deleteOrderHandler = (id) => {
+    dispatch(deleteMyOrder(id));
+  };
+
+  // const loadingDelete = useMessageAndErrorOther(
+  //   dispatch,
+  //   null,
+  //   null,
+  //   useGetOrders
+  // );
 
   return (
     <View
@@ -55,6 +66,7 @@ const Orders = ({ navigation }) => {
                   totalBox={item.totalBox}
                   totalAmount={item.totalAmount}
                   orderItems={item.orderItems}
+                  deleteHandler={deleteOrderHandler}
                 />
               ))
             ) : (

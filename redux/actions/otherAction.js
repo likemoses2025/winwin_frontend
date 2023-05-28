@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 
 const server = process.env.API_URL;
 
@@ -47,6 +48,7 @@ export const updateProfile =
         type: "updateProfileRequest",
       });
 
+      console.log("Working 1");
       const { data } = await axios.put(
         `${server}/user/updateprofile`,
         {
@@ -67,11 +69,14 @@ export const updateProfile =
         }
       );
 
+      console.log("Working 2");
       dispatch({
         type: "updateProfileSuccess",
         payload: data.message,
       });
+      console.log("Working 3");
     } catch (error) {
+      console.log("Working Error", error);
       dispatch({
         type: "updateProfileFail",
         payload: error.response.data.message,
@@ -251,9 +256,6 @@ export const updateOrder = (id, updateObj) => async (dispatch) => {
     dispatch({
       type: "updateOrderRequest",
     });
-    console.log("Working 1");
-    console.log("Update OBJ: " + JSON.stringify(updateObj));
-
     const { data } = await axios.put(
       `${server}/order/update/${id}`,
       updateObj,
@@ -264,18 +266,41 @@ export const updateOrder = (id, updateObj) => async (dispatch) => {
         withCredentials: true,
       }
     );
-
-    console.log("Working 2");
     dispatch({
       type: "updateOrderSuccess",
       payload: data.message,
     });
-    console.log("Working 3");
   } catch (error) {
-    console.log("Working Error", error);
     dispatch({
       type: "updateOrderFailure",
       payload: error?.response.data.message,
+    });
+  }
+};
+
+export const deleteMyOrder = (id) => async (dispatch) => {
+  const [loading, setLoading] = useState(false);
+  try {
+    console.log("Working 1");
+    setLoading(true);
+    dispatch({ type: "deleteMyOrderRequest" });
+
+    const { data } = await axios.delete(`${server}/order/delete/${id}`, {
+      withCredentials: true,
+    });
+
+    console.log("Working 2");
+    dispatch({
+      type: "deleteMyOrderSuccess",
+      payload: data.message,
+    });
+    setLoading(false);
+    console.log("Working 3");
+  } catch (error) {
+    console.log("Working Error: " + error);
+    dispatch({
+      type: "deleteMyOrderFailure",
+      payload: error.response.data.message,
     });
   }
 };
