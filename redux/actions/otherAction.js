@@ -279,25 +279,23 @@ export const updateOrder = (id, updateObj) => async (dispatch) => {
 };
 
 export const deleteMyOrder = (id) => async (dispatch) => {
-  const [loading, setLoading] = useState(false);
   try {
-    console.log("Working 1");
-    setLoading(true);
-    dispatch({ type: "deleteMyOrderRequest" });
-
-    const { data } = await axios.delete(`${server}/order/delete/${id}`, {
-      withCredentials: true,
+    dispatch({
+      type: "deleteMyOrderRequest",
     });
 
-    console.log("Working 2");
+    const { data } = await axios.delete(
+      `${server}/order/delete/${id}`,
+
+      {
+        withCredentials: true,
+      }
+    );
     dispatch({
       type: "deleteMyOrderSuccess",
       payload: data.message,
     });
-    setLoading(false);
-    console.log("Working 3");
   } catch (error) {
-    console.log("Working Error: " + error);
     dispatch({
       type: "deleteMyOrderFailure",
       payload: error.response.data.message,

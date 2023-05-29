@@ -9,22 +9,23 @@ import { colors, defaultStyle, formHeading } from "../../styles/styles";
 import { useGetOrders, useMessageAndErrorOther } from "../../utils/hooks";
 import { deleteMyOrder } from "../../redux/actions/otherAction";
 import { useDispatch } from "react-redux";
+import { getMyOrders } from "../../redux/actions/orderAction";
 
 const Orders = ({ navigation }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
-  const { orders, loading } = useGetOrders(isFocused, true);
+
+  const { orders, loading } = useGetOrders(dispatch, isFocused);
 
   const deleteOrderHandler = (id) => {
     dispatch(deleteMyOrder(id));
   };
-
-  // const loadingDelete = useMessageAndErrorOther(
-  //   dispatch,
-  //   null,
-  //   null,
-  //   useGetOrders
-  // );
+  const loadingDelete = useMessageAndErrorOther(
+    dispatch,
+    null,
+    null,
+    getMyOrders
+  );
 
   return (
     <View
@@ -50,30 +51,31 @@ const Orders = ({ navigation }) => {
           }}
         >
           <ScrollView showsVerticalScrollIndicator={false}>
-            {orders.length >= 0 ? (
-              orders.map((item, index) => (
-                <OrderItem
-                  key={item._id}
-                  id={item._id}
-                  i={index}
-                  team={item.team}
-                  storeName={item.user.storeName}
-                  status={item.orderStatus}
-                  user={item.user}
-                  orderedOn={item.createdAt}
-                  deliveryPlace={item.deliveryPlace}
-                  deliveryDate={item.deliveryDate}
-                  totalBox={item.totalBox}
-                  totalAmount={item.totalAmount}
-                  orderItems={item.orderItems}
-                  deleteHandler={deleteOrderHandler}
-                />
-              ))
-            ) : (
-              <Headline style={{ textAlign: "center" }}>
-                주문이 없습니다.!!
-              </Headline>
-            )}
+            {!loadingDelete &&
+              (orders?.length > 0 ? (
+                orders.map((item, index) => (
+                  <OrderItem
+                    key={item._id}
+                    id={item._id}
+                    i={index}
+                    team={item.team}
+                    storeName={item.user.storeName}
+                    status={item.orderStatus}
+                    user={item.user}
+                    createdAt={item.createdAt}
+                    deliveryPlace={item.deliveryPlace}
+                    deliveryDate={item.deliveryDate}
+                    totalBox={item.totalBox}
+                    totalAmount={item.totalAmount}
+                    orderItems={item.orderItems}
+                    deleteHandler={deleteOrderHandler}
+                  />
+                ))
+              ) : (
+                <Headline style={{ textAlign: "center" }}>
+                  주문이 없습니다.!!
+                </Headline>
+              ))}
           </ScrollView>
         </View>
       )}

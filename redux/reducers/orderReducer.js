@@ -3,17 +3,17 @@ import { createReducer } from "@reduxjs/toolkit";
 export const orderReducer = createReducer({ orderedItems: [] }, (builder) => {
   builder
     // Request
-    .addCase("getDealerOrdersRequest", (state) => {
+    .addCase("getMyOrdersRequest", (state) => {
       state.loading = true;
     })
     // Success
-    .addCase("getDealerOrdersSuccess", (state, action) => {
+    .addCase("getMyOrdersSuccess", (state, action) => {
       state.loading = false;
       state.message = action.payload.message;
-      state.dealerOrders = action.payload.dealerOrders;
+      state.orders = action.payload.orders;
     })
     // Failure
-    .addCase("getDealerOrdersFailure", (state, action) => {
+    .addCase("getMyOrdersFailure", (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

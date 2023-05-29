@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import { colors } from "../styles/styles";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { deleteMyOrder } from "../redux/actions/otherAction";
+import MyModal from "./MyModal";
 
 const nf = new Intl.NumberFormat();
 
@@ -19,10 +20,13 @@ const OrderItem = ({
   loading,
   deleteHandler,
   orderItems,
+  createdAt,
   i = 0,
 }) => {
+  const [openModal, setOpenModal] = useState(false);
+
   const navigation = useNavigation();
-  const date = new Date(deliveryDate);
+  const date = new Date(createdAt);
   const krTime = new Date(date.getTime() + 60 * 1000);
 
   return (
@@ -104,13 +108,20 @@ const OrderItem = ({
             marginTop: 10,
             backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
           }}
-          onPress={deleteHandler}
+          onPress={() => setOpenModal((prev) => !prev)}
           loading={loading}
           disabled={loading}
         >
           삭제하기
         </Button>
       </View>
+      {openModal && (
+        <MyModal
+          id={id}
+          deleteHandler={deleteHandler}
+          setOpenModal={setOpenModal}
+        />
+      )}
     </View>
   );
 };

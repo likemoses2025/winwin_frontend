@@ -7,6 +7,7 @@ import {
   getOrderProducts,
 } from "../redux/actions/productAction";
 import { loadUser } from "../redux/actions/userAction";
+import { getMyOrders } from "../redux/actions/orderAction";
 
 const server = process.env.API_URL;
 
@@ -135,34 +136,6 @@ export const useGetOrderProducts = (dispatch, isFocused) => {
   return { orderProducts, loading };
 };
 
-export const useGetOrders = (isFocused, dealer = false) => {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-
-    axios
-      .get(`${server}/order/${dealer ? "my" : "team"}`)
-      .then((res) => {
-        setOrders(res.data.orders);
-        setLoading(false);
-      })
-      .catch((e) => {
-        Toast.show({
-          type: "error",
-          text1: e.response.data.message,
-        });
-        setLoading(false);
-      });
-  }, [isFocused]);
-
-  return {
-    loading,
-    orders,
-  };
-};
-
 export const useGetTeamOrders = (isFocused, isAdmin = false) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -182,4 +155,17 @@ export const useGetTeamOrders = (isFocused, isAdmin = false) => {
   }, [isFocused]);
 
   return { loading, orders };
+};
+
+export const useGetOrders = (dispatch, isFocused) => {
+  const { orders, loading, error } = useSelector((state) => state.order);
+  useEffect(() => {
+    if (error) {
+      Toast.show({ type: "error", text1: error });
+      dispatch({ type: "clearError" });
+    }
+    dispatch(getMyOrders());
+  }, [dispatch, isFocused, error]);
+
+  return { orders, loading };
 };
