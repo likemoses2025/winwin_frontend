@@ -81,3 +81,18 @@ export const getProductDetails = (id) => async (dispatch) => {
     });
   }
 };
+
+export const getRefundProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: "getRefundProductsRequest" });
+    const { data } = await axios.get(`${server}/product/refund`, {
+      withCredentials: true,
+    });
+    dispatch({ type: "getRefundProductsSuccess", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "getOrderProductsFailure",
+      payload: error.response.data.message,
+    });
+  }
+};

@@ -18,7 +18,6 @@ import Orders from "./screens/Order/Orders";
 import Payment from "./screens/Payment";
 import ProductDetails from "./screens/ProductDetails";
 import Profile from "./screens/Profile";
-import Returns from "./screens/Returns";
 import SignUp from "./screens/SignUp";
 import UpdateProfile from "./screens/UpdateProfile";
 import Verify from "./screens/Verify";
@@ -26,8 +25,15 @@ import { useDispatch } from "react-redux";
 import { loadUser } from "./redux/actions/userAction";
 import OrderCreate from "./screens/Order/OrderCreate";
 import AdminPanel from "./screens/Admin/AdminPanel";
-import { getOrderProducts } from "./redux/actions/productAction";
+import {
+  getOrderProducts,
+  getRefundProducts,
+} from "./redux/actions/productAction";
 import OrderUpdate from "./screens/Order/OrderUpdate";
+import Refunds from "./screens/Refund/Refunds";
+import RefundCreate from "./screens/Refund/RefundCreate";
+import RefundConfirm from "./screens/Refund/RefundConfirm";
+import RefundUpdate from "./screens/Refund/RefundUpdate";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +43,7 @@ const Main = () => {
   useEffect(() => {
     dispatch(loadUser());
     dispatch(getOrderProducts());
+    dispatch(getRefundProducts());
   }, [dispatch]);
 
   return (
@@ -61,11 +68,6 @@ const Main = () => {
           <Stack.Screen
             name="cart"
             component={Cart}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="confirmorder"
-            component={ConfirmOrder}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -103,11 +105,7 @@ const Main = () => {
             component={Camera}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
-            name="orders"
-            component={Orders}
-            options={{ headerShown: false }}
-          />
+
           <Stack.Screen
             name="changepassword"
             component={ChangePassword}
@@ -116,11 +114,6 @@ const Main = () => {
           <Stack.Screen
             name="updateprofile"
             component={UpdateProfile}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="returns"
-            component={Returns}
             options={{ headerShown: false }}
           />
           {/* Admin */}
@@ -155,13 +148,43 @@ const Main = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
+            name="orders"
+            component={Orders}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="ordercreate"
             component={OrderCreate}
             options={{ headerShown: false }}
           />
           <Stack.Screen
+            name="confirmorder"
+            component={ConfirmOrder}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="orderupdate"
             component={OrderUpdate}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="refunds"
+            component={Refunds}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="refundcreate"
+            component={RefundCreate}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="refundconfirm"
+            component={RefundConfirm}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="refundupdate"
+            component={RefundUpdate}
             options={{ headerShown: false }}
           />
         </Stack.Group>

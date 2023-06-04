@@ -20,6 +20,9 @@ export const productReducer = createReducer(
       .addCase("getProductDetailsRequest", (state) => {
         state.loading = true;
       })
+      .addCase("getRefundProductsRequest", (state) => {
+        state.loading = true;
+      })
 
       // Success
       .addCase("getAllProductsSuccess", (state, action) => {
@@ -44,6 +47,10 @@ export const productReducer = createReducer(
         state.loading = false;
         state.product = action.payload;
       })
+      .addCase("getRefundProductsSuccess", (state, action) => {
+        state.loading = false;
+        state.refundProducts = action.payload.products;
+      })
 
       // Failure
       .addCase("getAllProductsFailure", (state, action) => {
@@ -63,6 +70,10 @@ export const productReducer = createReducer(
         state.error = action.payload;
       })
       .addCase("getProductDetailsFailure", (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase("getRefundProductsFailure", (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

@@ -66,7 +66,7 @@ const Profile = ({ navigation, route }) => {
         navigation.navigate("orders");
         break;
       case "반품":
-        navigation.navigate("returns");
+        navigation.navigate("refunds");
         break;
       case "프로필":
         navigation.navigate("updateprofile");

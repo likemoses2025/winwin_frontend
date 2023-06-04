@@ -169,3 +169,16 @@ export const useGetOrders = (dispatch, isFocused) => {
 
   return { orders, loading };
 };
+
+export const useGetRefunds = (dispatch, isFocused) => {
+  const { refunds, loading, error } = useSelector((state) => state.refund);
+  useEffect(() => {
+    if (error) {
+      Toast.show({ type: "error", text1: error });
+      dispatch({ type: "clearError" });
+    }
+    dispatch(getMyRefunds());
+  }, [dispatch, isFocused, error]);
+
+  return { refunds, loading };
+};
