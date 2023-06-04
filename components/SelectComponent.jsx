@@ -9,8 +9,21 @@ import React from "react";
 import { Avatar, Headline } from "react-native-paper";
 import { colors } from "../styles/styles";
 
-const SelectComponent = ({ visible, setVisible, setCategory, categories }) => {
+const SelectComponent = ({
+  visible,
+  setVisible,
+  setCategory,
+  setDeliveryPlace,
+  categories,
+  deliveryPlace,
+  title,
+}) => {
   const selectCategoryHandler = (item) => {
+    setCategory(item.category);
+    setVisible(false);
+  };
+
+  const selectDeliveryPlaceHandler = (item) => {
     setCategory(item.category);
     setVisible(false);
   };
@@ -28,17 +41,30 @@ const SelectComponent = ({ visible, setVisible, setCategory, categories }) => {
             icon={"close"}
           />
         </TouchableOpacity>
-        <Headline style={styles.heading}> 제품유형 선택하기</Headline>
+        <Headline style={styles.heading}>
+          {(title = "newproduct" ? "제품유형 선택하기" : "배송장소 선택하기")}
+        </Headline>
         <ScrollView>
-          {categories.map((i) => (
-            <Text
-              key={i._id}
-              onPress={() => selectCategoryHandler(i)}
-              style={styles.text}
-            >
-              {i.category}
-            </Text>
-          ))}
+          {categories &&
+            categories.map((i, index) => (
+              <Text
+                key={index}
+                onPress={() => selectCategoryHandler(i)}
+                style={styles.text}
+              >
+                {i.category}
+              </Text>
+            ))}
+          {deliveryPlace &&
+            deliveryPlace.map((i) => (
+              <Text
+                key={i._id}
+                onPress={() => selectDeliveryPlaceHandler(i.name)}
+                style={styles.text}
+              >
+                {i.name}
+              </Text>
+            ))}
         </ScrollView>
       </View>
     )

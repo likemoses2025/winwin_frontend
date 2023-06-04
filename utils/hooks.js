@@ -8,6 +8,7 @@ import {
 } from "../redux/actions/productAction";
 import { loadUser } from "../redux/actions/userAction";
 import { getMyOrders } from "../redux/actions/orderAction";
+import { getMyRefunds } from "../redux/actions/refundAction";
 
 const server = process.env.API_URL;
 

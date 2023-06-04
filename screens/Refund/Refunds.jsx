@@ -5,9 +5,10 @@ import { Avatar, Headline } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
-import RefundItem from "../../components/refundItem";
 import { colors, defaultStyle, formHeading } from "../../styles/styles";
 import { useGetRefunds, useMessageAndErrorOther } from "../../utils/hooks";
+import RefundItem from "../../components/RefundItem";
+import { getMyRefunds } from "../../redux/actions/refundAction";
 
 const Refunds = ({ navigation }) => {
   const isFocused = useIsFocused();
@@ -66,7 +67,7 @@ const Refunds = ({ navigation }) => {
                     totalBox={item.totalBox}
                     totalAmount={item.totalAmount}
                     orderItems={item.orderItems}
-                    deleteHandler={deleteOrderHandler}
+                    deleteHandler={deleteRefundHandler}
                   />
                 ))
               ) : (

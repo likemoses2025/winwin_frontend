@@ -189,7 +189,9 @@ const NewProduct = ({ route, navigation }) => {
       </View>
 
       <SelectComponent
+        title={"newproduct"}
         categories={categories}
+        deliveryPlace={deliveryPlace}
         setCategory={setCategory}
         visible={visible}
         setVisible={setVisible}

@@ -10,14 +10,12 @@ const nf = new Intl.NumberFormat();
 const RefundItem = ({
   id,
   team,
-  deliveryDate,
-  deliveryPlace,
   storeName,
-  totalBox,
+  totalValue,
   totalAmount,
   loading,
   deleteHandler,
-  orderItems,
+  refundItems,
   createdAt,
   i = 0,
 }) => {
@@ -34,16 +32,6 @@ const RefundItem = ({
         backgroundColor: i % 2 === 0 ? colors.color2 : colors.color3,
       }}
     >
-      <Text
-        style={{
-          ...styles.text,
-          backgroundColor: i % 2 === 0 ? colors.color3 : colors.color1,
-        }}
-      >
-        @{storeName + " " + " " + " " + " " + " " + " "} 배송날짜 -{" "}
-        {deliveryDate.split("T")[0]}
-      </Text>
-
       <View
         style={{
           paddingHorizontal: 20,
@@ -53,10 +41,9 @@ const RefundItem = ({
       >
         <View>
           <TextBox title={"팀명"} value={team} i={i} />
-          <TextBox title={"장소"} value={deliveryPlace} i={i} />
         </View>
         <View>
-          <TextBox title={"박스"} value={nf.format(totalBox)} i={i} />
+          <TextBox title={"박스"} value={nf.format(totalValue)} i={i} />
           <TextBox title={"금액"} value={nf.format(totalAmount)} i={i} />
         </View>
       </View>
@@ -80,15 +67,13 @@ const RefundItem = ({
             backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
           }}
           onPress={() =>
-            navigation.navigate("confirmorder", {
+            navigation.navigate("refundconfirm", {
               id,
               team,
-              deliveryDate,
-              deliveryPlace,
               totalAmount,
-              totalBox,
-              orderItems: JSON.parse(orderItems),
-              name: "orders",
+              totalValue,
+              refundItems: JSON.parse(refundItems),
+              name: "refunds",
             })
           }
           loading={loading}

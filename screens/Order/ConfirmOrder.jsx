@@ -1,7 +1,13 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { Avatar, Button } from "react-native-paper";
+import {
+  Avatar,
+  Button,
+  Modal,
+  Portal,
+  PaperProvider,
+} from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Heading from "../../components/Heading";
@@ -11,6 +17,7 @@ import { createOrder, updateOrder } from "../../redux/actions/otherAction";
 import { useMessageAndErrorOther } from "../../utils/hooks";
 import { useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import SelectComponent from "../../components/SelectComponent";
 
 const nf = new Intl.NumberFormat();
 
@@ -20,10 +27,12 @@ const ConfirmOrder = ({ route, navigation }) => {
   const { user } = useSelector((state) => state.user);
   const orderItems = route.params?.orderItems;
 
+  console.log("user: " + JSON.stringify(user));
+
   const [id] = useState(route.params?.id);
   const [name] = useState(route.params?.name);
   const [deliveryPlace, setDeliveryPlace] = useState(
-    route.params?.deliveryPlace
+    user.deliveryPlace[0].name
   );
   const [deliveryDate, setDeliveryDate] = useState(route.params?.deliveryDate);
   const [totalAmount, setTotalAmount] = useState(route.params?.totalAmount);
@@ -33,6 +42,9 @@ const ConfirmOrder = ({ route, navigation }) => {
     deliveryDate ? new Date(deliveryDate) : new Date()
   );
   const [showPicker, setShowPicker] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  const containerStyle = { backgroundColor: "white", padding: 20 };
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "orders");
 
@@ -68,8 +80,6 @@ const ConfirmOrder = ({ route, navigation }) => {
       orderItems: JSON.stringify(orderItems),
     };
 
-    console.log("Working orderSubmit");
-
     dispatch(createOrder(orderObj));
   };
 
@@ -82,8 +92,6 @@ const ConfirmOrder = ({ route, navigation }) => {
       totalAmount: totalAmount,
       orderItems: JSON.stringify(orderItems),
     };
-
-    console.log("updateObj" + JSON.stringify(updateObj));
 
     dispatch(updateOrder(id, updateObj));
   };
@@ -169,10 +177,21 @@ const ConfirmOrder = ({ route, navigation }) => {
               }}
             >
               <Text>배송장소</Text>
-              <Text style={{ fontSize: 16 }}>창고</Text>
+              <Text style={{ fontSize: 16 }}>{user.deliveryPlace[0].name}</Text>
+
+              {visible && (
+                <SelectComponent
+                  title={"confirmorder"}
+                  deliveryPlace={user.deliveryPlace}
+                  setDeliveryPlace={setDeliveryPlace}
+                  visible={visible}
+                  setVisible={setVisible}
+                />
+              )}
             </View>
             <TouchableOpacity
               style={{ justifyContent: "center", alignItems: "center" }}
+              onPress={() => setVisible(!visible)}
             >
               <Avatar.Icon
                 icon="truck-cargo-container"
