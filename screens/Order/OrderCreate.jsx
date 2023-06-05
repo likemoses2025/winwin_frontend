@@ -17,8 +17,6 @@ const OrderCreate = ({ route, navigation }) => {
 
   setTimeout(() => setLoading(false), 2500); // 2.5초 후 로딩을 false로 설정
 
-  console.log("orderList 111 : " + JSON.stringify(orderList));
-
   const changeQuantity = (code, quantity) => {
     const NewOrderList = orderList.map((item) =>
       item.code === code ? { ...item, quantity } : item

@@ -91,7 +91,7 @@ export const getRefundProducts = () => async (dispatch) => {
     dispatch({ type: "getRefundProductsSuccess", payload: data });
   } catch (error) {
     dispatch({
-      type: "getOrderProductsFailure",
+      type: "getRefundProductsFailure",
       payload: error.response.data.message,
     });
   }
