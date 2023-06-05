@@ -75,6 +75,7 @@ export default SelectComponent;
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: 100,
     backgroundColor: colors.color2,
     position: "absolute",
     padding: 35,

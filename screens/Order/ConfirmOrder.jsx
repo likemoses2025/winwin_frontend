@@ -1,23 +1,16 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import {
-  Avatar,
-  Button,
-  Modal,
-  Portal,
-  PaperProvider,
-} from "react-native-paper";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
+import { Modal, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { Avatar, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Heading from "../../components/Heading";
-import { colors, defaultStyle } from "../../styles/styles";
+import SelectComponent from "../../components/SelectComponent";
 import TableComponent from "../../components/TableComponent";
 import { createOrder, updateOrder } from "../../redux/actions/otherAction";
+import { colors, defaultStyle } from "../../styles/styles";
 import { useMessageAndErrorOther } from "../../utils/hooks";
-import { useEffect } from "react";
-import { useIsFocused } from "@react-navigation/native";
-import SelectComponent from "../../components/SelectComponent";
 
 const nf = new Intl.NumberFormat();
 
@@ -43,8 +36,6 @@ const ConfirmOrder = ({ route, navigation }) => {
   );
   const [showPicker, setShowPicker] = useState(false);
   const [visible, setVisible] = useState(false);
-
-  const containerStyle = { backgroundColor: "white", padding: 20 };
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "orders");
 
@@ -295,5 +286,27 @@ const PriceTag = ({ heading, value }) => (
     </Text>
   </View>
 );
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modal: {
+    width: 300,
+    height: 200,
+    backgroundColor: "white",
+    borderRadius: 10,
+    position: "absolute",
+    top: 100,
+    left: 100,
+  },
+  list: {
+    flex: 1,
+    flexDirection: "row",
+    marginTop: 10,
+  },
+});
 
 export default ConfirmOrder;
