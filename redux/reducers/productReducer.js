@@ -49,7 +49,7 @@ export const productReducer = createReducer(
       })
       .addCase("getRefundProductsSuccess", (state, action) => {
         state.loading = false;
-        state.refundProducts = action.payload.products;
+        state.expiredProducts = action.payload.expiredproducts;
       })
 
       // Failure

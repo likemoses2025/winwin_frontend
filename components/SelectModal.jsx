@@ -1,8 +1,7 @@
-import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import { colors } from "../styles/styles";
-import Heading from "./Heading";
 
 const SelectModal = ({
   isModalVisible,
@@ -15,14 +14,19 @@ const SelectModal = ({
     toggleModal(!isModalVisible);
   };
 
+  console.log("isModalVisible : " + isModalVisible);
+
   return (
-    <Modal isVisible={isModalVisible}>
+    <Modal
+      isVisible={isModalVisible}
+      backdropColor={colors.color3}
+      backdropOpacity={0.7}
+      animationIn={"zoomInDown"}
+      animationOut={"zoomOutUp"}
+    >
       <View style={{ backgroundColor: colors.color2, borderRadius: 30 }}>
         {deliveryPlace.map((item) => (
-          <TouchableOpacity
-            key={item._id}
-            onPress={() => setDeliveryPlaceHandler(item.name)}
-          >
+          <TouchableOpacity key={item._id}>
             <Text
               style={{
                 marginTop: 15,
@@ -30,6 +34,7 @@ const SelectModal = ({
                 textAlign: "center",
                 marginBottom: 15,
               }}
+              onPress={() => setDeliveryPlaceHandler(item.name)}
             >
               {item.name}
             </Text>

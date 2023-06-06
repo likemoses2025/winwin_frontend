@@ -2,7 +2,7 @@ import { useIsFocused } from "@react-navigation/native";
 import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Headline } from "react-native-paper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
 import { colors, defaultStyle, formHeading } from "../../styles/styles";
@@ -13,7 +13,6 @@ import { getMyRefunds } from "../../redux/actions/refundAction";
 const Refunds = ({ navigation }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
-
   const { refunds, loading } = useGetRefunds(dispatch, isFocused);
 
   const deleteRefundHandler = (id) => {
@@ -34,12 +33,91 @@ const Refunds = ({ navigation }) => {
       }}
     >
       <Header back={true} />
-
       {/* Heading */}
-      <View style={{ marginBottom: 20, paddingTop: 70 }}>
+      <View
+        style={{
+          marginBottom: 20,
+          paddingTop: 70,
+        }}
+      >
         <Text style={formHeading}>반 품 내 역</Text>
       </View>
-
+      <View
+        style={{
+          backgroundColor: colors.color2,
+          borderRadius: 10,
+          padding: 10,
+          elevation: 5,
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingBottom: 10,
+          }}
+        >
+          <Text style={{ flex: 2, fontSize: 17 }}>반품날짜</Text>
+          <View
+            style={{
+              flex: 4,
+              backgroundColor: "#eeeeee",
+              borderWidth: 0.2,
+              height: 30,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 18, fontWeight: "600" }}>23년 7월</Text>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingBottom: 10,
+          }}
+        >
+          <Text style={{ flex: 2, fontSize: 17 }}>마대수량</Text>
+          <View
+            style={{
+              flex: 4,
+              backgroundColor: "white",
+              borderWidth: 0.5,
+              height: 30,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 17 }}>36 마대</Text>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingBottom: 10,
+          }}
+        >
+          <Text style={{ flex: 2, fontSize: 17 }}>반품금액</Text>
+          <View
+            style={{
+              flex: 4,
+              backgroundColor: "white",
+              borderWidth: 0.5,
+              height: 30,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 17 }}>3,658,200 원</Text>
+          </View>
+        </View>
+      </View>
+      <Text style={{ fontSize: 15, marginTop: 10, color: "#e57676" }}>
+        채널별 반품 단가가 상이하여 금액이 정확하지 않으니 참고용으로
+        사용바랍니다.
+      </Text>
       {loading ? (
         <Loader />
       ) : (
@@ -85,7 +163,7 @@ const Refunds = ({ navigation }) => {
           bottom: 10,
           zIndex: 10,
         }}
-        onPress={() => navigation.navigate("ordercreate")}
+        onPress={() => navigation.navigate("refundcreate")}
       >
         <Avatar.Icon
           icon={"plus-circle"}
