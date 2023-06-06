@@ -75,6 +75,7 @@ const ConfirmOrder = ({ route, navigation }) => {
       totalBox: totalBox,
       totalAmount: totalAmount,
       orderItems: JSON.stringify(orderItems),
+      createdAt: new Date(Date.now()),
     };
 
     dispatch(createOrder(orderObj));
@@ -88,6 +89,7 @@ const ConfirmOrder = ({ route, navigation }) => {
       totalBox: totalBox,
       totalAmount: totalAmount,
       orderItems: JSON.stringify(orderItems),
+      createdAt: new Date(Date.now()),
     };
 
     dispatch(updateOrder(id, updateObj));

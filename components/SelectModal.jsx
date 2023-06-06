@@ -17,7 +17,7 @@ const SelectModal = ({
 
   return (
     <Modal isVisible={isModalVisible}>
-      <View style={{ backgroundColor: colors.color2 }}>
+      <View style={{ backgroundColor: colors.color2, borderRadius: 30 }}>
         {deliveryPlace.map((item) => (
           <TouchableOpacity
             key={item._id}

@@ -72,7 +72,7 @@ const Refunds = ({ navigation }) => {
                 ))
               ) : (
                 <Headline style={{ textAlign: "center" }}>
-                  주문이 없습니다.!!
+                  반품이 없습니다.!!
                 </Headline>
               ))}
           </ScrollView>
