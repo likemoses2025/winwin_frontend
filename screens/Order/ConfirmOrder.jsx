@@ -1,12 +1,12 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { Modal, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import Heading from "../../components/Heading";
-import SelectComponent from "../../components/SelectComponent";
+import SelectModal from "../../components/SelectModal";
 import TableComponent from "../../components/TableComponent";
 import { createOrder, updateOrder } from "../../redux/actions/otherAction";
 import { colors, defaultStyle } from "../../styles/styles";
@@ -20,7 +20,7 @@ const ConfirmOrder = ({ route, navigation }) => {
   const { user } = useSelector((state) => state.user);
   const orderItems = route.params?.orderItems;
 
-  console.log("user: " + JSON.stringify(user));
+  console.log("user: " + JSON.stringify(user.deliveryPlace));
 
   const [id] = useState(route.params?.id);
   const [name] = useState(route.params?.name);
@@ -35,7 +35,13 @@ const ConfirmOrder = ({ route, navigation }) => {
     deliveryDate ? new Date(deliveryDate) : new Date()
   );
   const [showPicker, setShowPicker] = useState(false);
-  const [visible, setVisible] = useState(false);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  console.log("deliveryPlace", deliveryPlace);
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "orders");
 
@@ -65,7 +71,7 @@ const ConfirmOrder = ({ route, navigation }) => {
     const orderObj = {
       team: user.team,
       deliveryDate: deliveryDate,
-      deliveryPlace: "창고",
+      deliveryPlace: deliveryPlace,
       totalBox: totalBox,
       totalAmount: totalAmount,
       orderItems: JSON.stringify(orderItems),
@@ -78,7 +84,7 @@ const ConfirmOrder = ({ route, navigation }) => {
     const updateObj = {
       team: user.team,
       deliveryDate: date,
-      deliveryPlace: "창고",
+      deliveryPlace: deliveryPlace,
       totalBox: totalBox,
       totalAmount: totalAmount,
       orderItems: JSON.stringify(orderItems),
@@ -88,185 +94,184 @@ const ConfirmOrder = ({ route, navigation }) => {
   };
 
   return (
-    <View style={defaultStyle}>
-      <Header back={true} />
-      <Heading
-        containerStyle={{
-          paddingTop: 40,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        text2="주문 확인"
-      />
-      <View style={{ paddingVertical: 20, flex: 1 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
+    <>
+      <View style={defaultStyle}>
+        <Header back={true} />
+        <Heading
+          containerStyle={{
+            paddingTop: 40,
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        >
+          text2="주문 확인"
+        />
+
+        <View style={{ paddingVertical: 20, flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              borderWidth: 0.3,
-              padding: 10,
-              borderRadius: 10,
-              width: "45%",
+              justifyContent: "space-between",
             }}
           >
-            <View style={{ flexDirection: "row" }}>
-              <View>
-                <Text>배송날짜</Text>
-                <Text style={{ fontSize: 16 }}>
-                  {date.toLocaleDateString("ko-KR")}
-                </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                borderWidth: 0.3,
+                padding: 10,
+                borderRadius: 10,
+                width: "45%",
+              }}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <View>
+                  <Text>배송날짜</Text>
+                  <Text style={{ fontSize: 16 }}>
+                    {date.toLocaleDateString("ko-KR")}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={showDatePicker}
+                  style={{ justifyContent: "center", padding: 10 }}
+                >
+                  <Avatar.Icon
+                    style={{
+                      backgroundColor: "white",
+                      borderWidth: 1,
+                      borderColor: "red",
+                    }}
+                    icon="calendar-month-outline"
+                    color={colors.color1}
+                    size={30}
+                  />
+                </TouchableOpacity>
+
+                {showPicker && (
+                  <DateTimePicker
+                    value={date}
+                    mode="date"
+                    display="default"
+                    locale="ko-KR" // Set the locale to Korean
+                    onChange={handleDateChange}
+                  />
+                )}
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-evenly",
+                borderWidth: 0.3,
+                padding: 5,
+                borderRadius: 10,
+                width: "45%",
+              }}
+            >
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text>배송장소</Text>
+                <Text style={{ fontSize: 16 }}>{deliveryPlace}</Text>
               </View>
               <TouchableOpacity
-                onPress={showDatePicker}
-                style={{ justifyContent: "center", padding: 10 }}
+                style={{ justifyContent: "center", alignItems: "center" }}
+                onPress={toggleModal}
               >
                 <Avatar.Icon
+                  icon="truck-cargo-container"
+                  color={colors.color1}
+                  size={30}
                   style={{
                     backgroundColor: "white",
                     borderWidth: 1,
                     borderColor: "red",
                   }}
-                  icon="calendar-month-outline"
-                  color={colors.color1}
-                  size={30}
                 />
-              </TouchableOpacity>
-
-              {showPicker && (
-                <DateTimePicker
-                  value={date}
-                  mode="date"
-                  display="default"
-                  locale="ko-KR" // Set the locale to Korean
-                  onChange={handleDateChange}
-                />
-              )}
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-evenly",
-              borderWidth: 0.3,
-              padding: 5,
-              borderRadius: 10,
-              width: "45%",
-            }}
-          >
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text>배송장소</Text>
-              <Text style={{ fontSize: 16 }}>{user.deliveryPlace[0].name}</Text>
-
-              {visible && (
-                <SelectComponent
-                  title={"confirmorder"}
+                <SelectModal
+                  isModalVisible={isModalVisible}
+                  toggleModal={toggleModal}
                   deliveryPlace={user.deliveryPlace}
                   setDeliveryPlace={setDeliveryPlace}
-                  visible={visible}
-                  setVisible={setVisible}
                 />
-              )}
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={{ justifyContent: "center", alignItems: "center" }}
-              onPress={() => setVisible(!visible)}
-            >
-              <Avatar.Icon
-                icon="truck-cargo-container"
-                color={colors.color1}
-                size={30}
-                style={{
-                  backgroundColor: "white",
-                  borderWidth: 1,
-                  borderColor: "red",
-                }}
-              />
-            </TouchableOpacity>
           </View>
-        </View>
 
-        {/******* Table *******/}
-        <TableComponent orderItems={orderItems} />
-      </View>
-      <View
-        style={{
-          borderColor: colors.color1,
-          borderWidth: 1,
-          marginTop: 30,
-          borderRadius: 10,
-          padding: 10,
-          backgroundColor: "#f0f0f0",
-        }}
-      >
-        <PriceTag heading={"전체수량"} value={totalBox} />
-        <PriceTag heading={"전체합계"} value={totalAmount} />
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-evenly",
-          marginTop: 10,
-        }}
-      >
-        {name !== "orderCreate" && (
+          {/******* Table *******/}
+          <TableComponent orderItems={orderItems} />
+        </View>
+        <View
+          style={{
+            borderColor: colors.color1,
+            borderWidth: 1,
+            marginTop: 30,
+            borderRadius: 10,
+            padding: 10,
+            backgroundColor: "#f0f0f0",
+          }}
+        >
+          <PriceTag heading={"전체수량"} value={totalBox} />
+          <PriceTag heading={"전체합계"} value={totalAmount} />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            marginTop: 10,
+          }}
+        >
+          {name !== "orderCreate" && (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("orderupdate", {
+                  id,
+                  orderItems,
+                })
+              }
+            >
+              <Button
+                icon={"chevron-right"}
+                style={{
+                  backgroundColor: colors.color3,
+                  padding: 5,
+                  margin: 10,
+                }}
+                textColor={colors.color2}
+                loading={loading}
+              >
+                제품추가
+              </Button>
+            </TouchableOpacity>
+          )}
+
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("orderupdate", {
-                id,
-                orderItems,
-              })
+            onPress={
+              name === "orderCreate"
+                ? createOrderSubmitHandler
+                : updateOrderSubmitHandler
             }
           >
             <Button
               icon={"chevron-right"}
               style={{
-                backgroundColor: colors.color3,
+                backgroundColor: colors.color1,
                 padding: 5,
                 margin: 10,
               }}
               textColor={colors.color2}
               loading={loading}
             >
-              제품추가
+              {name === "orderCreate" ? "주문하기" : "수정하기"}
             </Button>
           </TouchableOpacity>
-        )}
-
-        <TouchableOpacity
-          onPress={
-            name === "orderCreate"
-              ? createOrderSubmitHandler
-              : updateOrderSubmitHandler
-          }
-        >
-          <Button
-            icon={"chevron-right"}
-            style={{
-              backgroundColor: colors.color1,
-              padding: 5,
-              margin: 10,
-            }}
-            textColor={colors.color2}
-            loading={loading}
-          >
-            {name === "orderCreate" ? "주문하기" : "수정하기"}
-          </Button>
-        </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 

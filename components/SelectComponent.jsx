@@ -24,7 +24,7 @@ const SelectComponent = ({
   };
 
   const selectDeliveryPlaceHandler = (item) => {
-    setCategory(item.category);
+    setCategory(item.name);
     setVisible(false);
   };
 
