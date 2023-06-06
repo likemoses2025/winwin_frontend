@@ -62,7 +62,7 @@ const Orders = ({ navigation }) => {
                     storeName={item.user.storeName}
                     status={item.orderStatus}
                     user={item.user}
-                    createdAt={item.createdAt}
+                    createdAt={item.updatedAt}
                     deliveryPlace={item.deliveryPlace}
                     deliveryDate={item.deliveryDate}
                     totalBox={item.totalBox}
