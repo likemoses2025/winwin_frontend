@@ -1,7 +1,13 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Avatar, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
@@ -101,7 +107,7 @@ const ConfirmOrder = ({ route, navigation }) => {
         <Header back={true} />
         <Heading
           containerStyle={{
-            paddingTop: 40,
+            paddingTop: Platform.OS === "ios" ? 70 : 40,
             justifyContent: "center",
             alignItems: "center",
           }}

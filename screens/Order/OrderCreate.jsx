@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import { ScrollView, TouchableOpacity, View, Platform } from "react-native";
 import { Button } from "react-native-paper";
 import { useSelector } from "react-redux";
 import Header from "../../components/Header";
@@ -48,9 +48,9 @@ const OrderCreate = ({ route, navigation }) => {
         <>
           <View
             style={{
-              marginTop: 60,
+              marginTop: Platform.OS === "ios" ? 90 : 60,
               marginBottom: 15,
-              height: 30,
+              height: 20,
               alignItems: "center",
             }}
           >
@@ -63,7 +63,6 @@ const OrderCreate = ({ route, navigation }) => {
               justifyContent: "space-between",
               flexWrap: "wrap",
               paddingBottom: 10,
-              paddingTop: 10,
             }}
           >
             {orderList.map((item, index) => {
