@@ -123,31 +123,13 @@ const Refunds = ({ navigation }) => {
       ) : (
         <View
           style={{
-            padding: 10,
             flex: 1,
           }}
         >
           <ScrollView showsVerticalScrollIndicator={false}>
             {!loadingDelete &&
               (refunds?.length > 0 ? (
-                refunds.map((item, index) => (
-                  <RefundItem
-                    key={item._id}
-                    id={item._id}
-                    i={index}
-                    team={item.team}
-                    storeName={item.user.storeName}
-                    status={item.orderStatus}
-                    user={item.user}
-                    createdAt={item.createdAt}
-                    deliveryPlace={item.deliveryPlace}
-                    deliveryDate={item.deliveryDate}
-                    totalBox={item.totalBox}
-                    totalAmount={item.totalAmount}
-                    orderItems={item.orderItems}
-                    deleteHandler={deleteRefundHandler}
-                  />
-                ))
+                refunds.map((item, index) => <RefundItem key={item._id} />)
               ) : (
                 <Headline style={{ textAlign: "center" }}>
                   반품이 없습니다.!!

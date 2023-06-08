@@ -1,148 +1,60 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-paper";
+import { Divider, IconButton, MD3Colors } from "react-native-paper";
 import { colors } from "../styles/styles";
-import MyModal from "./MyModal";
 
 const nf = new Intl.NumberFormat();
 
-const RefundItem = ({
-  id,
-  team,
-  storeName,
-  totalValue,
-  totalAmount,
-  loading,
-  deleteHandler,
-  refundItems,
-  createdAt,
-  i = 0,
-}) => {
-  const [openModal, setOpenModal] = useState(false);
-
-  const navigation = useNavigation();
-  const date = new Date(createdAt);
-  const krTime = new Date(date.getTime() + 60 * 1000);
-
+const RefundItem = ({}) => {
   return (
     <View
       style={{
-        ...styles.container,
-        backgroundColor: i % 2 === 0 ? colors.color2 : colors.color3,
+        backgroundColor: "white",
+        elevation: 5,
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 5,
+        borderRadius: 7,
       }}
     >
-      <View
+      <Text
         style={{
-          paddingHorizontal: 20,
-          flexDirection: "row",
-          justifyContent: "space-between",
+          backgroundColor: colors.color1,
+          width: 40,
+          height: 40,
+          borderRadius: 7,
+          textAlign: "center",
+          justifyContent: "center",
+          alignSelf: "center",
+          alignItems: "center",
         }}
       >
-        <View>
-          <TextBox title={"팀명"} value={team} i={i} />
-        </View>
-        <View>
-          <TextBox title={"박스"} value={nf.format(totalValue)} i={i} />
-          <TextBox title={"금액"} value={nf.format(totalAmount)} i={i} />
-        </View>
-      </View>
-      <View
-        style={{
-          paddingLeft: 20,
-        }}
-      >
-        <TextBox title={"생성일"} value={krTime.toLocaleString()} i={i} />
-      </View>
+        1
+      </Text>
 
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Button
-          icon={"clipboard-text-search-outline"}
-          mode={"contained"}
-          textColor={i % 2 === 0 ? colors.color2 : colors.color3}
-          style={{
-            width: 120,
-            alignSelf: "center",
-            marginTop: 10,
-            backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
-          }}
-          onPress={() =>
-            navigation.navigate("refundconfirm", {
-              id,
-              team,
-              totalAmount,
-              totalValue,
-              refundItems: JSON.parse(refundItems),
-              name: "refunds",
-            })
-          }
-          loading={loading}
-          disabled={loading}
-        >
-          확인하기
-        </Button>
-        <Button
-          icon={"clipboard-text-search-outline"}
-          mode={"contained"}
-          textColor={i % 2 === 0 ? colors.color2 : colors.color3}
-          style={{
-            width: 120,
-            alignSelf: "center",
-            marginTop: 10,
-            backgroundColor: i % 2 === 0 ? colors.color3 : colors.color2,
-          }}
-          onPress={() => setOpenModal((prev) => !prev)}
-          loading={loading}
-          disabled={loading}
-        >
-          삭제하기
-        </Button>
-      </View>
-      {openModal && (
-        <MyModal
-          id={id}
-          deleteHandler={deleteHandler}
-          setOpenModal={setOpenModal}
+      <Text>22년 7월</Text>
+      <Text>176박스</Text>
+      <View style={{ flexDirection: "row" }}>
+        <IconButton
+          icon="update"
+          iconColor={MD3Colors.primary0}
+          size={30}
+          onPress={() => console.log("Pressed")}
         />
-      )}
+        <IconButton
+          icon="update"
+          iconColor={MD3Colors.primary0}
+          size={30}
+          onPress={() => console.log("Pressed")}
+        />
+      </View>
+      <Divider />
     </View>
   );
 };
 
-const TextBox = ({ title, value, i }) => (
-  <Text
-    style={{
-      marginVertical: 6,
-      color: i % 2 === 0 ? colors.color3 : colors.color2,
-    }}
-  >
-    <Text style={{ fontWeight: "900" }}>{title} : </Text>
-
-    {value}
-    {title === "금액" ? "원" : ""}
-    {title === "박스" ? "박스" : ""}
-  </Text>
-);
-
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    borderRadius: 10,
-    marginVertical: 10,
-    elevation: 5,
-  },
-  text: {
-    color: colors.color2,
-    fontSize: 16,
-    fontWeight: "700",
-    marginHorizontal: -20,
-    marginTop: -20,
-    marginBottom: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-  },
+  fab: {},
 });
 
 export default RefundItem;
