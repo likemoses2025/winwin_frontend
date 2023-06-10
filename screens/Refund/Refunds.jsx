@@ -1,6 +1,12 @@
 import { useIsFocused } from "@react-navigation/native";
 import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Avatar, Headline } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
@@ -38,6 +44,7 @@ const Refunds = ({ navigation }) => {
         style={{
           marginBottom: 20,
           paddingTop: 70,
+          marginTop: Platform.OS === "ios" && 20,
         }}
       >
         <Text style={formHeading}>반 품 내 역</Text>
