@@ -5,7 +5,7 @@ import { colors } from "../styles/styles";
 
 const nf = new Intl.NumberFormat();
 
-const RefundItem = ({}) => {
+const RefundItem = (item) => {
   return (
     <View
       style={{

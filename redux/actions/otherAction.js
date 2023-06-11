@@ -302,3 +302,28 @@ export const deleteMyOrder = (id) => async (dispatch) => {
     });
   }
 };
+
+export const deleteMyRefund = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "deleteMyRefundRequest",
+    });
+
+    const { data } = await axios.delete(
+      `${server}/refund/delete/${id}`,
+
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: "deleteMyRefundSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "deleteMyRefundFailure",
+      payload: error.response.data.message,
+    });
+  }
+};

@@ -15,11 +15,16 @@ import { colors, defaultStyle, formHeading } from "../../styles/styles";
 import { useGetRefunds, useMessageAndErrorOther } from "../../utils/hooks";
 import RefundItem from "../../components/RefundItem";
 import { getMyRefunds } from "../../redux/actions/refundAction";
+import { deleteMyRefund } from "../../redux/actions/otherAction";
 
 const Refunds = ({ navigation }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
-  const { refunds, loading } = useGetRefunds(dispatch, isFocused);
+  // refunds를 useGetRefunds를 통해서 가져와야함
+  const { loading } = useGetRefunds(dispatch, isFocused);
+  const refunds = [
+    { gunnySackNumber: 1, yearMonth: "22년 7월", totalBox: "176박스" },
+  ];
 
   const deleteRefundHandler = (id) => {
     dispatch(deleteMyRefund(id));
@@ -136,7 +141,9 @@ const Refunds = ({ navigation }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             {!loadingDelete &&
               (refunds?.length > 0 ? (
-                refunds.map((item, index) => <RefundItem key={item._id} />)
+                refunds.map((item, index) => (
+                  <RefundItem key={item._id} item={item} />
+                ))
               ) : (
                 <Headline style={{ textAlign: "center" }}>
                   반품이 없습니다.!!
