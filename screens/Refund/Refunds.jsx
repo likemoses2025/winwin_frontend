@@ -49,7 +49,7 @@ const Refunds = ({ navigation }) => {
         style={{
           marginBottom: 20,
           paddingTop: 70,
-          marginTop: Platform.OS === "ios" && 20,
+          // marginTop: Platform.OS === "ios" && 20,
         }}
       >
         <Text style={formHeading}>반 품 내 역</Text>
@@ -139,16 +139,15 @@ const Refunds = ({ navigation }) => {
           }}
         >
           <ScrollView showsVerticalScrollIndicator={false}>
-            {!loadingDelete &&
-              (refunds?.length > 0 ? (
-                refunds.map((item, index) => (
-                  <RefundItem key={item._id} item={item} />
-                ))
-              ) : (
-                <Headline style={{ textAlign: "center" }}>
-                  반품이 없습니다.!!
-                </Headline>
-              ))}
+            {!loadingDelete && refunds?.length > 0 ? (
+              refunds.map((item, index) => (
+                <RefundItem key={item._id} item={item} />
+              ))
+            ) : (
+              <Headline style={{ textAlign: "center" }}>
+                반품이 없습니다.!!
+              </Headline>
+            )}
           </ScrollView>
         </View>
       )}

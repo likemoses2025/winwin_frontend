@@ -5,8 +5,19 @@ import { colors } from "../styles/styles";
 
 const nf = new Intl.NumberFormat();
 
-const TableComponent = ({ orderItems }) => {
+const TableComponent = ({ orderItems = [], refundItems = [] }) => {
   const textStyle = { color: "white", fontWeight: "700", fontSize: 15 };
+  const [tableItems, setTableItems] = useState("");
+  console.log("orderItems: " + orderItems);
+  console.log("refundItems: " + refundItems);
+  if (orderItems?.length > 0) {
+    setTableItems(orderItems);
+  } else if (refundItems?.length > 0) {
+    setTableItems(refundItems);
+  } else {
+    return null;
+  }
+
   return (
     <DataTable style={{ marginTop: 15 }}>
       <DataTable.Header
@@ -54,7 +65,7 @@ const TableComponent = ({ orderItems }) => {
           borderRadius: 10,
         }}
       >
-        {orderItems.map((item) => (
+        {tableItems.map((item) => (
           <DataTable.Row key={item.code} style={{ borderBottomWidth: 1 }}>
             <DataTable.Cell style={{ flex: 1.7 }}>{item.name}</DataTable.Cell>
             <DataTable.Cell style={{ flex: 0.5 }} numeric>

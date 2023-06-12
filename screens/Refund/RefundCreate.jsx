@@ -12,9 +12,7 @@ import { colors, defaultStyle } from "../../styles/styles";
 const RefundCreate = ({ route, navigation }) => {
   const { expiredProducts } = useSelector((state) => state.product);
   const [refundList, setRefundList] = useState(expiredProducts);
-  const [loading, setLoading] = useState(true);
-
-  setTimeout(() => setLoading(false), 2500); // 2.5초 후 로딩을 false로 설정
+  const [loading, setLoading] = useState(false);
 
   const changeQuantity = (code, quantity) => {
     const NewRefundList = refundList.map((item) =>

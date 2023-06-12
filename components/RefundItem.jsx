@@ -18,7 +18,7 @@ const RefundItem = (item) => {
         alignSelf: "center",
         padding: 5,
         borderRadius: 7,
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
         flex: 1,
       }}
     >
@@ -32,6 +32,7 @@ const RefundItem = (item) => {
           textAlignVertical: "center",
           overflow: "hidden",
           color: "white",
+          fontSize: 25,
           fontWeight: "900",
         }}
       >
@@ -43,6 +44,8 @@ const RefundItem = (item) => {
           textAlign: "center",
           textAlignVertical: "center",
           justifyContent: "center",
+          fontSize: 17,
+          fontWeight: "700",
           flex: 2,
         }}
       >
@@ -53,24 +56,35 @@ const RefundItem = (item) => {
           textAlign: "center",
           textAlignVertical: "center",
           justifyContent: "center",
+          fontSize: 17,
+          fontWeight: "700",
           flex: 2,
         }}
       >
         176박스
       </Text>
-      <View style={{ flexDirection: "row", flex: 3 }}>
-        <IconButton
-          icon="update"
-          iconColor={MD3Colors.primary0}
-          size={30}
-          onPress={() => console.log("Pressed")}
-        />
-        <IconButton
-          icon="update"
-          iconColor={MD3Colors.primary0}
-          size={30}
-          onPress={() => console.log("Pressed")}
-        />
+      <Text style={{ borderWidth: 0.4 }}></Text>
+      <View style={{ flexDirection: "row", flex: 2 }}>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <IconButton
+            icon="square-edit-outline"
+            iconColor={MD3Colors.primary0}
+            size={30}
+            onPress={() => console.log("Pressed")}
+            style={{ marginBottom: -10 }}
+          />
+          <Text>수정</Text>
+        </View>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <IconButton
+            icon="delete-outline"
+            iconColor={MD3Colors.primary0}
+            size={30}
+            onPress={() => console.log("Pressed")}
+            style={{ marginBottom: -10 }}
+          />
+          <Text>삭제</Text>
+        </View>
       </View>
       <Divider />
     </View>
