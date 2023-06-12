@@ -8,7 +8,12 @@ import Header from "../../components/Header";
 import Heading from "../../components/Heading";
 import SelectModal from "../../components/SelectModal";
 import TableComponent from "../../components/TableComponent";
-import { createOrder, updateOrder } from "../../redux/actions/otherAction";
+import {
+  createOrder,
+  createRefund,
+  updateOrder,
+  updateRefund,
+} from "../../redux/actions/otherAction";
 import { colors, defaultStyle } from "../../styles/styles";
 import { useMessageAndErrorOther } from "../../utils/hooks";
 
@@ -27,7 +32,7 @@ const RefundConfirm = ({ route, navigation }) => {
 
   const [ginnySackNumber, setGinnySackNumber] = useState(1);
   const [totalAmount, setTotalAmount] = useState(route.params?.totalAmount);
-  const [totalBox, setTotalBox] = useState(route.params?.totalBox);
+  const [totalValue, setTotalValue] = useState(route.params?.totalValue);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const toggleModal = () => {
@@ -38,39 +43,37 @@ const RefundConfirm = ({ route, navigation }) => {
 
   useEffect(() => {
     setTotalAmount(amount);
-    setTotalBox(box);
+    setTotalValue(refundValue);
   }, [isFocused]);
 
   const amount = refundItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
-  const box = refundItems.reduce((acc, item) => acc + item.quantity, 0);
+  const refundValue = refundItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const createRefundSubmitHandler = () => {
-    const orderObj = {
+    const refundObj = {
       team: user.team,
-      deliveryDate: deliveryDate,
-      deliveryPlace: deliveryPlace,
-      totalBox: totalBox,
+      refundDate: refundDate,
+      totalValue: totalValue,
       totalAmount: totalAmount,
-      orderItems: JSON.stringify(orderItems),
+      refundItems: JSON.stringify(refundItems),
     };
 
-    dispatch(createOrder(orderObj));
+    dispatch(createRefund(refundObj));
   };
 
   const updateRefundSubmitHandler = () => {
     const updateObj = {
       team: user.team,
-      deliveryDate: date,
-      deliveryPlace: deliveryPlace,
-      totalBox: totalBox,
+      refundDate: refundDate,
+      totalValue: totalValue,
       totalAmount: totalAmount,
-      orderItems: JSON.stringify(orderItems),
+      refundItems: JSON.stringify(refundItems),
     };
 
-    dispatch(updateOrder(id, updateObj));
+    dispatch(updateRefund(id, updateObj));
   };
 
   return (
@@ -100,7 +103,7 @@ const RefundConfirm = ({ route, navigation }) => {
             backgroundColor: "#f0f0f0",
           }}
         >
-          <PriceTag heading={"전체수량"} value={totalBox} />
+          <PriceTag heading={"전체수량"} value={totalValue} />
           <PriceTag heading={"전체합계"} value={totalAmount} />
         </View>
         <View

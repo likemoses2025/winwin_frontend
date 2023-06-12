@@ -36,6 +36,15 @@ export const otherReducer = createReducer({}, (builder) => {
     .addCase("deleteMyOrderRequest", (state) => {
       state.loading = true;
     })
+    .addCase("createRefundRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("updateRefundRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("deleteMyRefundRequest", (state) => {
+      state.loading = true;
+    })
     // Success
     .addCase("changePasswordSuccess", (state, action) => {
       state.loading = false;
@@ -81,6 +90,19 @@ export const otherReducer = createReducer({}, (builder) => {
       state.loading = false;
       state.message = action.payload;
     })
+    .addCase("createRefundSuccess", (state, action) => {
+      state.loading = false;
+      state.message = action.payload.message;
+      state.refund = action.payload.refund;
+    })
+    .addCase("updateRefundSuccess", (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    })
+    .addCase("deleteMyRefundSuccess", (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    })
     // Failure
     .addCase("changePasswordFailure", (state, action) => {
       state.loading = false;
@@ -123,6 +145,18 @@ export const otherReducer = createReducer({}, (builder) => {
       state.error = action.payload;
     })
     .addCase("deleteMyOrderFailure", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("createRefundFailure", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("updateRefundFailure", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("deleteMyRefundFailure", (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

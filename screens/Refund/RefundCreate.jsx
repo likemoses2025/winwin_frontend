@@ -24,7 +24,7 @@ const RefundCreate = ({ route, navigation }) => {
   const refundCreateHandler = () => {
     const refundItems = refundList.filter((item) => item.quantity > 0);
     navigation.navigate("refundconfirm", {
-      refundItems,
+      refundItems: refundItems,
       name: "refundCreate",
     });
   };

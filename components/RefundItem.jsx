@@ -5,7 +5,9 @@ import { colors } from "../styles/styles";
 
 const nf = new Intl.NumberFormat();
 
-const RefundItem = (item) => {
+const RefundItem = ({
+  item: { gunnySackNumber, reFundDate, totalValue, totalAmount },
+}) => {
   return (
     <View
       style={{
@@ -36,7 +38,7 @@ const RefundItem = (item) => {
           fontWeight: "900",
         }}
       >
-        1
+        {gunnySackNumber}
       </Text>
 
       <Text
@@ -44,24 +46,24 @@ const RefundItem = (item) => {
           textAlign: "center",
           textAlignVertical: "center",
           justifyContent: "center",
-          fontSize: 17,
+          fontSize: 15,
           fontWeight: "700",
           flex: 2,
         }}
       >
-        22년 7월
+        {reFundDate}
       </Text>
       <Text
         style={{
           textAlign: "center",
           textAlignVertical: "center",
           justifyContent: "center",
-          fontSize: 17,
+          fontSize: 15,
           fontWeight: "700",
           flex: 2,
         }}
       >
-        176박스
+        {totalValue} 박스
       </Text>
       <Text style={{ borderWidth: 0.4 }}></Text>
       <View style={{ flexDirection: "row", flex: 2 }}>

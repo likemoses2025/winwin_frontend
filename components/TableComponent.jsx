@@ -8,8 +8,8 @@ const nf = new Intl.NumberFormat();
 const TableComponent = ({ orderItems = [], refundItems = [] }) => {
   const textStyle = { color: "white", fontWeight: "700", fontSize: 15 };
   const [tableItems, setTableItems] = useState("");
-  console.log("orderItems: " + orderItems);
-  console.log("refundItems: " + refundItems);
+  console.log("orderItems: " + JSON.stringify(orderItems));
+  console.log("refundItems: " + JSON.stringify(refundItems));
   if (orderItems?.length > 0) {
     setTableItems(orderItems);
   } else if (refundItems?.length > 0) {

@@ -303,6 +303,53 @@ export const deleteMyOrder = (id) => async (dispatch) => {
   }
 };
 
+export const createRefund = (refundObj) => async (dispatch) => {
+  try {
+    dispatch({ type: "createRefundRequest" });
+
+    const { data } = await axios.post(`${server}/refund/new`, refundObj, {
+      withCredentials: true,
+    });
+
+    dispatch({
+      type: "createRefundSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "createRefundFailure",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateRefund = (id, updateObj) => async (dispatch) => {
+  try {
+    dispatch({
+      type: "updateOrderRequest",
+    });
+    const { data } = await axios.put(
+      `${server}/order/update/${id}`,
+      updateObj,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    dispatch({
+      type: "updateOrderSuccess",
+      payload: data.message,
+    });
+  } catch (error) {
+    dispatch({
+      type: "updateOrderFailure",
+      payload: error?.response.data.message,
+    });
+  }
+};
+
 export const deleteMyRefund = (id) => async (dispatch) => {
   try {
     dispatch({

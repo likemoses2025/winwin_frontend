@@ -23,7 +23,30 @@ const Refunds = ({ navigation }) => {
   // refunds를 useGetRefunds를 통해서 가져와야함
   const { loading } = useGetRefunds(dispatch, isFocused);
   const refunds = [
-    { gunnySackNumber: 1, yearMonth: "22년 7월", totalBox: "176박스" },
+    {
+      _id: 1,
+      gunnySackNumber: 1,
+      reFundDate: "22년 7월",
+      totalValue: 150,
+      totalAmount: 235067,
+      refundItems: "refundItem",
+    },
+    {
+      _id: 2,
+      gunnySackNumber: 2,
+      reFundDate: "22년 7월",
+      totalValue: 176,
+      totalAmount: 235067,
+      refundItems: "refundItem2",
+    },
+    {
+      _id: 3,
+      gunnySackNumber: 3,
+      reFundDate: "22년 7월",
+      totalValue: 100,
+      totalAmount: 235067,
+      refundItems: "refundItem2",
+    },
   ];
 
   const deleteRefundHandler = (id) => {

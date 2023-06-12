@@ -10,8 +10,6 @@ const Footer = ({ activeRoute = "home" }) => {
 
   const { loading, isAuthenticated } = useSelector((state) => state.user);
 
-  console.log("loading : " + loading);
-
   const navigatationHandler = (key) => {
     switch (key) {
       case 0:

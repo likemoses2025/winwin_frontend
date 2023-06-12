@@ -23,7 +23,7 @@ const SignUp = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
-  const [sapCode, setSapCode] = useState("");
+  const [storeCode, setStoreCode] = useState("");
   const [storeName, setStoreName] = useState("");
   const [storeAddress, setStoreAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -35,7 +35,7 @@ const SignUp = ({ navigation, route }) => {
     !email ||
     !password ||
     !userName ||
-    !sapCode ||
+    !storeCode ||
     !storeName ||
     !storeAddress ||
     !phoneNumber;
@@ -48,7 +48,7 @@ const SignUp = ({ navigation, route }) => {
     myForm.append("email", email);
     myForm.append("password", password);
     myForm.append("userName", userName);
-    myForm.append("sapCode", sapCode);
+    myForm.append("storeCode", storeCode);
     myForm.append("storeName", storeName);
     myForm.append("storeAddress", storeAddress);
     myForm.append("phoneNumber", phoneNumber);
@@ -139,9 +139,9 @@ const SignUp = ({ navigation, route }) => {
             />
             <TextInput
               {...inputOptions}
-              placeholder="SapCode"
-              value={sapCode}
-              onChangeText={setSapCode}
+              placeholder="SAP 점포코드"
+              value={storeCode}
+              onChangeText={setStoreCode}
             />
             <TextInput
               {...inputOptions}
