@@ -1,20 +1,18 @@
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import { colors } from "../styles/styles";
 
 const SelectModal = ({
   isModalVisible,
   toggleModal,
-  deliveryPlace,
-  setDeliveryPlace,
+  selectItem,
+  setSelectItem,
 }) => {
-  const setDeliveryPlaceHandler = (name) => {
-    setDeliveryPlace(name);
+  const setSelectHandler = (name) => {
+    setSelectItem(name);
     toggleModal(!isModalVisible);
   };
-
-  console.log("isModalVisible : " + isModalVisible);
 
   return (
     <Modal
@@ -23,23 +21,34 @@ const SelectModal = ({
       backdropOpacity={0.7}
       animationIn={"zoomInDown"}
       animationOut={"zoomOutUp"}
+      style={{ height: 300 }}
     >
-      <View style={{ backgroundColor: colors.color2, borderRadius: 30 }}>
-        {deliveryPlace.map((item) => (
-          <TouchableOpacity key={item._id}>
-            <Text
-              style={{
-                marginTop: 15,
-                fontSize: 20,
-                textAlign: "center",
-                marginBottom: 15,
-              }}
-              onPress={() => setDeliveryPlaceHandler(item.name)}
-            >
-              {item.name}
-            </Text>
-          </TouchableOpacity>
-        ))}
+      <View style={{ flex: 1, height: 100 }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{
+            backgroundColor: colors.color2,
+            borderWidth: 0.5,
+            marginTop: 5,
+            borderRadius: 10,
+          }}
+        >
+          {selectItem.map((item) => (
+            <TouchableOpacity key={item._id}>
+              <Text
+                style={{
+                  marginTop: 15,
+                  fontSize: 20,
+                  textAlign: "center",
+                  marginBottom: 15,
+                }}
+                onPress={() => setSelectHandler(item.name)}
+              >
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
     </Modal>
   );

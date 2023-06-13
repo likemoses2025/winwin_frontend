@@ -26,13 +26,19 @@ const ConfirmOrder = ({ route, navigation }) => {
   const { user } = useSelector((state) => state.user);
   const orderItems = route.params?.orderItems;
 
-  console.log("user: " + JSON.stringify(user.deliveryPlace));
+  if (user.deliveryPlace.length === 0) {
+    return (
+      <View>
+        <Text>배송장소를 등록해 주세요!!</Text>
+      </View>
+    );
+  }
+
+  console.log("Router.params: " + JSON.stringify(route.params));
 
   const [id] = useState(route.params?.id);
-  const [name] = useState(route.params?.name);
-  const [deliveryPlace, setDeliveryPlace] = useState(
-    user.deliveryPlace[0].name
-  );
+  const [routeName] = useState(route.params?.routeName);
+  const [selectItem, setSelectItem] = useState(user.deliveryPlace[0].name);
   const [deliveryDate, setDeliveryDate] = useState(route.params?.deliveryDate);
   const [totalAmount, setTotalAmount] = useState(route.params?.totalAmount);
   const [totalBox, setTotalBox] = useState(route.params?.totalBox);
@@ -46,8 +52,6 @@ const ConfirmOrder = ({ route, navigation }) => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  console.log("deliveryPlace", deliveryPlace);
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "orders");
 
@@ -77,11 +81,10 @@ const ConfirmOrder = ({ route, navigation }) => {
     const orderObj = {
       team: user.team,
       deliveryDate: deliveryDate,
-      deliveryPlace: deliveryPlace,
+      deliveryPlace: selectItem,
       totalBox: totalBox,
       totalAmount: totalAmount,
       orderItems: JSON.stringify(orderItems),
-      createdAt: new Date(Date.now),
     };
 
     dispatch(createOrder(orderObj));
@@ -91,11 +94,10 @@ const ConfirmOrder = ({ route, navigation }) => {
     const updateObj = {
       team: user.team,
       deliveryDate: date,
-      deliveryPlace: deliveryPlace,
+      deliveryPlace: selectItem,
       totalBox: totalBox,
       totalAmount: totalAmount,
       orderItems: JSON.stringify(orderItems),
-      createdAt: new Date(Date.now),
     };
 
     dispatch(updateOrder(id, updateObj));
@@ -184,7 +186,7 @@ const ConfirmOrder = ({ route, navigation }) => {
                 }}
               >
                 <Text>배송장소</Text>
-                <Text style={{ fontSize: 16 }}>{deliveryPlace}</Text>
+                <Text style={{ fontSize: 16 }}>{selectItem}</Text>
               </View>
               <TouchableOpacity
                 style={{ justifyContent: "center", alignItems: "center" }}
@@ -203,15 +205,15 @@ const ConfirmOrder = ({ route, navigation }) => {
                 <SelectModal
                   isModalVisible={isModalVisible}
                   toggleModal={toggleModal}
-                  deliveryPlace={user.deliveryPlace}
-                  setDeliveryPlace={setDeliveryPlace}
+                  selectItem={user.deliveryPlace}
+                  setSelectItem={setSelectItem}
                 />
               </TouchableOpacity>
             </View>
           </View>
 
           {/******* Table *******/}
-          <TableComponent orderItems={orderItems} />
+          <TableComponent tableItems={orderItems} />
         </View>
         <View
           style={{
@@ -233,7 +235,7 @@ const ConfirmOrder = ({ route, navigation }) => {
             marginTop: 10,
           }}
         >
-          {name !== "orderCreate" && (
+          {routeName !== "orderCreate" && (
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("orderupdate", {
@@ -259,7 +261,7 @@ const ConfirmOrder = ({ route, navigation }) => {
 
           <TouchableOpacity
             onPress={
-              name === "orderCreate"
+              routeName === "orderCreate"
                 ? createOrderSubmitHandler
                 : updateOrderSubmitHandler
             }
@@ -274,7 +276,7 @@ const ConfirmOrder = ({ route, navigation }) => {
               textColor={colors.color2}
               loading={loading}
             >
-              {name === "orderCreate" ? "주문하기" : "수정하기"}
+              {routeName === "orderCreate" ? "주문하기" : "수정하기"}
             </Button>
           </TouchableOpacity>
         </View>

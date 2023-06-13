@@ -5,18 +5,8 @@ import { colors } from "../styles/styles";
 
 const nf = new Intl.NumberFormat();
 
-const TableComponent = ({ orderItems = [], refundItems = [] }) => {
+const TableComponent = ({ tableItems }) => {
   const textStyle = { color: "white", fontWeight: "700", fontSize: 15 };
-  const [tableItems, setTableItems] = useState("");
-  console.log("orderItems: " + JSON.stringify(orderItems));
-  console.log("refundItems: " + JSON.stringify(refundItems));
-  if (orderItems?.length > 0) {
-    setTableItems(orderItems);
-  } else if (refundItems?.length > 0) {
-    setTableItems(refundItems);
-  } else {
-    return null;
-  }
 
   return (
     <DataTable style={{ marginTop: 15 }}>

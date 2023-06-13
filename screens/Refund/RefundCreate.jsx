@@ -12,7 +12,9 @@ import { colors, defaultStyle } from "../../styles/styles";
 const RefundCreate = ({ route, navigation }) => {
   const { expiredProducts } = useSelector((state) => state.product);
   const [refundList, setRefundList] = useState(expiredProducts);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  setTimeout(() => setLoading(false), 2500); // 2.5초 후 로딩을 false로 설정
 
   const changeQuantity = (code, quantity) => {
     const NewRefundList = refundList.map((item) =>
@@ -51,7 +53,7 @@ const RefundCreate = ({ route, navigation }) => {
               alignItems: "center",
             }}
           >
-            <Heading text1="주문하기" />
+            <Heading text1="반품하기" />
           </View>
           <ScrollView
             contentContainerStyle={{

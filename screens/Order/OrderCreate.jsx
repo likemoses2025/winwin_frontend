@@ -13,7 +13,6 @@ const OrderCreate = ({ route, navigation }) => {
   const { orderProducts } = useSelector((state) => state.product);
   const [orderList, setOrderList] = useState(orderProducts);
   const [loading, setLoading] = useState(true);
-  // const { orderItems } = route.params?.orderItems;
 
   setTimeout(() => setLoading(false), 2500); // 2.5초 후 로딩을 false로 설정
 
@@ -28,7 +27,7 @@ const OrderCreate = ({ route, navigation }) => {
     const orderItems = orderList.filter((item) => item.quantity > 0);
     navigation.navigate("confirmorder", {
       orderItems,
-      name: "orderCreate",
+      routeName: "orderCreate",
     });
   };
 

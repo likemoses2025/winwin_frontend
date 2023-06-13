@@ -1,4 +1,3 @@
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { useIsFocused } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -8,14 +7,10 @@ import Header from "../../components/Header";
 import Heading from "../../components/Heading";
 import SelectModal from "../../components/SelectModal";
 import TableComponent from "../../components/TableComponent";
-import {
-  createOrder,
-  createRefund,
-  updateOrder,
-  updateRefund,
-} from "../../redux/actions/otherAction";
+import { createRefund, updateRefund } from "../../redux/actions/otherAction";
 import { colors, defaultStyle } from "../../styles/styles";
 import { useMessageAndErrorOther } from "../../utils/hooks";
+import { gunnySackNumber, refundDate } from "../../assets/data/data";
 
 const nf = new Intl.NumberFormat();
 
@@ -24,13 +19,9 @@ const RefundConfirm = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const refundItems = route.params?.refundItems;
-
-  console.log("refundItems: " + refundItems);
-
   const [id] = useState(route.params?.id);
   const [name] = useState(route.params?.name);
-
-  const [ginnySackNumber, setGinnySackNumber] = useState(1);
+  const [selectItem, setSelectItem] = useState(refundDate[0].name);
   const [totalAmount, setTotalAmount] = useState(route.params?.totalAmount);
   const [totalValue, setTotalValue] = useState(route.params?.totalValue);
 
@@ -38,6 +29,8 @@ const RefundConfirm = ({ route, navigation }) => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
+  console.log("selectItem :" + selectItem);
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "refunds");
 
@@ -86,12 +79,104 @@ const RefundConfirm = ({ route, navigation }) => {
             justifyContent: "center",
             alignItems: "center",
           }}
-          text2="주문 확인"
+          text2="반품 확인"
         />
 
         <View style={{ paddingVertical: 20, flex: 1 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-evenly",
+                borderWidth: 0.3,
+                padding: 5,
+                borderRadius: 10,
+                width: "45%",
+              }}
+            >
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text>반품년월</Text>
+                <Text style={{ fontSize: 16 }}>{selectItem}</Text>
+              </View>
+              <TouchableOpacity
+                style={{ justifyContent: "center", alignItems: "center" }}
+                onPress={toggleModal}
+              >
+                <Avatar.Icon
+                  icon="calendar-month-outline"
+                  color={colors.color1}
+                  size={30}
+                  style={{
+                    backgroundColor: "white",
+                    borderWidth: 1,
+                    borderColor: "red",
+                  }}
+                />
+                <SelectModal
+                  isModalVisible={isModalVisible}
+                  toggleModal={toggleModal}
+                  selectItem={refundDate}
+                  setSelectItem={setSelectItem}
+                />
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-evenly",
+                borderWidth: 0.3,
+                padding: 5,
+                borderRadius: 10,
+                width: "45%",
+              }}
+            >
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text>마대번호</Text>
+                <Text style={{ fontSize: 16 }}>{selectItem}</Text>
+              </View>
+              <TouchableOpacity
+                style={{ justifyContent: "center", alignItems: "center" }}
+                onPress={toggleModal}
+              >
+                <Avatar.Icon
+                  icon="numeric-1-box-multiple-outline"
+                  color={colors.color1}
+                  size={30}
+                  style={{
+                    backgroundColor: "white",
+                    borderWidth: 1,
+                    borderColor: "red",
+                  }}
+                />
+                <SelectModal
+                  isModalVisible={isModalVisible}
+                  toggleModal={toggleModal}
+                  selectItem={gunnySackNumber}
+                  setSelectItem={setSelectItem}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+
           {/******* Table *******/}
-          <TableComponent refundItems={refundItems} />
+          <TableComponent tableItems={refundItems} name={name} />
         </View>
         <View
           style={{
@@ -103,8 +188,8 @@ const RefundConfirm = ({ route, navigation }) => {
             backgroundColor: "#f0f0f0",
           }}
         >
-          <PriceTag heading={"전체수량"} value={totalValue} />
-          <PriceTag heading={"전체합계"} value={totalAmount} />
+          <PriceTag heading={"반품수량"} value={totalValue} />
+          <PriceTag heading={"반품금액"} value={totalAmount} />
         </View>
         <View
           style={{
@@ -175,7 +260,7 @@ const PriceTag = ({ heading, value }) => (
     <Text style={{ fontWeight: "800" }}>{heading}</Text>
     <Text>
       {nf.format(value)}
-      {heading === "전체수량" ? "박스" : "원"}
+      {heading === "반품수량" ? "식" : "원"}
     </Text>
   </View>
 );
