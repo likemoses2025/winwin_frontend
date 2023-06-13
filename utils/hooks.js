@@ -183,3 +183,19 @@ export const useGetRefunds = (dispatch, isFocused) => {
 
   return { refunds, loading };
 };
+
+export const useGetRefundProducts = (dispatch, isFocused) => {
+  const { expiredProducts, error, loading } = useSelector(
+    (state) => state.product
+  );
+
+  useEffect(() => {
+    if (error) {
+      Toast.show({ type: "error", text1: error });
+      dispatch({ type: "clearError" });
+    }
+    dispatch(getRefundProducts());
+  }, [dispatch, isFocused, error]);
+
+  return { expiredProducts, loading };
+};
