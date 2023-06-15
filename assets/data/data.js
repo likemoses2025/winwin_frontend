@@ -1,4 +1,4 @@
-export const refundDate = [
+export const refundDateList = [
   { _id: "1", name: "23년 7월" },
   { _id: "2", name: "23년 8월" },
   { _id: "3", name: "23년 9월" },
@@ -19,7 +19,7 @@ export const refundDate = [
   { _id: "22", name: "24년 12월" },
 ];
 
-export const gunnySackNumber = [
+export const gunnySackNumberList = [
   { _id: "1", name: "1번" },
   { _id: "2", name: "2번" },
   { _id: "3", name: "3번" },

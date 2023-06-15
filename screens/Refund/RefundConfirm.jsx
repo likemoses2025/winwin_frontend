@@ -10,7 +10,7 @@ import TableComponent from "../../components/TableComponent";
 import { createRefund, updateRefund } from "../../redux/actions/otherAction";
 import { colors, defaultStyle } from "../../styles/styles";
 import { useMessageAndErrorOther } from "../../utils/hooks";
-import { gunnySackNumber, refundDate } from "../../assets/data/data";
+import { gunnySackNumberList, refundDateList } from "../../assets/data/data";
 
 const nf = new Intl.NumberFormat();
 
@@ -21,7 +21,10 @@ const RefundConfirm = ({ route, navigation }) => {
   const refundItems = route.params?.refundItems;
   const [id] = useState(route.params?.id);
   const [name] = useState(route.params?.name);
-  const [selectItem, setSelectItem] = useState(refundDate[0].name);
+  const [refundDate, setRefundDate] = useState(refundDateList[0].name);
+  const [gunnySackNumber, setGunnySackNumber] = useState(
+    gunnySackNumberList[0].name
+  );
   const [totalAmount, setTotalAmount] = useState(route.params?.totalAmount);
   const [totalValue, setTotalValue] = useState(route.params?.totalValue);
 
@@ -30,7 +33,8 @@ const RefundConfirm = ({ route, navigation }) => {
     setModalVisible(!isModalVisible);
   };
 
-  console.log("selectItem :" + selectItem);
+  console.log("refundDate :" + refundDate);
+  console.log("gunnySackNumber :" + gunnySackNumber);
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "refunds");
 
@@ -107,7 +111,7 @@ const RefundConfirm = ({ route, navigation }) => {
                 }}
               >
                 <Text>반품년월</Text>
-                <Text style={{ fontSize: 16 }}>{selectItem}</Text>
+                <Text style={{ fontSize: 16 }}>{refundDate}</Text>
               </View>
               <TouchableOpacity
                 style={{ justifyContent: "center", alignItems: "center" }}
@@ -126,8 +130,8 @@ const RefundConfirm = ({ route, navigation }) => {
                 <SelectModal
                   isModalVisible={isModalVisible}
                   toggleModal={toggleModal}
-                  selectItem={refundDate}
-                  setSelectItem={setSelectItem}
+                  refundDateList={refundDateList}
+                  setRefundDate={setRefundDate}
                 />
               </TouchableOpacity>
             </View>
@@ -149,7 +153,7 @@ const RefundConfirm = ({ route, navigation }) => {
                 }}
               >
                 <Text>마대번호</Text>
-                <Text style={{ fontSize: 16 }}>{selectItem}</Text>
+                <Text style={{ fontSize: 16 }}>{gunnySackNumber}</Text>
               </View>
               <TouchableOpacity
                 style={{ justifyContent: "center", alignItems: "center" }}
@@ -168,8 +172,8 @@ const RefundConfirm = ({ route, navigation }) => {
                 <SelectModal
                   isModalVisible={isModalVisible}
                   toggleModal={toggleModal}
-                  selectItem={gunnySackNumber}
-                  setSelectItem={setSelectItem}
+                  gunnySackNumberList={gunnySackNumberList}
+                  setGunnySackNumber={setGunnySackNumber}
                 />
               </TouchableOpacity>
             </View>
