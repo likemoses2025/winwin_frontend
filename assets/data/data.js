@@ -1,25 +1,4 @@
-export const refundDateList = [
-  { _id: "1", name: "23년 7월" },
-  { _id: "2", name: "23년 8월" },
-  { _id: "3", name: "23년 9월" },
-  { _id: "4", name: "23년 10월" },
-  { _id: "5", name: "23년 11월" },
-  { _id: "6", name: "23년 12월" },
-  { _id: "7", name: "24년 01월" },
-  { _id: "8", name: "24년 02월" },
-  { _id: "9", name: "24년 03월" },
-  { _id: "10", name: "24년 04월" },
-  { _id: "11", name: "24년 05월" },
-  { _id: "12", name: "24년 06월" },
-  { _id: "13", name: "24년 07월" },
-  { _id: "14", name: "24년 08월" },
-  { _id: "15", name: "24년 09월" },
-  { _id: "19", name: "24년 10월" },
-  { _id: "20", name: "24년 11월" },
-  { _id: "22", name: "24년 12월" },
-];
-
-export const gunnySackNumberList = [
+const gunnySackNumberList = [
   { _id: "1", name: "1번" },
   { _id: "2", name: "2번" },
   { _id: "3", name: "3번" },
@@ -71,3 +50,26 @@ export const gunnySackNumberList = [
   { _id: "49", name: "49번" },
   { _id: "50", name: "50번" },
 ];
+
+const refundDateList = [
+  { _id: "1", name: "23년 7월" },
+  { _id: "2", name: "23년 8월" },
+  { _id: "3", name: "23년 9월" },
+  { _id: "4", name: "23년 10월" },
+  { _id: "5", name: "23년 11월" },
+  { _id: "6", name: "23년 12월" },
+  { _id: "7", name: "24년 01월" },
+  { _id: "8", name: "24년 02월" },
+  { _id: "9", name: "24년 03월" },
+  { _id: "10", name: "24년 04월" },
+  { _id: "11", name: "24년 05월" },
+  { _id: "12", name: "24년 06월" },
+  { _id: "13", name: "24년 07월" },
+  { _id: "14", name: "24년 08월" },
+  { _id: "15", name: "24년 09월" },
+  { _id: "16", name: "24년 10월" },
+  { _id: "17", name: "24년 11월" },
+  { _id: "18", name: "24년 12월" },
+];
+
+export { refundDateList, gunnySackNumberList };

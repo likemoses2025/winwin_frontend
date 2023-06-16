@@ -3,36 +3,19 @@ import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
 import { colors } from "../styles/styles";
 
-const SelectModal = ({
-  isModalVisible,
-  toggleModal,
-  selectItem,
-  refundDateList,
+const GunnySackModal = ({
+  sackModalVisible,
+  toggleSackModal,
   gunnySackNumberList,
-  setRefundDate,
   setGunnySackNumber,
 }) => {
-  console.log("selectModal refundDateList" + refundDateList);
-  console.log("selectModal gunnySackNumberList" + gunnySackNumberList);
-
-  const selectDateHandler = (name) => {
-    setRefundDate(name);
-    toggleModal(!isModalVisible);
-  };
-
   const selectGunnySackHandler = (name) => {
     setGunnySackNumber(name);
-    toggleModal(!isModalVisible);
+    toggleSackModal(!sackModalVisible);
   };
-
-  const setSelectHandler = (name) => {
-    setSelectItem(name);
-    toggleModal(!isModalVisible);
-  };
-
   return (
     <Modal
-      isVisible={isModalVisible}
+      isVisible={sackModalVisible}
       backdropColor={colors.color3}
       backdropOpacity={0.7}
       animationIn={"zoomInDown"}
@@ -49,7 +32,7 @@ const SelectModal = ({
             borderRadius: 10,
           }}
         >
-          {refundDateList.map((item) => (
+          {gunnySackNumberList.map((item) => (
             <TouchableOpacity key={item._id}>
               <Text
                 style={{
@@ -58,11 +41,7 @@ const SelectModal = ({
                   textAlign: "center",
                   marginBottom: 15,
                 }}
-                onPress={() =>
-                  refundDateList !== undefined
-                    ? selectDateHandler(item.name)
-                    : selectGunnySackHandler(item.name)
-                }
+                onPress={() => selectGunnySackHandler(item.name)}
               >
                 {item.name}
               </Text>
@@ -74,4 +53,4 @@ const SelectModal = ({
   );
 };
 
-export default SelectModal;
+export default GunnySackModal;

@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
+import { gunnySackNumberList, refundDateList } from "../../assets/data/data.js";
+
 import Header from "../../components/Header";
 import Heading from "../../components/Heading";
-import SelectModal from "../../components/SelectModal";
+import GunnySackModal from "../../components/GunnySackModal";
+import RefundDateModal from "../../components/RefundDateModal";
 import TableComponent from "../../components/TableComponent";
 import { createRefund, updateRefund } from "../../redux/actions/otherAction";
 import { colors, defaultStyle } from "../../styles/styles";
 import { useMessageAndErrorOther } from "../../utils/hooks";
-import { gunnySackNumberList, refundDateList } from "../../assets/data/data";
 
 const nf = new Intl.NumberFormat();
 
@@ -28,13 +30,15 @@ const RefundConfirm = ({ route, navigation }) => {
   const [totalAmount, setTotalAmount] = useState(route.params?.totalAmount);
   const [totalValue, setTotalValue] = useState(route.params?.totalValue);
 
-  const [isModalVisible, setModalVisible] = useState(false);
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
+  const [dateModalVisible, setDateModalVisible] = useState(false);
+  const [sackModalVisible, setSackModalVisible] = useState(false);
 
-  console.log("refundDate :" + refundDate);
-  console.log("gunnySackNumber :" + gunnySackNumber);
+  const toggleDateModal = () => {
+    setDateModalVisible(!dateModalVisible);
+  };
+  const toggleSackModal = () => {
+    setSackModalVisible(!sackModalVisible);
+  };
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "refunds");
 
@@ -115,7 +119,7 @@ const RefundConfirm = ({ route, navigation }) => {
               </View>
               <TouchableOpacity
                 style={{ justifyContent: "center", alignItems: "center" }}
-                onPress={toggleModal}
+                onPress={toggleDateModal}
               >
                 <Avatar.Icon
                   icon="calendar-month-outline"
@@ -127,9 +131,9 @@ const RefundConfirm = ({ route, navigation }) => {
                     borderColor: "red",
                   }}
                 />
-                <SelectModal
-                  isModalVisible={isModalVisible}
-                  toggleModal={toggleModal}
+                <RefundDateModal
+                  dateModalVisible={dateModalVisible}
+                  toggleDateModal={toggleDateModal}
                   refundDateList={refundDateList}
                   setRefundDate={setRefundDate}
                 />
@@ -157,7 +161,7 @@ const RefundConfirm = ({ route, navigation }) => {
               </View>
               <TouchableOpacity
                 style={{ justifyContent: "center", alignItems: "center" }}
-                onPress={toggleModal}
+                onPress={toggleSackModal}
               >
                 <Avatar.Icon
                   icon="numeric-1-box-multiple-outline"
@@ -169,9 +173,9 @@ const RefundConfirm = ({ route, navigation }) => {
                     borderColor: "red",
                   }}
                 />
-                <SelectModal
-                  isModalVisible={isModalVisible}
-                  toggleModal={toggleModal}
+                <GunnySackModal
+                  sackModalVisible={sackModalVisible}
+                  toggleSackModal={toggleSackModal}
                   gunnySackNumberList={gunnySackNumberList}
                   setGunnySackNumber={setGunnySackNumber}
                 />
