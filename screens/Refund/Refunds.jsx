@@ -1,58 +1,49 @@
 import { useIsFocused } from "@react-navigation/native";
 import React from "react";
-import {
-  Platform,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Headline } from "react-native-paper";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Header from "../../components/Header";
 import Loader from "../../components/Loader";
+import RefundItem from "../../components/RefundItem";
+import { deleteMyRefund } from "../../redux/actions/otherAction";
+import { getMyRefunds } from "../../redux/actions/refundAction";
 import { colors, defaultStyle, formHeading } from "../../styles/styles";
 import { useGetRefunds, useMessageAndErrorOther } from "../../utils/hooks";
-import RefundItem from "../../components/RefundItem";
-import { getMyRefunds } from "../../redux/actions/refundAction";
-import { deleteMyRefund } from "../../redux/actions/otherAction";
-import { refundDateList } from "../../assets/data/data";
+
+const nf = new Intl.NumberFormat();
+
+// 반품 수정 기능 구현
+// 반품 삭제 기능 구현
+// 마대번호중 가장 큰것을 확인하고 거기에 +1을 하는 기능
+// 반품날짜 클릭하면 오늘년월 기준으로 +1월 ~ -5월 (6개월 모달 선택 기능:6개월치만 검색되도록)
 
 const Refunds = ({ navigation }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
-  // refunds를 useGetRefunds를 통해서 가져와야함
-  const { loading } = useGetRefunds(dispatch, isFocused);
-  const refunds = [
-    {
-      _id: 1,
-      gunnySackNumber: 1,
-      reFundDate: "22년 7월",
-      totalValue: 150,
-      totalAmount: 235067,
-      refundItems: "refundItem",
-    },
-    {
-      _id: 2,
-      gunnySackNumber: 2,
-      reFundDate: "22년 7월",
-      totalValue: 176,
-      totalAmount: 235067,
-      refundItems: "refundItem2",
-    },
-    {
-      _id: 3,
-      gunnySackNumber: 3,
-      reFundDate: "22년 7월",
-      totalValue: 100,
-      totalAmount: 235067,
-      refundItems: "refundItem2",
-    },
-  ];
+  useGetRefunds(dispatch, isFocused);
+  const { refunds, loading } = useGetRefunds(dispatch, isFocused);
+
+  // 년월 자동설정하기
+  const date = new Date();
+  const formattedYear = date.getFullYear().toString().slice(-2);
+  const month = date.getMonth() + 2;
+  const formattedDate = `${formattedYear}년 ${month}월`;
+  const filteredMonthRefunds = refunds.filter(
+    (item) => item.refundDate == formattedDate
+  );
+
+  console.log("Refunds refunds :" + JSON.stringify(refunds));
 
   const deleteRefundHandler = (id) => {
     dispatch(deleteMyRefund(id));
   };
+
+  const totalMonthAmount = filteredMonthRefunds.reduce(
+    (acc, item) => acc + item.totalAmount,
+    0
+  );
+
   const loadingDelete = useMessageAndErrorOther(
     dispatch,
     null,
@@ -104,7 +95,9 @@ const Refunds = ({ navigation }) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 18, fontWeight: "600" }}>23년 7월</Text>
+            <Text style={{ fontSize: 18, fontWeight: "600" }}>
+              {formattedDate}
+            </Text>
           </View>
         </View>
         <View
@@ -125,7 +118,9 @@ const Refunds = ({ navigation }) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 17 }}>36 마대</Text>
+            <Text style={{ fontSize: 17 }}>
+              {filteredMonthRefunds.length} 마대
+            </Text>
           </View>
         </View>
         <View
@@ -146,7 +141,9 @@ const Refunds = ({ navigation }) => {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 17 }}>3,658,200 원</Text>
+            <Text style={{ fontSize: 17 }}>
+              {nf.format(totalMonthAmount)} 원
+            </Text>
           </View>
         </View>
       </View>
@@ -164,7 +161,7 @@ const Refunds = ({ navigation }) => {
         >
           <ScrollView showsVerticalScrollIndicator={false}>
             {!loadingDelete && refunds?.length > 0 ? (
-              refunds.map((item, index) => (
+              filteredMonthRefunds.map((item, index) => (
                 <RefundItem key={item._id} item={item} />
               ))
             ) : (

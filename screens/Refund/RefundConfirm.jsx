@@ -4,7 +4,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { gunnySackNumberList, refundDateList } from "../../assets/data/data.js";
-
 import Header from "../../components/Header";
 import Heading from "../../components/Heading";
 import GunnySackModal from "../../components/GunnySackModal";
@@ -55,7 +54,7 @@ const RefundConfirm = ({ route, navigation }) => {
 
   const createRefundSubmitHandler = () => {
     const refundObj = {
-      team: user.team,
+      gunnySackNumber: gunnySackNumber,
       refundDate: refundDate,
       totalValue: totalValue,
       totalAmount: totalAmount,
@@ -68,6 +67,7 @@ const RefundConfirm = ({ route, navigation }) => {
   const updateRefundSubmitHandler = () => {
     const updateObj = {
       team: user.team,
+      gunnySackNumber: gunnySackNumber,
       refundDate: refundDate,
       totalValue: totalValue,
       totalAmount: totalAmount,

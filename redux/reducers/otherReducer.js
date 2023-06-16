@@ -92,8 +92,7 @@ export const otherReducer = createReducer({}, (builder) => {
     })
     .addCase("createRefundSuccess", (state, action) => {
       state.loading = false;
-      state.message = action.payload.message;
-      state.refund = action.payload.refund;
+      state.message = action.payload;
     })
     .addCase("updateRefundSuccess", (state, action) => {
       state.loading = false;

@@ -2,12 +2,13 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Divider, IconButton, MD3Colors } from "react-native-paper";
 import { colors } from "../styles/styles";
+import { useNavigation } from "@react-navigation/native";
 
 const nf = new Intl.NumberFormat();
 
-const RefundItem = ({
-  item: { gunnySackNumber, reFundDate, totalValue, totalAmount },
-}) => {
+const RefundItem = ({ item }) => {
+  const navigation = useNavigation();
+  const { gunnySackNumber, refundDate, totalValue } = item;
   return (
     <View
       style={{
@@ -51,7 +52,7 @@ const RefundItem = ({
           flex: 2,
         }}
       >
-        {reFundDate}
+        {refundDate}
       </Text>
       <Text
         style={{
@@ -63,7 +64,7 @@ const RefundItem = ({
           flex: 2,
         }}
       >
-        {totalValue} 박스
+        {totalValue} 식
       </Text>
       <Text style={{ borderWidth: 0.4 }}></Text>
       <View style={{ flexDirection: "row", flex: 2 }}>
@@ -72,8 +73,8 @@ const RefundItem = ({
             icon="square-edit-outline"
             iconColor={MD3Colors.primary0}
             size={30}
-            onPress={() => console.log("Pressed")}
             style={{ marginBottom: -10 }}
+            onPressIn={() => navigation.navigate("refundconfirm")}
           />
           <Text>수정</Text>
         </View>

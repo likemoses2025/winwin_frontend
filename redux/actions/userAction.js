@@ -32,19 +32,14 @@ export const loadUser = () => async (dispatch) => {
     dispatch({
       type: "loadUserRequest",
     });
-    console.log("Working 1");
     const { data } = await axios.get(`${server}/user/me`, {
       withCredentials: true,
     });
-    console.log("Working 2 data", data);
-
     dispatch({
       type: "loadUserSuccess",
       payload: data.user,
     });
-    console.log("Working 3");
   } catch (error) {
-    console.log("Working Error", error.message);
     dispatch({
       type: "loadUserFailure",
       payload: error.response.data.message,

@@ -7,24 +7,8 @@ const SelectModal = ({
   isModalVisible,
   toggleModal,
   selectItem,
-  refundDateList,
-  gunnySackNumberList,
-  setRefundDate,
-  setGunnySackNumber,
+  setSelectItem,
 }) => {
-  console.log("selectModal refundDateList" + refundDateList);
-  console.log("selectModal gunnySackNumberList" + gunnySackNumberList);
-
-  const selectDateHandler = (name) => {
-    setRefundDate(name);
-    toggleModal(!isModalVisible);
-  };
-
-  const selectGunnySackHandler = (name) => {
-    setGunnySackNumber(name);
-    toggleModal(!isModalVisible);
-  };
-
   const setSelectHandler = (name) => {
     setSelectItem(name);
     toggleModal(!isModalVisible);
@@ -49,7 +33,7 @@ const SelectModal = ({
             borderRadius: 10,
           }}
         >
-          {refundDateList.map((item) => (
+          {selectItem.map((item) => (
             <TouchableOpacity key={item._id}>
               <Text
                 style={{
@@ -58,11 +42,7 @@ const SelectModal = ({
                   textAlign: "center",
                   marginBottom: 15,
                 }}
-                onPress={() =>
-                  refundDateList !== undefined
-                    ? selectDateHandler(item.name)
-                    : selectGunnySackHandler(item.name)
-                }
+                onPress={() => setSelectHandler(item.name)}
               >
                 {item.name}
               </Text>

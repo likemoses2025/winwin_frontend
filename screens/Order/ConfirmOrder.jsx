@@ -34,8 +34,6 @@ const ConfirmOrder = ({ route, navigation }) => {
     );
   }
 
-  console.log("Router.params: " + JSON.stringify(route.params));
-
   const [id] = useState(route.params?.id);
   const [routeName] = useState(route.params?.routeName);
   const [selectItem, setSelectItem] = useState(user.deliveryPlace[0].name);
