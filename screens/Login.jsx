@@ -1,89 +1,79 @@
-import { View, Text, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import { Button, TextInput } from "react-native-paper";
+import { useDispatch } from "react-redux";
+import Footer from "../components/Footer";
+import { login } from "../redux/actions/userAction";
 import {
   colors,
   defaultStyle,
   formHeading,
+  formStyles,
   inputOptions,
-  formStyles as styles,
 } from "../styles/styles";
-import { Button, TextInput } from "react-native-paper";
-import Footer from "../components/Footer";
-import { useDispatch } from "react-redux";
-import { login } from "../redux/actions/userAction";
 import { useMessageAndErrorUser } from "../utils/hooks";
+import { useNavigation } from "@react-navigation/native";
 
-const Login = ({ navigation }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const loading = useMessageAndErrorUser(navigation, dispatch, "profile");
+  const navigation = useNavigation();
 
   const submitHandler = () => {
     dispatch(login(email, password));
-    setEmail("");
-    setPassword("");
   };
+
+  const loading = useMessageAndErrorUser(dispatch, navigation, "profile");
+
   return (
     <>
-      <View
-        style={{
-          ...defaultStyle,
-          paddingBottom: 150,
-          backgroundColor: colors.color2,
-        }}
-      >
+      <View style={{ ...defaultStyle, backgroundColor: colors.color2 }}>
         {/* Heading */}
         <View style={{ marginBottom: 20 }}>
-          <Text style={formHeading}>로그인 하기</Text>
+          <Text style={formHeading}>Login</Text>
         </View>
-
-        <View style={styles.container}>
+        <View style={formStyles.container}>
           <TextInput
-            {...inputOptions}
-            placeholder="이메일"
             keyboardType="email-address"
+            {...inputOptions}
+            placeholder="Email"
             value={email}
             onChangeText={setEmail}
           />
-
           <TextInput
             {...inputOptions}
-            placeholder="패스워드"
+            placeholder="Password"
             secureTextEntry={true}
             value={password}
             onChangeText={setPassword}
           />
-
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.navigate("forgetpassword")}
           >
-            <Text style={styles.forget}>패스워드를 잊으셨나요?</Text>
+            <Text style={formStyles.forget}>Forget Password?</Text>
           </TouchableOpacity>
 
           <Button
-            loading={loading}
             textColor={colors.color2}
             disabled={email === "" || password === ""}
-            style={styles.btn}
+            style={formStyles.btn}
             onPress={submitHandler}
+            loading={loading}
           >
-            로그인
+            Log In
           </Button>
-
-          <Text style={styles.or}>OR</Text>
-
+          <Text style={formStyles.or}>OR</Text>
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => navigation.navigate("signup")}
           >
-            <Text style={styles.link}>회원가입</Text>
+            <Text style={formStyles.link}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>
-
       <Footer activeRoute="profile" />
     </>
   );

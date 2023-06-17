@@ -29,21 +29,27 @@ export const login = (email, password) => async (dispatch) => {
 
 export const loadUser = () => async (dispatch) => {
   try {
+    console.log("Working 1");
     dispatch({
       type: "loadUserRequest",
     });
     const { data } = await axios.get(`${server}/user/me`, {
       withCredentials: true,
     });
+    console.log("Working 2");
+
     dispatch({
       type: "loadUserSuccess",
       payload: data.user,
     });
+    console.log("Working 3");
   } catch (error) {
+    console.log("Working Error : ", error);
     dispatch({
-      type: "loadUserFailure",
+      type: "loadUserFail",
       payload: error.response.data.message,
     });
+    console.log(error.response.data.message);
   }
 };
 

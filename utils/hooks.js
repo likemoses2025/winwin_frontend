@@ -13,8 +13,8 @@ import { getMyRefunds } from "../redux/actions/refundAction";
 const server = process.env.API_URL;
 
 export const useMessageAndErrorUser = (
-  navigation,
   dispatch,
+  navigation,
   navigateTo = "login"
 ) => {
   const { loading, message, error } = useSelector((state) => state.user);

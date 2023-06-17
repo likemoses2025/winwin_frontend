@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { colors } from "../styles/styles";
 import { Avatar } from "react-native-paper";
