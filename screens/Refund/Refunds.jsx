@@ -17,6 +17,7 @@ const nf = new Intl.NumberFormat();
 // 반품 삭제 기능 구현
 // 마대번호중 가장 큰것을 확인하고 거기에 +1을 하는 기능
 // 반품날짜 클릭하면 오늘년월 기준으로 +1월 ~ -5월 (6개월 모달 선택 기능:6개월치만 검색되도록)
+// refundDate model(2301,2302,2303) schema 만들고 현재기준 년월에서 -5 ~ +1 까지 가져오기
 
 const Refunds = ({ navigation }) => {
   const isFocused = useIsFocused();
@@ -48,19 +49,19 @@ const Refunds = ({ navigation }) => {
   );
 
   // RefundDateList 만들기 (현재월 기준 6달까지)
-  const [yearStr, monthStr] = formattedDate.split(" ");
-  const yearValue = parseInt(yearStr.slice(0, 2), 10);
-  const monthValue = parseInt(monthStr.slice(0, 2), 10);
-  const refundDateList = [];
+  // const [yearStr, monthStr] = formattedDate.split(" ");
+  // const yearValue = parseInt(yearStr.slice(0, 2), 10);
+  // const monthValue = parseInt(monthStr.slice(0, 2), 10);
+  // const refundDateList = [];
 
-  for (let i = 0; i <= 6; i--) {
-    const nextMonth = (monthValue + i) % 13;
-    const nextYear = yearValue + Math.floor((monthValue + i - 1) / 12);
-    const nextMonthStr = String(nextMonth).padStart(2, "0");
-    refundDateList.push(`${nextYear}년 ${nextMonthStr}월`);
-  }
+  // for (let i = 0; i <= 6; i--) {
+  //   const nextMonth = (monthValue + i) % 13;
+  //   const nextYear = yearValue + Math.floor((monthValue + i - 1) / 12);
+  //   const nextMonthStr = String(nextMonth).padStart(2, "0");
+  //   refundDateList.push(`${nextYear}년 ${nextMonthStr}월`);
+  // }
 
-  console.log("refundDateList :" + refundDateList);
+  // console.log("refundDateList :" + refundDateList);
 
   return (
     <View
@@ -100,7 +101,8 @@ const Refunds = ({ navigation }) => {
             style={{
               flex: 4,
               backgroundColor: "#eeeeee",
-              borderWidth: 0.2,
+              borderColor: colors.color_s3,
+              borderWidth: 1.5,
               height: 30,
               justifyContent: "center",
               alignItems: "center",
@@ -159,8 +161,7 @@ const Refunds = ({ navigation }) => {
         </View>
       </View>
       <Text style={{ fontSize: 15, marginTop: 10, color: "#e57676" }}>
-        채널별 반품 단가가 상이하여 금액이 정확하지 않으니 참고용으로
-        사용바랍니다.
+        채널별 반품 단가가 상이하여 금액이 정확하지 않으니 참고만 해주세요!!
       </Text>
       {loading ? (
         <Loader />

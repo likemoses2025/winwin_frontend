@@ -19,9 +19,10 @@ const RefundItem = ({ item }) => {
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "center",
-        padding: 5,
+        padding: 2,
         borderRadius: 7,
         paddingHorizontal: 15,
+        marginBottom: 5,
         flex: 1,
       }}
     >
