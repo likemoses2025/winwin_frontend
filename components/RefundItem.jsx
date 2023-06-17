@@ -67,7 +67,7 @@ const RefundItem = ({ item }) => {
         {totalValue} 식
       </Text>
       <Text style={{ borderWidth: 0.4 }}></Text>
-      <View style={{ flexDirection: "row", flex: 2 }}>
+      <View style={{ flexDirection: "row", flex: 3 }}>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
           <IconButton
             icon="square-edit-outline"

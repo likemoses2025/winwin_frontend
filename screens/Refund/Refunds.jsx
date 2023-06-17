@@ -21,7 +21,6 @@ const nf = new Intl.NumberFormat();
 const Refunds = ({ navigation }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
-  useGetRefunds(dispatch, isFocused);
   const { refunds, loading } = useGetRefunds(dispatch, isFocused);
 
   // 년월 자동설정하기
@@ -29,20 +28,17 @@ const Refunds = ({ navigation }) => {
   const formattedYear = date.getFullYear().toString().slice(-2);
   const month = date.getMonth() + 2;
   const formattedDate = `${formattedYear}년 ${month}월`;
-  const filteredMonthRefunds = refunds.filter(
-    (item) => item.refundDate == formattedDate
-  );
-
-  console.log("Refunds refunds :" + JSON.stringify(refunds));
+  const filteredMonthRefunds =
+    refunds !== undefined &&
+    refunds.filter((item) => item.refundDate == formattedDate);
 
   const deleteRefundHandler = (id) => {
     dispatch(deleteMyRefund(id));
   };
 
-  const totalMonthAmount = filteredMonthRefunds.reduce(
-    (acc, item) => acc + item.totalAmount,
-    0
-  );
+  const totalMonthAmount =
+    refunds !== undefined &&
+    filteredMonthRefunds.reduce((acc, item) => acc + item.totalAmount, 0);
 
   const loadingDelete = useMessageAndErrorOther(
     dispatch,
@@ -50,6 +46,21 @@ const Refunds = ({ navigation }) => {
     null,
     getMyRefunds
   );
+
+  // RefundDateList 만들기 (현재월 기준 6달까지)
+  const [yearStr, monthStr] = formattedDate.split(" ");
+  const yearValue = parseInt(yearStr.slice(0, 2), 10);
+  const monthValue = parseInt(monthStr.slice(0, 2), 10);
+  const refundDateList = [];
+
+  for (let i = 0; i <= 6; i--) {
+    const nextMonth = (monthValue + i) % 13;
+    const nextYear = yearValue + Math.floor((monthValue + i - 1) / 12);
+    const nextMonthStr = String(nextMonth).padStart(2, "0");
+    refundDateList.push(`${nextYear}년 ${nextMonthStr}월`);
+  }
+
+  console.log("refundDateList :" + refundDateList);
 
   return (
     <View
