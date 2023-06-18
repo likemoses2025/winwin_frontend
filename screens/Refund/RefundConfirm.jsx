@@ -22,10 +22,16 @@ const RefundConfirm = ({ route, navigation }) => {
   const refundItems = route.params?.refundItems;
   const [id] = useState(route.params?.id);
   const [name] = useState(route.params?.name);
-  const [refundDate, setRefundDate] = useState(refundDateList[0].name);
-  const [gunnySackNumber, setGunnySackNumber] = useState(
-    gunnySackNumberList[0].name
+  const [refundDate, setRefundDate] = useState(
+    route.params?.refundDate ? route.params.refundDate : refundDateList[0].name
   );
+  const [gunnySackNumber, setGunnySackNumber] = useState(
+    route.params?.gunnySackNumber
+      ? route.params.gunnySackNumber
+      : gunnySackNumberList[0].name
+  );
+  console.log("user.team :" + user.team);
+
   const [totalAmount, setTotalAmount] = useState(route.params?.totalAmount);
   const [totalValue, setTotalValue] = useState(route.params?.totalValue);
 
@@ -38,6 +44,9 @@ const RefundConfirm = ({ route, navigation }) => {
   const toggleSackModal = () => {
     setSackModalVisible(!sackModalVisible);
   };
+
+  console.log("refundconfirm gunnySackNumber: " + gunnySackNumber);
+  console.log("refundconfirm refundDate: " + refundDate);
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "refunds");
 

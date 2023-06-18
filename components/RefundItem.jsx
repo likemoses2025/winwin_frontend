@@ -6,9 +6,10 @@ import { useNavigation } from "@react-navigation/native";
 
 const nf = new Intl.NumberFormat();
 
-const RefundItem = ({ item }) => {
+const RefundItem = ({ item, id }) => {
   const navigation = useNavigation();
-  const { gunnySackNumber, refundDate, totalValue } = item;
+  const { gunnySackNumber, refundDate, totalValue, refundItems } = item;
+
   return (
     <View
       style={{
@@ -75,7 +76,14 @@ const RefundItem = ({ item }) => {
             iconColor={MD3Colors.primary0}
             size={30}
             style={{ marginBottom: -10 }}
-            onPressIn={() => navigation.navigate("refundconfirm")}
+            onPressIn={() =>
+              navigation.navigate("refundupdate", {
+                refundItems: JSON.parse(refundItems),
+                id,
+                gunnySackNumber,
+                refundDate,
+              })
+            }
           />
           <Text>수정</Text>
         </View>

@@ -329,7 +329,7 @@ export const updateRefund = (id, updateObj) => async (dispatch) => {
       type: "updateOrderRequest",
     });
     const { data } = await axios.put(
-      `${server}/order/update/${id}`,
+      `${server}/refund/update/${id}`,
       updateObj,
       {
         headers: {
