@@ -1,14 +1,16 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import { Text, View } from "react-native";
 import { Divider, IconButton, MD3Colors } from "react-native-paper";
 import { colors } from "../styles/styles";
-import { useNavigation } from "@react-navigation/native";
+import RefundModal from "./RefundModal";
 
 const nf = new Intl.NumberFormat();
 
 const RefundItem = ({ item, id, deleteRefundHandler }) => {
   const navigation = useNavigation();
   const { gunnySackNumber, refundDate, totalValue, refundItems } = item;
+  const [openModal2, setOpenModal2] = useState(false);
 
   return (
     <View
@@ -93,18 +95,21 @@ const RefundItem = ({ item, id, deleteRefundHandler }) => {
             iconColor={MD3Colors.primary0}
             size={30}
             style={{ marginBottom: -10 }}
-            onPress={() => deleteRefundHandler(id)}
+            onPress={() => setOpenModal2(true)}
           />
           <Text>삭제</Text>
         </View>
       </View>
       <Divider />
+      {openModal2 && (
+        <RefundModal
+          id2={id}
+          deleteHandler2={deleteRefundHandler}
+          setOpenModal2={setOpenModal2}
+        />
+      )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  fab: {},
-});
 
 export default RefundItem;
