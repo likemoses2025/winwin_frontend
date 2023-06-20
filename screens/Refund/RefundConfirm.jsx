@@ -82,7 +82,7 @@ const RefundConfirm = ({ route, navigation }) => {
       totalAmount: totalAmount,
       refundItems: JSON.stringify(refundItems),
     };
-
+    console.log("updateObj", updateObj);
     dispatch(updateRefund(id, updateObj));
   };
 

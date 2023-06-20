@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const nf = new Intl.NumberFormat();
 
-const RefundItem = ({ item, id }) => {
+const RefundItem = ({ item, id, deleteRefundHandler }) => {
   const navigation = useNavigation();
   const { gunnySackNumber, refundDate, totalValue, refundItems } = item;
 
@@ -37,7 +37,7 @@ const RefundItem = ({ item, id }) => {
           textAlignVertical: "center",
           overflow: "hidden",
           color: "white",
-          fontSize: 25,
+          fontSize: 22,
           fontWeight: "900",
         }}
       >
@@ -92,8 +92,8 @@ const RefundItem = ({ item, id }) => {
             icon="delete-outline"
             iconColor={MD3Colors.primary0}
             size={30}
-            onPress={() => console.log("Pressed")}
             style={{ marginBottom: -10 }}
+            onPress={() => deleteRefundHandler(id)}
           />
           <Text>삭제</Text>
         </View>

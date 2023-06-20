@@ -13,8 +13,7 @@ import { useGetRefunds, useMessageAndErrorOther } from "../../utils/hooks";
 
 const nf = new Intl.NumberFormat();
 
-// 반품 수정 기능 구현 ()
-// 반품 삭제 기능 구현
+// 반품 삭제 기능 구현 (모달을 띄우고 1번더 삭제 묻기)
 // 마대번호중 가장 큰것을 확인하고 거기에 +1을 하는 기능
 // 반품날짜 클릭하면 오늘년월 기준으로 +1월 ~ -5월 (6개월 모달 선택 기능:6개월치만 검색되도록)
 // refundDate model(2301,2302,2303) schema 만들고 현재기준 년월에서 -5 ~ +1 까지 가져오기
@@ -174,7 +173,12 @@ const Refunds = ({ navigation }) => {
           <ScrollView showsVerticalScrollIndicator={false}>
             {!loadingDelete && refunds?.length > 0 ? (
               filteredMonthRefunds.map((item, index) => (
-                <RefundItem key={item._id} id={item._id} item={item} />
+                <RefundItem
+                  key={item._id}
+                  id={item._id}
+                  item={item}
+                  deleteRefundHandler={deleteRefundHandler}
+                />
               ))
             ) : (
               <Headline style={{ textAlign: "center" }}>

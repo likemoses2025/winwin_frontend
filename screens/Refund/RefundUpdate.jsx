@@ -12,13 +12,15 @@ import { colors, defaultStyle } from "../../styles/styles";
 const RefundUpdate = ({ route, navigation }) => {
   const { expiredProducts } = useSelector((state) => state.product);
   const [refundList, setRefundList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 2500);
 
   const { id, refundItems, gunnySackNumber, refundDate } = route.params;
 
   console.log("route.params :" + JSON.stringify(route.params));
-
-  setTimeout(() => setLoading(false), 2500); // 2.5초 후 로딩을 false로 설정
 
   useEffect(() => {
     const updatedArray = expiredProducts.map((item) => {
