@@ -21,9 +21,8 @@ const RefundDateModal = ({
       backdropOpacity={0.7}
       animationIn={"zoomInDown"}
       animationOut={"zoomOutUp"}
-      style={{ height: 300 }}
     >
-      <View style={{ flex: 1, height: 100 }}>
+      <View style={{ paddingVertical: 50 }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{
@@ -33,8 +32,8 @@ const RefundDateModal = ({
             borderRadius: 10,
           }}
         >
-          {refundDateList.map((item) => (
-            <TouchableOpacity key={item._id}>
+          {refundDateList.map((item, index) => (
+            <TouchableOpacity key={index}>
               <Text
                 style={{
                   marginTop: 15,
@@ -42,9 +41,9 @@ const RefundDateModal = ({
                   textAlign: "center",
                   marginBottom: 15,
                 }}
-                onPress={() => selectDateHandler(item.name)}
+                onPress={() => selectDateHandler(item)}
               >
-                {item.name}
+                {item}
               </Text>
             </TouchableOpacity>
           ))}

@@ -119,6 +119,7 @@ const ConfirmOrder = ({ route, navigation }) => {
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
+              padding: 2,
             }}
           >
             <View
@@ -129,7 +130,7 @@ const ConfirmOrder = ({ route, navigation }) => {
                 borderWidth: 0.3,
                 padding: 10,
                 borderRadius: 10,
-                width: "45%",
+                width: "47%",
               }}
             >
               <View style={{ flexDirection: "row" }}>
@@ -174,7 +175,7 @@ const ConfirmOrder = ({ route, navigation }) => {
                 borderWidth: 0.3,
                 padding: 5,
                 borderRadius: 10,
-                width: "45%",
+                width: "47%",
               }}
             >
               <View
@@ -219,7 +220,7 @@ const ConfirmOrder = ({ route, navigation }) => {
             borderWidth: 1,
             marginTop: 30,
             borderRadius: 10,
-            padding: 10,
+            padding: 8,
             backgroundColor: "#f0f0f0",
           }}
         >
@@ -250,7 +251,6 @@ const ConfirmOrder = ({ route, navigation }) => {
                   margin: 10,
                 }}
                 textColor={colors.color2}
-                loading={loading}
               >
                 제품추가
               </Button>

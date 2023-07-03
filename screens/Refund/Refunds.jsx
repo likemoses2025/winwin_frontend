@@ -22,11 +22,18 @@ const Refunds = ({ navigation }) => {
   const dispatch = useDispatch();
   const { refunds, loading } = useGetRefunds(dispatch, isFocused);
 
+  console.log("refunds", refunds);
+
   // 년월 자동설정하기
   const date = new Date();
   const formattedYear = date.getFullYear().toString().slice(-2);
   const month = date.getMonth() + 2;
-  const formattedDate = `${formattedYear}년 ${month}월`;
+  const formattedDate = `${formattedYear}년 ${
+    month < 10 ? `0` + month : month
+  }월`;
+
+  console.log("formattedDate", formattedDate);
+
   const filteredMonthRefunds =
     refunds !== undefined &&
     refunds.filter((item) => item.refundDate == formattedDate);
@@ -45,21 +52,6 @@ const Refunds = ({ navigation }) => {
     null,
     getMyRefunds
   );
-
-  // RefundDateList 만들기 (현재월 기준 6달까지)
-  // const [yearStr, monthStr] = formattedDate.split(" ");
-  // const yearValue = parseInt(yearStr.slice(0, 2), 10);
-  // const monthValue = parseInt(monthStr.slice(0, 2), 10);
-  // const refundDateList = [];
-
-  // for (let i = 0; i <= 6; i--) {
-  //   const nextMonth = (monthValue + i) % 13;
-  //   const nextYear = yearValue + Math.floor((monthValue + i - 1) / 12);
-  //   const nextMonthStr = String(nextMonth).padStart(2, "0");
-  //   refundDateList.push(`${nextYear}년 ${nextMonthStr}월`);
-  // }
-
-  // console.log("refundDateList :" + refundDateList);
 
   return (
     <View
@@ -180,9 +172,7 @@ const Refunds = ({ navigation }) => {
                 />
               ))
             ) : (
-              <Headline style={{ textAlign: "center" }}>
-                반품이 없습니다.!!
-              </Headline>
+              <Headline style={{ textAlign: "center" }}></Headline>
             )}
           </ScrollView>
         </View>

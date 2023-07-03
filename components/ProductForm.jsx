@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TextInput } from "react-native-paper";
+import { TextInput, DefaultTheme } from "react-native-paper";
 import { colors } from "../styles/styles";
 
 const ProductForm = ({ item, changeQuantity }) => {
@@ -9,6 +9,16 @@ const ProductForm = ({ item, changeQuantity }) => {
     changeQuantity(item.code, parseInt(quantity));
   }, [quantity]);
 
+  // 숫자만 포함된 값인지 확인하는 정규식
+  const numberRegex = /^[0-9]*$/;
+
+  const handleInputChange = (text) => {
+    // 숫자만 포함된 값인지 검사
+    if (numberRegex.test(text)) {
+      setQuantity(text);
+    }
+  };
+
   return (
     <TextInput
       key={item.code}
@@ -17,6 +27,7 @@ const ProductForm = ({ item, changeQuantity }) => {
       textColor={colors.color_s3}
       keyboardType="numeric"
       style={{
+        padding: 0,
         fontSize: 12,
         width: 120,
         fontWeight: "bold",
@@ -26,7 +37,8 @@ const ProductForm = ({ item, changeQuantity }) => {
       label={item.name}
       mode="outlined"
       value={item.quantity ? item.quantity.toString() : quantity.toString()}
-      onChangeText={(text) => setQuantity(text)}
+      // onChangeText={(text) => setQuantity(text)}
+      onChangeText={handleInputChange}
     />
   );
 };

@@ -9,7 +9,7 @@ const TableComponent = ({ tableItems }) => {
   const textStyle = { color: "white", fontWeight: "700", fontSize: 15 };
 
   return (
-    <DataTable style={{ marginTop: 15 }}>
+    <DataTable style={{ marginVertical: 15 }}>
       <DataTable.Header
         style={{
           backgroundColor: colors.color3,

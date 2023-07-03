@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Avatar, Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
-import { gunnySackNumberList, refundDateList } from "../../assets/data/data.js";
+import { gunnySackNumberList } from "../../assets/data/data.js";
+import GunnySackModal from "../../components/GunnySackModal";
 import Header from "../../components/Header";
 import Heading from "../../components/Heading";
-import GunnySackModal from "../../components/GunnySackModal";
 import RefundDateModal from "../../components/RefundDateModal";
 import TableComponent from "../../components/TableComponent";
 import { createRefund, updateRefund } from "../../redux/actions/otherAction";
@@ -15,6 +15,24 @@ import { useMessageAndErrorOther } from "../../utils/hooks";
 
 const nf = new Intl.NumberFormat();
 
+// refundDate 설정
+const date = new Date();
+const year = date.getFullYear();
+const month = date.getMonth() + 2;
+
+// 6개월 설정
+const pastMonths = [];
+for (let i = 0; i < 7; i++) {
+  const targetMonth = month - i;
+  const targetYear = year - Math.floor(targetMonth / 12);
+  const adjustedMonth = (((targetMonth % 12) + 12) % 12) + 1; // 음수나 0이면 12를 더해 양수로 만들어주고, 1을 더해 1부터 시작하도록 조정
+  pastMonths.push(
+    `${targetYear.toString().slice(-2)}년 ${adjustedMonth
+      .toString()
+      .padStart(2, "0")}월`
+  );
+}
+
 const RefundConfirm = ({ route, navigation }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
@@ -22,15 +40,17 @@ const RefundConfirm = ({ route, navigation }) => {
   const refundItems = route.params?.refundItems;
   const [id] = useState(route.params?.id);
   const [name] = useState(route.params?.name);
+  // const [refundDate, setRefundDate] = useState(
+  //   route.params?.refundDate ? route.params.refundDate : refundDateList[0].name
+  // );
   const [refundDate, setRefundDate] = useState(
-    route.params?.refundDate ? route.params.refundDate : refundDateList[0].name
+    route.params?.refundDate ? route.params.refundDate : pastMonths[1]
   );
   const [gunnySackNumber, setGunnySackNumber] = useState(
     route.params?.gunnySackNumber
       ? route.params.gunnySackNumber
       : gunnySackNumberList[0].name
   );
-  console.log("user.team :" + user.team);
 
   const [totalAmount, setTotalAmount] = useState(route.params?.totalAmount);
   const [totalValue, setTotalValue] = useState(route.params?.totalValue);
@@ -44,9 +64,6 @@ const RefundConfirm = ({ route, navigation }) => {
   const toggleSackModal = () => {
     setSackModalVisible(!sackModalVisible);
   };
-
-  console.log("refundconfirm gunnySackNumber: " + gunnySackNumber);
-  console.log("refundconfirm refundDate: " + refundDate);
 
   const loading = useMessageAndErrorOther(dispatch, navigation, "refunds");
 
@@ -99,7 +116,7 @@ const RefundConfirm = ({ route, navigation }) => {
           text2="반품 확인"
         />
 
-        <View style={{ paddingVertical: 20, flex: 1 }}>
+        <View style={{ paddingVertical: 15, paddingHorizontal: 2, flex: 1 }}>
           <View
             style={{
               flexDirection: "row",
@@ -114,7 +131,7 @@ const RefundConfirm = ({ route, navigation }) => {
                 borderWidth: 0.3,
                 padding: 5,
                 borderRadius: 10,
-                width: "45%",
+                width: "48%",
               }}
             >
               <View
@@ -143,7 +160,7 @@ const RefundConfirm = ({ route, navigation }) => {
                 <RefundDateModal
                   dateModalVisible={dateModalVisible}
                   toggleDateModal={toggleDateModal}
-                  refundDateList={refundDateList}
+                  refundDateList={pastMonths}
                   setRefundDate={setRefundDate}
                 />
               </TouchableOpacity>
@@ -232,7 +249,6 @@ const RefundConfirm = ({ route, navigation }) => {
                   margin: 10,
                 }}
                 textColor={colors.color2}
-                loading={loading}
               >
                 반품추가
               </Button>
